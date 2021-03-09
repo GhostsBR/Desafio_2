@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DatabaseController {
+    //Cria a pré conexão.
     public static Connection preConnect(){
         Connection connect = null;
         try {
@@ -17,6 +18,7 @@ public class DatabaseController {
         return connect;
     }
 
+    //Cria a conexão com o banco de dados.
     public static Connection connect(){
         Connection connect = null;
 
