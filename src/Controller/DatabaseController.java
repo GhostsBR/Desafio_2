@@ -11,7 +11,6 @@ public class DatabaseController {
             String user = "root";
             String password = "";
             connect = DriverManager.getConnection(url,user,password);
-            System.out.println("Connected");
         }catch (Exception error){
             System.out.println(error.getMessage());
         }
@@ -26,7 +25,6 @@ public class DatabaseController {
             String user = "root";
             String password = "";
             connect = DriverManager.getConnection(url,user,password);
-            System.out.println("Connected");
         }catch (Exception error){
             System.out.println(error.getMessage());
         }
