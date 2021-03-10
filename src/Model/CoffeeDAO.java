@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class CoffeeModel {
+public class CoffeeDAO {
     //Cria uma nova entrada na tabela de Espaços de Café.
     public void createCoffee(String name){
         try {
