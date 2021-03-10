@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.DatabaseController;
+import Database.ConnectionFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ public class CoffeeDAO {
     public void createCoffee(String name){
         try {
             String sql = "INSERT INTO coffee (name) VALUES (?)";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.execute();
         }catch (Exception error){
@@ -48,7 +48,7 @@ public class CoffeeDAO {
             // Define o comando SQL
             String sql = "INSERT INTO coffee (name) VALUES (?)";
             // Pega uma conexão do banco e gera um PreparedStatement
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             // Define os paramêtros do comando SQL
             pstmt.setString(1,coffee.getNameCoffee());
             // Executa o comando SQL para salvar no banco
@@ -73,7 +73,7 @@ public class CoffeeDAO {
     public void deleteCoffee (int id){
         try {
             String sql = "DELETE FROM coffee WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
         }catch (Exception error){
@@ -85,7 +85,7 @@ public class CoffeeDAO {
     public void updateCoffee (int id, String name){
         try {
             String sql = "UPDATE coffee SET name=? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setInt(2,id);
             pstmt.execute();
@@ -103,7 +103,7 @@ public class CoffeeDAO {
     public void updateCoffee (Coffee coffee){
         try {
             String sql = "UPDATE coffee SET name=? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,coffee.getNameCoffee());
             pstmt.setInt(2,coffee.getIdCoffee());
             pstmt.execute();
@@ -116,7 +116,7 @@ public class CoffeeDAO {
     public static String[] getCoffee() {
         try {
             String sql = "SELECT * FROM coffee";
-            Statement stmt = DatabaseController.connect().createStatement();
+            Statement stmt = ConnectionFactory.connect().createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -146,7 +146,7 @@ public class CoffeeDAO {
             // Define o comando SQL
             String sql = "SELECT * FROM coffee";
             // Pega uma conexão do banco e gera um Statement
-            Statement stmt = DatabaseController.connect().createStatement();
+            Statement stmt = ConnectionFactory.connect().createStatement();
             // Executa o comando SQL e recebe os dados via ResultSet
             ResultSet rs = stmt.executeQuery(sql);
             // Verifica se há dados

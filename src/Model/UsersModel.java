@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.DatabaseController;
+import Database.ConnectionFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ public class UsersModel {
     public void createUser(String name){
         try {
             String sql = "INSERT INTO users (name) VALUES (?)";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.execute();
         }catch (Exception error){
@@ -23,7 +23,7 @@ public class UsersModel {
     public void deleteUser (int id){
         try {
             String sql = "DELETE FROM users WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
         }catch (Exception error){
@@ -35,7 +35,7 @@ public class UsersModel {
     public void updateUser (int id, String name){
         try {
             String sql = "UPDATE users SET name = ? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setInt(2,id);
             pstmt.execute();
@@ -49,7 +49,7 @@ public class UsersModel {
     public static String[] getUsers() {
         try {
             String sql = "SELECT * FROM users";
-            Statement stmt = DatabaseController.connect().createStatement();
+            Statement stmt = ConnectionFactory.connect().createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
 
