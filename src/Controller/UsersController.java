@@ -1,7 +1,5 @@
 package Controller;
 
-import Model.RoomsModel;
-
 import java.util.ArrayList;
 
 public class UsersController {
@@ -26,14 +24,19 @@ public class UsersController {
         }
 
         for(int i=0; i < users.size(); i++) {
-            coffe = (Integer.parseInt(SelectedPeople[i][1]) + 1);
+            if(i < (users.size() / 2)) {
+                coffe = 0;
+                coffe2 = 1;
+            } else {
+                coffe = 1;
+                coffe2 = 0;
+            }
+
             if(coffe >= coffes.size()) {
                 coffe = 0;
             }
 
             SelectedPeople[i][3] = String.valueOf(coffe);
-
-            coffe++;
         }
 
         for(int i=0; i < users.size(); i++) {
@@ -47,14 +50,18 @@ public class UsersController {
         }
 
         for(int i=0; i < users.size(); i++) {
-            coffe2 = (Integer.parseInt(SelectedPeople[i][2]) + 1);
+            if(i < (users.size() / 2)) {
+                coffe2 = 1;
+            } else {
+                coffe2 = 0;
+            }
+
             if(coffe2 >= coffes.size()) {
                 coffe2 = 0;
             }
 
             SelectedPeople[i][4] = String.valueOf(coffe2);
             System.out.println("Nome: " + SelectedPeople[i][0] + " \t|\t Primeira Sala: " + SelectedPeople[i][1] + "\t|\tPrimeiro Espaço: " + SelectedPeople[i][3] + "\t|\tSegunda Sala: " + SelectedPeople[i][2] + "\t|\tSegundo Café: " + SelectedPeople[i][4]);
-            coffe2++;
         }
 
 
