@@ -11,6 +11,11 @@ public class UsersController {
         int coffe2 = 0;
         String[][]SelectedPeople = new String[users.size()][5];
 
+        /*
+            Define a primeira sala dos usuários.
+            Distribuindo os usuários pelas salas disponíveis em ordem.
+            Exemplo: Se existirem 3 salas, seram adicionados usuários na ordem: 1, 2, 3, 1, 2, 3...
+        */
         for(int i=0; i < users.size(); i++) {
             if(room >= rooms.length) {
                 room = 0;
@@ -23,6 +28,11 @@ public class UsersController {
             room++;
         }
 
+        /*
+            Define qual o primeiro espaço de café.
+            Dividindo a lista de usuários em dois, cada parte fica em um espaço de café diferente.
+            Exemplo: (6 / 2 = 3) ou seja 3 usuários no espaço 1 e 3 usuários no espaço 2.
+        */
         for(int i=0; i < users.size(); i++) {
             if(i < (users.size() / 2)) {
                 coffe = 0;
@@ -39,6 +49,11 @@ public class UsersController {
             SelectedPeople[i][3] = String.valueOf(coffe);
         }
 
+        /*
+            Define a segunda sala dos usuários
+            Distribuindo os usuários pelas salas disponíveis, sempre começando da proxima sala em consideração a sala da primeira etapa.
+            Exemplo: Etapa 1: Sala 3 Etapa 2: Sala 4.
+         */
         for(int i=0; i < users.size(); i++) {
             room2 = (Integer.parseInt(SelectedPeople[i][1]) + 1);
             if(room2 >= rooms.length) {
@@ -49,6 +64,11 @@ public class UsersController {
             room2++;
         }
 
+        /*
+            Define qual o segundo espaço de café.
+            Dividindo a lista de usuários em dois, cada parte fica em um espaço de café diferente da etapa anterior.
+            Exemplo: Etapa anterior: 1 Etapa atual: 2.
+        */
         for(int i=0; i < users.size(); i++) {
             if(i < (users.size() / 2)) {
                 coffe2 = 1;
@@ -64,7 +84,7 @@ public class UsersController {
             System.out.println("Nome: " + SelectedPeople[i][0] + " \t|\t Primeira Sala: " + SelectedPeople[i][1] + "\t|\tPrimeiro Espaço: " + SelectedPeople[i][3] + "\t|\tSegunda Sala: " + SelectedPeople[i][2] + "\t|\tSegundo Café: " + SelectedPeople[i][4]);
         }
 
-
+        //Retorna a lista de usuários em forma de matriz na seguinde ordem: NOME, PRIMEIRA SALA, PRIMEIRO ESPAÇO, SEGUNDA SALA, SEGUNDO ESPAÇO.
         return SelectedPeople;
     }
 }
