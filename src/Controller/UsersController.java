@@ -14,7 +14,7 @@ public class UsersController {
         /*
             Define a primeira sala dos usuários.
             Distribuindo os usuários pelas salas disponíveis em ordem.
-            Exemplo: Se existirem 3 salas, seram adicionados usuários na ordem: 1, 2, 3, 1, 2, 3...
+            Exemplo: Se existirem 3 salas, serão adicionados usuários na ordem: 1, 2, 3, 1, 2, 3...
         */
         for(int i=0; i < users.size(); i++) {
             if(room >= rooms.length) {
