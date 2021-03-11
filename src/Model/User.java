@@ -14,19 +14,17 @@ public class User {
      */
     private Integer idUser;
     private String nameUser;
-    private Integer room1User;
-    private Integer room2User;
-    private Integer coffee1User;
-    private Integer coffee2User;
-
+    private Room room1User;
+    private Room room2User;
+    private Coffee coffee1User;
+    private Coffee coffee2User;
+    private Integer posicionRoom;
+    private Integer posicionCoffee;
 
     /**
      * Construtor vazio da classe User
      */
-    public User() {
-    }
-
-    ;
+    public User() {}
 
     /**
      * Construtor com todos os parâmetros da classe User
@@ -56,14 +54,14 @@ public class User {
      * Construtor com todos os parâmetros da classe User
      * usado para criar a lista de retorno dos Usuários
      *
-     * @param id
-     * @param name
-     * @param room1
-     * @param room2
-     * @param coffee1
-     * @param coffee2
+     * @param id Integer
+     * @param name String
+     * @param room1 Room
+     * @param room2 Room
+     * @param coffee1 Coffee
+     * @param coffee2 Coffee
      */
-    public User(Integer id, String name, Integer room1, Integer room2, Integer coffee1, Integer coffee2) {
+    public User(Integer id, String name, Room room1, Room room2, Coffee coffee1, Coffee coffee2) {
         this.idUser = id;
         this.nameUser = name;
         this.room1User = room1;
@@ -119,6 +117,7 @@ public class User {
 
     /**
      * Método Getter do atributo nomeUser
+     *
      * @return String
      */
     public String getNameUser() {
@@ -127,69 +126,47 @@ public class User {
 
     /**
      * Método Setter do atributo room1User
-     * realizando validação para valore nulos, negativos ou zero
+     *
      * @param room1 Integer
      */
-    public void setRoom1User(Integer room1) {
-        if (room1 != null) {
-            if (room1 > 0) {
-                this.room1User = room1;
-            } else {
-                System.out.println("Erro: o ID da Sala da primeira etapa não pode ser menor ou igual à zero!");
-            }
-        } else {
-            System.out.println("Erro: o ID da Sala da primeira etapa não pode ser nulo!");
-        }
+    public void setRoom1User(Room room1) {
+        this.room1User = room1;
     }
 
     /**
      * Método Getter do atributo room1User
+     *
      * @return room1User
      */
-    public Integer getRoom1User() {
+    public Room getRoom1User() {
         return this.room1User;
     }
 
     /**
      * Método Setter do atributo room2User
-     * realizando validação para valore nulos, negativos ou zero
-     * @param room2 Integer
+     *
+     * @param room2 Room
      */
-    public void setRoom2User(Integer room2) {
-        if (room2 != null) {
-            if (room2 > 0) {
-                this.room2User = room2;
-            } else {
-                System.out.println("Erro: o ID da Sala da segunda etapa não pode ser menor ou igual à zero!");
-            }
-        } else {
-            System.out.println("Erro: o ID da Sala da segunda etapa não pode ser nulo!");
-        }
+    public void setRoom2User(Room room2) {
+        this.room2User = room2;
     }
 
     /**
      * Método Getter do atributo room2User
+     *
      * @return room2User
      */
-    public Integer getRoom2User() {
+    public Room getRoom2User() {
         return this.room2User;
     }
 
     /**
      * Método Setter do atributo coffee1User
-     * realizando validação para valore nulos, negativos ou zero
-     * @param coffee1 Integer
+     *
+     * @param coffee1 Coffee
      */
-    public void setCoffee1User(Integer coffee1) {
-        if (coffee1 != null) {
-            if (coffee1 > 0) {
-                this.coffee1User = coffee1;
-            } else {
-                System.out.println("Erro: o ID do Espaço de Café da primeira etapa não pode ser menor ou igual à zero!");
-            }
-        } else {
-            System.out.println("Erro: o ID do Espaço de Café da primeira etapa não pode ser nulo!");
-        }
+    public void setCoffee1User(Coffee coffee1) {
+        this.coffee1User = coffee1;
     }
 
     /**
@@ -197,25 +174,17 @@ public class User {
      *
      * @return coffee1User
      */
-    public Integer getCoffee1User() {
+    public Coffee getCoffee1User() {
         return this.coffee1User;
     }
 
     /**
      * Método Setter do atributo coffee2User
-     * realizando validação para valore nulos, negativos ou zero
-     * @param coffee2 Integer
+     *
+     * @param coffee2 Coffee
      */
-    public void setCoffee2User(Integer coffee2) {
-        if (coffee2 != null) {
-            if (coffee2 > 0) {
-                this.coffee2User = coffee2;
-            } else {
-                System.out.println("Erro: o ID do Espaço de Café da segunda etapa não pode ser menor ou igual à zero!");
-            }
-        } else {
-            System.out.println("Erro: o ID do Espaço de Café da segunda etapa não pode ser nulo!");
-        }
+    public void setCoffee2User(Coffee coffee2) {
+        this.coffee2User = coffee2;
     }
 
     /**
@@ -223,10 +192,43 @@ public class User {
      *
      * @return coffee2User
      */
-    public Integer getCoffee2User() {
+    public Coffee getCoffee2User() {
         return this.coffee2User;
     }
+
+    /**
+     * Método Setter do atributo posicionRoom
+     *
+     * @param posicion Integer
+     */
+    public void setPosicionRoom(Integer posicion) {
+        this.posicionRoom = posicion;
+    }
+
+    /**
+     * Método Getter do atributo posicionRoom
+     *
+     * @return posicionRoom Integer
+     */
+    public Integer getPosicionRoom() {
+        return this.posicionRoom;
+    }
+
+    /**
+     * Método Setter do atributo posicionCoffee
+     *
+     * @param posicion Integer
+     */
+    public void setPosicionCoffee(Integer posicion) {
+        this.posicionCoffee = posicion;
+    }
+
+    /**
+     * Método Getter do atributo posicionCoffee
+     *
+     * @return posicionCoffee Integer
+     */
+    public Integer getPosicionCoffee() {
+        return this.posicionCoffee;
+    }
 }
-
-
-
