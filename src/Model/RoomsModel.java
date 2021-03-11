@@ -1,6 +1,6 @@
 package Model;
 
-import Controller.DatabaseController;
+import Database.ConnectionFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ public class RoomsModel {
     public void createRoom(String name, int capacity){
         try {
             String sql = "INSERT INTO rooms (name, capacity) VALUES (?,?)";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setInt(2,capacity);
             pstmt.execute();
@@ -24,7 +24,7 @@ public class RoomsModel {
     public void deleteRoom(int id){
         try {
             String sql = "DELETE FROM rooms WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
         }catch (Exception error){
@@ -36,7 +36,7 @@ public class RoomsModel {
     public void updateRoom (int id, String name){
         try {
             String sql = "UPDATE rooms SET name = ? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setInt(2,id);
             pstmt.execute();
@@ -50,7 +50,7 @@ public class RoomsModel {
     public void updateRoom (int id, int capacity){
         try {
             String sql = "UPDATE rooms SET capacity = ? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,capacity);
             pstmt.setInt(2,id);
             pstmt.execute();
@@ -64,7 +64,7 @@ public class RoomsModel {
     public void updateRoom (int id, String name, int capacity){
         try {
             String sql = "UPDATE rooms SET name=?,capacity = ? WHERE id = ?";
-            PreparedStatement pstmt = DatabaseController.connect().prepareStatement(sql);
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.setInt(2,capacity);
             pstmt.setInt(3,id);
@@ -79,7 +79,7 @@ public class RoomsModel {
     public static String[] getRooms() {
         try {
             String sql = "SELECT * FROM rooms";
-            Statement stmt = DatabaseController.connect().createStatement();
+            Statement stmt = ConnectionFactory.connect().createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
 

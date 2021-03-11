@@ -1,6 +1,7 @@
 package Test.Model;
 
 import Model.Coffee;
+import Test.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +10,26 @@ import java.util.List;
  * Classe para testes de objetos Coffee
  * @author Thiago
  */
-public class TestCoffe {
+public class TestCoffe extends Test{
 
     /**
-     *  Objeto Coffee utilizado para os testes
+     * Objeto Coffee utilizado para os testes
      */
     private final Coffee coffee;
 
     /**
-     *  Lista de possíveis erros do teste
-     */
-    private List<String> erros;
-
-    /**
-     * Cosntrutor da Classe TestCoffe, definindo
-     * o objeto coffee da classe e uma lista vazia
-     * para adicionar os possíveis erros
+     * Construtor da Classe TestCoffe, definindo
+     * o objeto Coffee
      */
     public TestCoffe(){
+        super();
         this.coffee = new Coffee();
-        erros = new ArrayList<String>();
     }
 
     /**
      * Método para testar a classe Coffee
      */
+    @Override
     public void test(){
         // Definindo um valor válido para o atributo idCoffee
         coffee.setIdCoffee(1);
@@ -76,14 +72,6 @@ public class TestCoffe {
             erros.add("Erro: foi possível adicionar um valor com mais de 50 caracteres para o atributo nameCoffee!");
         }
         // Verifica se ocorreu erros
-        if (erros.size() > 0){
-            System.out.println("Classe Coffee não passou nos testes!");
-            // Mostra os erros encontrados
-            for (String erro: erros) {
-                System.out.println(erro);
-            }
-        } else{
-            System.out.println("Classe Coffee passou nos testes!");
-        }
+        super.verficaErros("Classe Coffee passou nos testes!", "Classe Coffee não passou nos testes!");
     }
 }
