@@ -21,7 +21,7 @@ public class UserDAO {
      * os valores de "name"
      * @param user User
      */
-    public void createCoffee(User user){
+    public void createUser(User user){
         try{
             String sql = "INSERT INTO users VALUES (?)";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
