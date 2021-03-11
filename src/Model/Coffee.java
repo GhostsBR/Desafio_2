@@ -30,6 +30,16 @@ public class Coffee {
     }
 
     /**
+     * Construtor com o parâmetro nameCoffee da classe Coffee
+     * usado para criar entradas novas na tabela de Espaços de Café
+     * Obs: estas entradas novas vão receber somente o nome do novo Espaço de Café
+     * e seu idCoffee será atribuído diretamente no Banco de Dados
+     */
+    public Coffee(String name){
+        this.nameCoffee = name;
+    }
+
+    /**
      * Método Setter do atributo idCoffe, realizando validação
      * para valores negativos, zero e nulos.
      * Obs: Cuidado para verificar antes se o valor é nulo,

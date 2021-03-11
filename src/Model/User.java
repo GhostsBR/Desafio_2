@@ -1,15 +1,16 @@
 package Model;
 
 /**
- * Classe responsável pela persistência de dados para um Usuário
- *
+ * Classe representativa para um Usuário
  */
 
 public class User {
 
     /**
      * Criação de atributos da classe User
-     * Os atributos room1
+     * Os atributos room1, room2, coffee1 e coffee2 são
+     * inicializados como null, uma vez que inicialmente a tabela
+     * users receberá valores nulos para estes atributos.
      */
     private Integer idUser;
     private String nameUser;
@@ -29,6 +30,17 @@ public class User {
      */
     public User(Integer id, String name){
         this.idUser = id;
+        this.nameUser = name;
+    }
+
+    /**
+     * Construtor com o parâmetro nameUser da classe User
+     * usado para criar entradas novas na tabela de Usuários
+     * Obs: estas entradas novas vão receber somente o nome do novo Usuário
+     * e futuramente serão populadas com suas Salas e Espaços de Café
+     * Obs2: seu atributo idUser será atribuído diretamente no Banco de Dados
+     */
+    public User(String name){
         this.nameUser = name;
     }
 

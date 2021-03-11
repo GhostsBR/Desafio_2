@@ -27,6 +27,17 @@ public class Room {
         this.capacityRoom = capacityRoom;
     }
 
+    /**
+     * Construtor com o parâmetro nameRoom e capacityRoom da classe Room
+     * usado para criar entradas novas na tabela de Salas
+     * Obs: estas entradas novas vão receber somente o nome e lotação da nova Sala
+     * e seu idRoom será atribuído diretamente no Banco de Dados
+     */
+    public Room(String name, int capacity){
+        this.nameRoom = name;
+        this.capacityRoom = capacity;
+    }
+
     //Método SET para atributo ID.
     public void setIdRoom(Integer idRoom){
         if (idRoom != null){
