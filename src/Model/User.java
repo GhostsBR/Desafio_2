@@ -14,10 +14,10 @@ public class User {
      */
     private Integer idUser;
     private String nameUser;
-    private Room room1User;
-    private Room room2User;
-    private Coffee coffee1User;
-    private Coffee coffee2User;
+    private Integer room1User;
+    private Integer room2User;
+    private Integer coffee1User;
+    private Integer coffee2User;
     private Integer posicionRoom;
     private Integer posicionCoffee;
 
@@ -61,7 +61,7 @@ public class User {
      * @param coffee1 Coffee
      * @param coffee2 Coffee
      */
-    public User(Integer id, String name, Room room1, Room room2, Coffee coffee1, Coffee coffee2) {
+    public User(Integer id, String name, Integer room1, Integer room2, Integer coffee1, Integer coffee2) {
         this.idUser = id;
         this.nameUser = name;
         this.room1User = room1;
@@ -129,7 +129,7 @@ public class User {
      *
      * @param room1 Integer
      */
-    public void setRoom1User(Room room1) {
+    public void setRoom1User(Integer room1) {
         this.room1User = room1;
     }
 
@@ -138,7 +138,7 @@ public class User {
      *
      * @return room1User
      */
-    public Room getRoom1User() {
+    public Integer getRoom1User() {
         return this.room1User;
     }
 
@@ -147,7 +147,7 @@ public class User {
      *
      * @param room2 Room
      */
-    public void setRoom2User(Room room2) {
+    public void setRoom2User(Integer room2) {
         this.room2User = room2;
     }
 
@@ -156,7 +156,7 @@ public class User {
      *
      * @return room2User
      */
-    public Room getRoom2User() {
+    public Integer getRoom2User() {
         return this.room2User;
     }
 
@@ -165,7 +165,7 @@ public class User {
      *
      * @param coffee1 Coffee
      */
-    public void setCoffee1User(Coffee coffee1) {
+    public void setCoffee1User(Integer coffee1) {
         this.coffee1User = coffee1;
     }
 
@@ -174,7 +174,7 @@ public class User {
      *
      * @return coffee1User
      */
-    public Coffee getCoffee1User() {
+    public Integer getCoffee1User() {
         return this.coffee1User;
     }
 
@@ -183,7 +183,7 @@ public class User {
      *
      * @param coffee2 Coffee
      */
-    public void setCoffee2User(Coffee coffee2) {
+    public void setCoffee2User(Integer coffee2) {
         this.coffee2User = coffee2;
     }
 
@@ -192,7 +192,7 @@ public class User {
      *
      * @return coffee2User
      */
-    public Coffee getCoffee2User() {
+    public Integer getCoffee2User() {
         return this.coffee2User;
     }
 
