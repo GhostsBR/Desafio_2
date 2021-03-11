@@ -106,8 +106,8 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 User user = new User(rs.getInt("id"), rs.getString("name"),
-                        rs.getInt("room1"),rs.getInt("room2"),
-                        rs.getInt("coffee1"), rs.getInt("coffee2"));
+                        rs.getInt("id_room1"),rs.getInt("id_room2"),
+                        rs.getInt("id_coffee1"), rs.getInt("id_coffee2"));
                 users.add(user);
             }
         }catch (Exception error){
