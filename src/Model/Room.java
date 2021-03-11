@@ -92,7 +92,7 @@ public class Room {
     public void setQuantity1(Integer quantity1){
         if (quantity1 != null){
             //Verifica se o valor é menor que 1
-            if (quantity1 < 0){
+            if (quantity1 > 0){
                 this.quantity1 = quantity1;
             }else {
                 System.out.println("Erro: a quantidade de pessoas na Sala não pode ser negativa!");
@@ -110,7 +110,7 @@ public class Room {
     public void setQuantity2(Integer quantity2){
         if (quantity2 != null){
             //Verifica se o valor é menor que 1.
-            if (quantity2 < 0){
+            if (quantity2 > 0){
                 this.quantity2 = quantity2;
             }else {
                 System.out.println("Erro: a quantidade de pessoas na Sala não pode ser negativa!");
@@ -123,4 +123,5 @@ public class Room {
     public Integer getQuantity2(){
         return this.quantity2;
     }
+
 }
