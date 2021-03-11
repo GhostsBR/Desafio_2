@@ -27,6 +27,8 @@ public class User {
 
     /**
      * Construtor com todos os parâmetros da classe User
+     * @param id Integer
+     * @param name String
      */
     public User(Integer id, String name){
         this.idUser = id;
@@ -39,9 +41,29 @@ public class User {
      * Obs: estas entradas novas vão receber somente o nome do novo Usuário
      * e futuramente serão populadas com suas Salas e Espaços de Café
      * Obs2: seu atributo idUser será atribuído diretamente no Banco de Dados
+     * @param name String
      */
     public User(String name){
         this.nameUser = name;
+    }
+
+    /**
+     * Construtor com todos os parâmetros da classe User
+     * usado para criar a lista de retorno dos Usuários
+     * @param id
+     * @param name
+     * @param room1
+     * @param room2
+     * @param coffee1
+     * @param coffee2
+     */
+    public User(int id, String name, String room1, String room2, String coffee1, String coffee2) {
+        this.idUser = id;
+        this.nameUser = name;
+        this.room1User = room1;
+        this.room2User = room2;
+        this.coffee1User = coffee1;
+        this.coffee2User = coffee2;
     }
 
     /**
@@ -91,6 +113,7 @@ public class User {
 
     /**
      * Método Getter do atributo nomeUser
+     * @return String
      */
     public String getNameUser(){
         return this.nameUser;
@@ -113,7 +136,7 @@ public class User {
     }
 
     /**
-     * Método Setter do atributo room1User
+     * Método Getter do atributo room1User
      * @return String
      */
     public String getRoom1User(){
@@ -137,7 +160,7 @@ public class User {
     }
 
     /**
-     * Método Setter do atributo room2User
+     * Método Getter do atributo room2User
      * @return String
      */
     public String getRoom2User(){
@@ -161,7 +184,7 @@ public class User {
     }
 
     /**
-     * Método Setter do atributo coffee1User
+     * Método Getter do atributo coffee1User
      * @return String
      */
     public String getCoffee1User(){
@@ -185,7 +208,7 @@ public class User {
     }
 
     /**
-     * Método Setter do atributo coffee2User
+     * Método Getter do atributo coffee2User
      * @return String
      */
     public String getCoffee2User(){
