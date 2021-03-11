@@ -67,7 +67,7 @@ public class RoomDAO{
 
             //Loop para criação da lista.
             while (rs.next()){
-                Room room = new Room(rs.getInt("id"), rs.getString("name"), rs.getInt("quantity"));
+                Room room = new Room(rs.getInt("id"), rs.getString("name"), rs.getInt("capacity"));
                 rooms.add(room);
             }
         }catch (Exception error){
