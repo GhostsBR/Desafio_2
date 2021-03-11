@@ -22,7 +22,7 @@ public class RoomController {
      */
     public static void insertRoom(List<Room> rooms) {
         for(int i=0; i < rooms.size(); i++) {
-            RoomDAO.createRoom(rooms.get(i));
+            new RoomDAO().createRoom(rooms.get(i));
         }
     }
 }

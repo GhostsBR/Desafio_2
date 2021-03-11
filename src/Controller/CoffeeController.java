@@ -21,8 +21,7 @@ public class CoffeeController {
      */
     public static void insertCoffee(List<Coffee> coffees) {
         for (int i=0; i < coffees.size(); i++) {
-            CoffeeDAO cd = new CoffeeDAO();
-            cd.createCoffee(coffees.get(i));
+            new CoffeeDAO().createCoffee(coffees.get(i));
         }
     }
 }
