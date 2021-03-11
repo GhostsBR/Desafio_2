@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Coffee;
 import Model.Room;
 
 import java.util.ArrayList;
@@ -23,13 +24,13 @@ public class UserController {
      * @param coffees
      * @return
      */
-    public static Object userRaffle(ArrayList<String> users, List<Room> rooms, ArrayList<String> coffees) {
+    public static Object userRaffle(ArrayList<String> users, List<Room> rooms, List<Coffee> coffees) {
         Collections.shuffle(users); // Embaralhar ordem da lista de usuários
 
         int room = 0;
         int room2 = 0;
-        int coffe = 0;
-        int coffe2 = 0;
+        int coffee = 0;
+        int coffee2 = 0;
         int smallestRoom = 0;
         int biggestRoom = 0;
         int totalRoom = 0;
@@ -99,12 +100,12 @@ public class UserController {
             Exemplo: Se existirem duas salas serão adicionados usuários na ordem: 1, 2, 1, 2...
         */
         for(int i=0; i < users.size(); i++) {
-            if(coffe >= coffees.size()) {
-                coffe = 0;
+            if(coffee >= coffees.size()) {
+                coffee = 0;
             }
 
-            SelectedPeople[i][3] = String.valueOf(coffe);
-            coffe++;
+            SelectedPeople[i][3] = String.valueOf(coffee);
+            coffee++;
         }
 
         /*
@@ -143,17 +144,18 @@ public class UserController {
             Exemplo: Etapa anterior: 1 Etapa atual: 2.
         */
         for(int i=0; i < users.size(); i++) {
-            coffe2 = Integer.parseInt(SelectedPeople[i][3]) + 1;
-            if(coffe2 >= coffees.size()) {
-                coffe2 = 0;
+            coffee2 = Integer.parseInt(SelectedPeople[i][3]) + 1;
+            if(coffee2 >= coffees.size()) {
+                coffee2 = 0;
             }
 
-            SelectedPeople[i][4] = String.valueOf(coffe2);
+            SelectedPeople[i][4] = String.valueOf(coffee2);
             System.out.println("Nome: " + SelectedPeople[i][0] + " \t|\t Primeira Sala: " + SelectedPeople[i][1] + "\t|\tPrimeiro Espaço: " + SelectedPeople[i][3] + "\t|\tSegunda Sala: " + SelectedPeople[i][2] + "\t|\tSegundo Café: " + SelectedPeople[i][4]);
         }
 
-        System.out.println("Usuários na sala 1\n P1: " + rooms.get(0).getQuantity1() + " P2: " + rooms.get(0).getQuantity2());
-        System.out.println("Usuários na sala 2:\n  P1: " +rooms.get(1).getQuantity1()+ " P2: " + rooms.get(1).getQuantity2());
+        for(int i=0; i < rooms.size(); i++) {
+            System.out.println("Usuários na sala " + i + "\n P1: " + rooms.get(i).getQuantity1() + " P2: " + rooms.get(i).getQuantity2());
+        }
 
         //Retorna a lista de usuários em forma de matriz na seguinde ordem: NOME, PRIMEIRA SALA, PRIMEIRO ESPAÇO, SEGUNDA SALA, SEGUNDO ESPAÇO.
         return SelectedPeople;
