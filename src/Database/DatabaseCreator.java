@@ -22,6 +22,7 @@ public class DatabaseCreator {
      * @author João, Gustavo, Thiago
      */
     public void createDatabase(){
+        // Cria um objeto PreparedStatement usado no método, permitindo fecha-lo ao final do processo
         PreparedStatement pstmt = null;
         try{
             // Define o comando SQL para criar o banco de dados

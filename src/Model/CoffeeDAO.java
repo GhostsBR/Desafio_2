@@ -10,13 +10,15 @@ import java.util.List;
 
 /**
  * Classe responsável pela persisntência de dados da Classe Coffee
- * @author João, Thiago
+ *
+ * @author João
+ * @author Thiago
  */
 public class CoffeeDAO {
     //Cria uma nova entrada na tabela de Espaços de Café.
     public void createCoffee(String name){
         try {
-            String sql = "INSERT INTO coffee (name) VALUES (?)";
+            String sql = "INSERT INTO coffees (name) VALUES (?)";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.execute();
@@ -46,7 +48,7 @@ public class CoffeeDAO {
     public void createCoffee(Coffee coffee){
         try {
             // Define o comando SQL
-            String sql = "INSERT INTO coffee (name) VALUES (?)";
+            String sql = "INSERT INTO coffees (name) VALUES (?)";
             // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             // Define os paramêtros do comando SQL
@@ -72,9 +74,13 @@ public class CoffeeDAO {
     //Deleta uma entrada na tabela de Espaços de Café.
     public void deleteCoffee (int id){
         try {
-            String sql = "DELETE FROM coffee WHERE id = ?";
+            // Define o comando SQL
+            String sql = "DELETE FROM coffees WHERE id = ?";
+            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            // Define os paramêtros do comando SQL
             pstmt.setInt(1,id);
+            // Executa o comando SQL para deletar no banco
             pstmt.execute();
         }catch (Exception error){
             System.out.println("Falha ao deletar o Espaço de Café. Erro: " + error.getMessage());
@@ -84,10 +90,15 @@ public class CoffeeDAO {
     //Atualiza uma entrada na tabela de Espaços de Café.
     public void updateCoffee (int id, String name){
         try {
-            String sql = "UPDATE coffee SET name=? WHERE id = ?";
+            // Define o comando SQL
+            String sql = "UPDATE coffees SET name=? WHERE id = ?";
+            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            // Define os paramêtros do comando SQL
             pstmt.setString(1,name);
+            // Define os paramêtros do comando SQL
             pstmt.setInt(2,id);
+            // Executa o comando SQL para alterar no banco
             pstmt.execute();
         }catch (Exception error){
             System.out.println("Falha ao atualizar o Espaço de Café. Erro: " + error.getMessage());
@@ -102,10 +113,15 @@ public class CoffeeDAO {
      */
     public void updateCoffee (Coffee coffee){
         try {
-            String sql = "UPDATE coffee SET name=? WHERE id = ?";
+            // Define o comando SQL
+            String sql = "UPDATE coffees SET name=? WHERE id = ?";
+            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            // Define os paramêtros do comando SQL
             pstmt.setString(1,coffee.getNameCoffee());
+            // Define os paramêtros do comando SQL
             pstmt.setInt(2,coffee.getIdCoffee());
+            // Executa o comando SQL para alterar no banco
             pstmt.execute();
         }catch (Exception error){
             System.out.println("Falha ao atualizar o Espaço de Café. Erro: " + error.getMessage());
@@ -115,7 +131,7 @@ public class CoffeeDAO {
     //Retorna todas as entradas da tabela de Espaços de Café.
     public static String[] getCoffee() {
         try {
-            String sql = "SELECT * FROM coffee";
+            String sql = "SELECT * FROM coffees";
             Statement stmt = ConnectionFactory.connect().createStatement();
 
             ResultSet rs = stmt.executeQuery(sql);
@@ -144,7 +160,7 @@ public class CoffeeDAO {
         List<Coffee> coffes = new ArrayList<Coffee>();
         try {
             // Define o comando SQL
-            String sql = "SELECT * FROM coffee";
+            String sql = "SELECT * FROM coffees";
             // Pega uma conexão do banco e gera um Statement
             Statement stmt = ConnectionFactory.connect().createStatement();
             // Executa o comando SQL e recebe os dados via ResultSet
@@ -161,5 +177,38 @@ public class CoffeeDAO {
         }
         // Retorna a lista, seja ela vazia ou não
         return coffes;
+    }
+
+    /**
+     * Método para retornar um Espaço de Café salvo no banco em um objeto Coffee através do id
+     *
+     * Obs: retorna um objeto vazio caso nenhum Espaço
+     * de Café seja encontrado no banco!
+     * @author Thiago
+     * @return Coffee
+     */
+    public static Coffee getCoffee(Integer id) {
+        // Cria um objeto Coffee vazio
+        Coffee coffee = new Coffee();
+        try {
+            // Define o comando SQL
+            String sql = "SELECT * FROM coffees WHERE id = ?";
+            // Pega uma conexão do banco e gera um PreparedStatement
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            // Define os paramêtros do comando SQL
+            pstmt.setInt(1,id);
+            // Executa o comando SQL e recebe os dados via ResultSet
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+            // Verifica se há dados
+            if(rs.next()){
+                // Pega os dados do ResultSet e cria uma objeto Coffee através do construtor com paramêtros
+                coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
+            }
+        } catch (Exception e) {
+            System.out.println("Falha ao selecionar os Espaços de Café:" + e.getMessage());
+        }
+        // Retorna o objeto Coffee, seja ele vazio ou não
+        return coffee;
     }
 }
