@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RoomDAO{
     //Cria uma nova entrada na tabela de Salas.
-    public static void createRoom(Room room){
+    public void createRoom(Room room){
         try {
             //Define o comando de SQL.
             String sql = "INSERT INTO rooms (name, capacity) VALUES (?,?)";
@@ -28,7 +28,7 @@ public class RoomDAO{
     }
 
     //Deleta uma entrada na tabela de Sala.
-    public static void deleteRoom (int id){
+    public void deleteRoom (int id){
         try {
             String sql = "DELETE FROM rooms WHERE id = ?";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
@@ -40,7 +40,7 @@ public class RoomDAO{
     }
 
     //Atualiza uma Sala.
-    public static void updateRoom(Room room){
+    public void updateRoom(Room room){
         try {
             String sql = "UPDATE rooms SET name=?,capacity=? WHERE id=?";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
@@ -54,7 +54,7 @@ public class RoomDAO{
     }
 
     //Retorna todos as Salas
-    public static List<Room> getRooms(){
+    public List<Room> getRooms(){
         //Cria uma lista de objetos Room vazia
         List<Room> rooms = new ArrayList<>();
         try {

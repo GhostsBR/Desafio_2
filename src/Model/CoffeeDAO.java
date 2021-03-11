@@ -129,7 +129,7 @@ public class CoffeeDAO {
     }
 
     //Retorna todas as entradas da tabela de Espaços de Café.
-    public static String[] getCoffee() {
+    public String[] getCoffee() {
         try {
             String sql = "SELECT * FROM coffees";
             Statement stmt = ConnectionFactory.connect().createStatement();
@@ -155,7 +155,7 @@ public class CoffeeDAO {
      * @author Thiago
      * @return List<Coffee>
      */
-    public static List<Coffee> getCoffees() {
+    public List<Coffee> getCoffees() {
         // Cria uma lista de objetos Coffee vazia
         List<Coffee> coffes = new ArrayList<Coffee>();
         try {
@@ -187,7 +187,7 @@ public class CoffeeDAO {
      * @author Thiago
      * @return Coffee
      */
-    public static Coffee getCoffee(Integer id) {
+    public Coffee getCoffee(Integer id) {
         // Cria um objeto Coffee vazio
         Coffee coffee = new Coffee();
         try {
