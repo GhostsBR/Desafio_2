@@ -1,27 +1,29 @@
 package Test.Model;
 
+import CustomExceptions.CustomException;
 import Database.DatabaseCreator;
 import Model.Coffee;
 import Model.CoffeeDAO;
 import Test.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe para testes do CoffeeDAO
+ * Classe para testes do CoffeeDAO.
+ *
+ * Realiza testes unitários nos métodos de persistência da classe CoffeeDAO.
+ *
  * @author Thiago
  */
 public class TestCoffeeDAO extends Test {
 
     /**
-     * Objeto CoffeeDAO utilizado para os testes
+     * Objeto CoffeeDAO utilizado para os testes.
      */
     private final CoffeeDAO dao;
 
     /**
-     * Construtor da Classe TestCoffeDAO, definindo
-     * o objeto CoffeeDAO
+     * Construtor da Classe TestCoffeDAO, definindo o objeto CoffeeDAO.
      */
     public TestCoffeeDAO() {
         super();
@@ -29,61 +31,68 @@ public class TestCoffeeDAO extends Test {
     }
 
     /**
-     * Método para testar a classe CoffeeDAO
+     * Método para testar a classe CoffeeDAO.
+     *
+     * Utiliza o DatabseCreator para gerar o banco. Depois, cria-se um objeto Coffee
+     * e define um nome para realizar o teste de inserção no banco de dados. Com isso,
+     * busca-se todos os Espaços de café salvos no banco. Caso nenhum objeto Coffee seja
+     * encontrado, ocorreu erro ou no cadastro ou na busca por todos, sendo finalizado o
+     * teste. Caso seja encontrado espaços de café salvos no banco, busca-se o último
+     * registrado e verifica se o nome salvo é igual ao nome enviado para salvar. Realizado
+     * esse teste, atualiza-se os dados de teste e envia as atualizações para o banco. Ao
+     * buscar o objeto pelo ID, verifica-se o nome caso seja nulo, o que indica erro no método
+     * e finaliza o teste. Se não for nulo, verifica-se se o nome salvo é correspondente a
+     * atualização enviada ao banco. Por fim, realiza a exclusão do espaço de café e a busca pelo
+     * seu ID. Caso o objeto retornar com um ID diferente de nulo, significa que a exclusão falhou.
+     * Ao final, verifica-se a lista de erros e define se a classe passou nos testes.
+     *
+     * @exception CustomException se ocorrer erros no teste
+     *
+     * @author Thiago
      */
     @Override
-    public void test(){
+    public void test() throws CustomException{
+        try{
+            DatabaseCreator dataBase = new DatabaseCreator();
+            dataBase.createDatabase();
 
-        //Cria um objeto DatabaseCreator e chama o método para criar o banco de dados
-        DatabaseCreator dataBase = new DatabaseCreator();
-        dataBase.createDatabase();
+            Coffee coffeeTeste = new Coffee();
+            coffeeTeste.setNameCoffee("Espaço de Café Teste");
+            dao.createCoffee(coffeeTeste);
 
-        // Cria um novo objeto Coffee e define um valor para nameCoffee
-        Coffee coffeeTeste = new Coffee();
-        coffeeTeste.setNameCoffee("Espaço de Café Teste");
+            List<Coffee> coffees = dao.getCoffees();
+            if (coffees.size() > 0){
+                Coffee coffeeNovo = coffees.get(coffees.size() - 1);
+                if (!coffeeNovo.getNameCoffee().equals(coffeeTeste.getNameCoffee())){
+                    erros.add("Erro: não foi possível cadastrar um novo espaço de café!");
+                }
 
-        // Cadastra o objeto Coffee no banco de dados
-        dao.createCoffee(coffeeTeste);
+                coffeeTeste.setIdCoffee(coffeeNovo.getIdCoffee());
+                coffeeTeste.setNameCoffee("Espaço de Café Teste Editado");
+                dao.updateCoffee(coffeeTeste);
 
-        // Busca todos os espaços de café cadastrado no banco
-        List<Coffee> coffees = dao.getCoffees();
+                coffeeNovo = dao.getCoffee(coffeeTeste.getIdCoffee());
+                if (coffeeNovo.getNameCoffee() != null){
 
-        // Verifica se foi cadastrado o novo espaço de café
-        if (coffees.size() > 0){
+                    if (!coffeeNovo.getNameCoffee().equals(coffeeTeste.getNameCoffee())){
+                        erros.add("Erro: não foi possível alterar o espaço de café!");
+                    }
 
-            // Pega o último objeto coffee cadastrado no banco
-            Coffee coffeeNovo = coffees.get(coffees.size() - 1);
-
-            // Verifica se é o mesmo objeto que foi enviado para o cadastro
-            if (!coffeeNovo.getNameCoffee().equals(coffeeTeste.getNameCoffee())){
-                erros.add("Erro: não foi possível cadastrar um novo espaço de café!");
+                    dao.deleteCoffee(coffeeNovo.getIdCoffee());
+                    coffeeNovo = dao.getCoffee(coffeeNovo.getIdCoffee());
+                    if (coffeeNovo.getIdCoffee() != null){
+                        erros.add("Erro: não foi possível excluir o espaço de café!");
+                    }
+                } else{
+                    erros.add("Erro: não foi possível buscar o espaço de café pelo ID!");
+                }
+            } else{
+                erros.add("Erro: não foi possível cadastrar um novo espaço de café" +
+                        " ou não foi possível realizar a busca dos espaços de café!");
             }
-
-            // Altera o nome do espaço de café e salva no banco de dados
-            coffeeTeste.setIdCoffee(coffeeNovo.getIdCoffee());
-            coffeeTeste.setNameCoffee("Espaço de Café Teste Editado");
-            dao.updateCoffee(coffeeTeste);
-
-            // Busca o objeto Coffee alterado no banco
-            coffeeNovo = dao.getCoffee(coffeeTeste.getIdCoffee());
-
-            // Verifica se é o mesmo nome que foi enviado para a alteração
-            if (!coffeeNovo.getNameCoffee().equals(coffeeTeste.getNameCoffee())){
-                erros.add("Erro: não foi possível alterar o espaço de café!");
-            }
-            // Deleta o espaço de café do banco
-            dao.deleteCoffee(coffeeNovo.getIdCoffee());
-
-            // Busca o objeto pelo id deletado
-            coffeeNovo = dao.getCoffee(coffeeNovo.getIdCoffee());
-
-            // Verifica se o objeto foi apagado do banco
-            if (coffeeNovo.getIdCoffee() != null){
-                erros.add("Erro: não foi possível excluir o espaço de café!");
-            }
-        } else{
-            erros.add("Erro: não foi possível cadastrar um novo espaço de café!");
+            super.verficarErros("Classe CoffeeDAO passou nos testes!","Classe CoffeeDAO não passou nos testes!");
+        } catch(Exception error){
+            throw new CustomException("Erro ao realizar o teste da classe CoffeeDAO: " + error.getMessage());
         }
-        super.verficaErros("Classe CoffeeDAO passou nos testes!","Classe CoffeeDAO não passou nos testes!");
     }
 }

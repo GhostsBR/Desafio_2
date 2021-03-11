@@ -1,5 +1,6 @@
 package Model;
 
+import CustomExceptions.CustomException;
 import Database.ConnectionFactory;
 
 import java.sql.PreparedStatement;
@@ -9,54 +10,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável pela persisntência de dados da Classe Coffee
+ * Classe responsável pela persisntência de dados da Classe Coffee.
  *
  * @author João
  * @author Thiago
  */
 public class CoffeeDAO {
+
     //Cria uma nova entrada na tabela de Espaços de Café.
-    public void createCoffee(String name){
+    public void createCoffee(String name) throws CustomException{
         try {
             String sql = "INSERT INTO coffees (name) VALUES (?)";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,name);
             pstmt.execute();
         }catch (Exception error){
-            System.out.println("Falha ao cadastrar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
         }
     }
 
     /**
-     * Método para registrar no banco um novo Espaço de Café,
-     * utilizando um objeto Coffee
+     * Método para registrar no banco um novo Espaço de Café.
      *
-     * Obs: Como acabei definindo que o idCoffee não poderá ser definido como nulo,
-     * é necessário criar um objeto Coffee utilizando o construtor vazio e definir
-     * seus atributos via métodos setters!
+     * Cadastra um novo espaço de café no banco utilizando um objeto Coffee.
      *
-     * Coffee novo = new Coffee();
-     * novo.setNameCoffee("Espaço 1");
-     * createCoffee(novo);
+     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
      *
-     * Isso ocorre pelo fato do ID ser criado automáticamente no banco,
-     * e não ser definido pelo sistema.
-     *
+     * @author João
      * @author Thiago
+     *
      * @param coffee Coffee
      */
-    public void createCoffee(Coffee coffee){
+    public void createCoffee(Coffee coffee) throws CustomException{
         try {
-            // Define o comando SQL
             String sql = "INSERT INTO coffees (name) VALUES (?)";
-            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Define os paramêtros do comando SQL
             pstmt.setString(1,coffee.getNameCoffee());
-            // Executa o comando SQL para salvar no banco
             pstmt.execute();
         }catch (Exception error){
-            System.out.println("Falha ao cadastrar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
         }
     }
 
@@ -69,26 +61,27 @@ public class CoffeeDAO {
      * serão enviados, não precisando adicionar novos parâmetros
      * no método caso a tabela venha a ser alterada, contendo mais colunas.
      * Somente a classe Coffee precisará ser atualizada!
+     *
+     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     *
+     * @author João
+     * @author Thiago
+     *
      * @param id Integer
      */
-    //Deleta uma entrada na tabela de Espaços de Café.
-    public void deleteCoffee (int id){
+    public void deleteCoffee (int id) throws CustomException{
         try {
-            // Define o comando SQL
             String sql = "DELETE FROM coffees WHERE id = ?";
-            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Define os paramêtros do comando SQL
             pstmt.setInt(1,id);
-            // Executa o comando SQL para deletar no banco
             pstmt.execute();
         }catch (Exception error){
-            System.out.println("Falha ao deletar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
         }
     }
 
     //Atualiza uma entrada na tabela de Espaços de Café.
-    public void updateCoffee (int id, String name){
+    public void updateCoffee (int id, String name) throws CustomException{
         try {
             // Define o comando SQL
             String sql = "UPDATE coffees SET name=? WHERE id = ?";
@@ -101,114 +94,95 @@ public class CoffeeDAO {
             // Executa o comando SQL para alterar no banco
             pstmt.execute();
         }catch (Exception error){
-            System.out.println("Falha ao atualizar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao atualizar o Espaço de Café. Erro: " + error.getMessage());
         }
     }
 
     /**
-     * Método para alterar o Espaço de Café
-     * utilizando um objeto Coffee
+     * Método para alterar o Espaço de Café.
+     *
+     * Realiza alterações dos dados de Espaço de café no banco,
+     * utilizando um objeto Coffee.
+     *
+     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     *
+     * @author João
      * @author Thiago
+     *
      * @param coffee Coffee
      */
-    public void updateCoffee (Coffee coffee){
+    public void updateCoffee (Coffee coffee) throws CustomException{
         try {
-            // Define o comando SQL
             String sql = "UPDATE coffees SET name=? WHERE id = ?";
-            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Define os paramêtros do comando SQL
             pstmt.setString(1,coffee.getNameCoffee());
-            // Define os paramêtros do comando SQL
             pstmt.setInt(2,coffee.getIdCoffee());
-            // Executa o comando SQL para alterar no banco
             pstmt.execute();
         }catch (Exception error){
-            System.out.println("Falha ao atualizar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao atualizar o Espaço de Café. Erro: " + error.getMessage());
         }
-    }
-
-    //Retorna todas as entradas da tabela de Espaços de Café.
-    public String[] getCoffee() {
-        try {
-            String sql = "SELECT * FROM coffees";
-            Statement stmt = ConnectionFactory.connect().createStatement();
-
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while(rs.next()){
-                System.out.println("\nID do Espaço de Café:\t" + rs.getString("id"));
-                System.out.println("Nome do Espaço de Café:\t" + rs.getString("name"));
-            }
-            return null;
-        } catch (Exception e) {
-            System.out.println("Falha ao selecionas os Espaços de Café:" + e.getMessage());
-        }
-        return null;
     }
 
     /**
-     * Método para retornar todos os Espaços de Café
-     * salvas no banco em uma lista de objetos Coffee
+     * Método para retornar todos os Espaços de Café.
+     *
+     * Realiza a busca e retorno de todos os Espaços de café salvos no banco.
+     *
      * Obs: retorna uma lista vazia caso nenhum Espaço
      * de Café seja encontrado no banco!
+     *
+     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     *
+     * @author João
      * @author Thiago
-     * @return List<Coffee>
+     *
+     * @return List<Coffee> Lista de Espaços de café
      */
-    public List<Coffee> getCoffees() {
-        // Cria uma lista de objetos Coffee vazia
+    public List<Coffee> getCoffees() throws CustomException{
         List<Coffee> coffes = new ArrayList<Coffee>();
         try {
-            // Define o comando SQL
             String sql = "SELECT * FROM coffees";
-            // Pega uma conexão do banco e gera um Statement
             Statement stmt = ConnectionFactory.connect().createStatement();
-            // Executa o comando SQL e recebe os dados via ResultSet
             ResultSet rs = stmt.executeQuery(sql);
-            // Verifica se há dados
             while(rs.next()){
-                // Pega os dados do ResultSet e cria uma objeto Coffee através do construtor com paramêtros
                 Coffee coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
-                // Adiciona o objeto Coffee na lista
                 coffes.add(coffee);
             }
-        } catch (Exception e) {
-            System.out.println("Falha ao selecionas os Espaços de Café:" + e.getMessage());
+        } catch (Exception error) {
+            throw new CustomException("Erro ao selecionar o Espaço de Café: " + error.getMessage());
         }
-        // Retorna a lista, seja ela vazia ou não
         return coffes;
     }
 
     /**
-     * Método para retornar um Espaço de Café salvo no banco em um objeto Coffee através do id
+     * Método para retornar um Espaço de Café.
+     *
+     * Realiza a busca e retorno de um Espaço de café salvo no banco através do id.
      *
      * Obs: retorna um objeto vazio caso nenhum Espaço
      * de Café seja encontrado no banco!
+     *
+     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     *
+     * @author João
      * @author Thiago
+     *
      * @return Coffee
      */
-    public Coffee getCoffee(Integer id) {
-        // Cria um objeto Coffee vazio
+    public Coffee getCoffee(Integer id) throws CustomException{
         Coffee coffee = new Coffee();
         try {
-            // Define o comando SQL
             String sql = "SELECT * FROM coffees WHERE id = ?";
-            // Pega uma conexão do banco e gera um PreparedStatement
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Define os paramêtros do comando SQL
             pstmt.setInt(1,id);
-            // Executa o comando SQL e recebe os dados via ResultSet
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
-            // Verifica se há dados
             if(rs.next()){
-                // Pega os dados do ResultSet e cria uma objeto Coffee através do construtor com paramêtros
                 coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
             }
-        } catch (Exception e) {
-            System.out.println("Falha ao selecionar os Espaços de Café:" + e.getMessage());
+        } catch (Exception error) {
+            throw new CustomException("Erro ao buscar o Espaço de Café: " + error.getMessage());
         }
-        // Retorna o objeto Coffee, seja ele vazio ou não
         return coffee;
     }
 }

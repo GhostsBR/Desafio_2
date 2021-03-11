@@ -1,101 +1,88 @@
 package Database;
 
+import CustomExceptions.CustomException;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * Classe responsável por criar o banco de dados caso ele não exista
- * @author João, Gustavo, Thiago
+ * Classe responsável por criar o banco de dados.
+ *
+ * Utilizado para automatizar a criação do banco de dados caso ele não exista.
+ *
+ * @author João
+ * @author Gustavo
+ * @author Thiago
  */
 public class DatabaseCreator {
 
     /**
-     * Método para gerar o banco de dados
+     * Método para gerar o banco de dados.
      *
-     * Obs: para criar os relacionamentos, é necessário criar as tabelas em ordem,
-     * pois tabelas que estarão sendo relacionandas precisam ser criadas antes.
+     * Cria um objeto PreparedStatement usado no método, permitindo fecha-lo ao final do processo.
+     * Solicita-se uma conexão com o MySQL pelo ConnectionFactory para gerar o banco de dados.
+     * Após gerar o banco, solicita-se uma conexão com o banco de dados pelo ConnectionFactory
+     * para gerar a tabela "rooms", que representa a classe Model.Room. Em seguida, solicita-se
+     * uma conexão com o banco de dados pelo ConnectionFactory para gerar a tabela "coffees",
+     * que representa a classe Model.Coffee. Com essas duas tabelas geradas no banco, pode-se
+     * gerar a tabela "users" e criar os relacionamentos entre ela e as tabelas "rooms" e "coffees".
+     * Ao final, fecha as conexões com o MySQL e com o banco de dados.
      *
-     * Se a tabela Users for criada antes da tabela Rooms, não será possível
-     * fazer o relacionamento entre elas, pois a tabela Users não conhece
-     * a tabela Rooms!
+     * @exception CustomException se ocorrer erros de acesso ao banco de dados
      *
-     * @author João, Gustavo, Thiago
+     * @author João
+     * @author Gustavo
+     * @author Thiago
      */
-    public void createDatabase(){
-      
-        // Cria um objeto PreparedStatement usado no método, permitindo fecha-lo ao final do processo
-
+    public void createDatabase() throws CustomException{
         PreparedStatement pstmt = null;
         try{
-            // Define o comando SQL para criar o banco de dados
-            String sql = "CREATE DATABASE IF NOT EXISTS event DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
-            // Pega uma conexão ao MySQL e prepara o comando SQL
+            String sql = "CREATE DATABASE IF NOT EXISTS event " +
+                    "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
             pstmt = ConnectionFactory.preConnect().prepareStatement(sql);
-            // Executa o comando SQL
             pstmt.execute();
 
-            // Define o comando SQL para criar a tabela das Salas
             sql = "CREATE TABLE IF NOT EXISTS rooms (" +
-
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "name VARCHAR(50) NOT NULL, " +
                     "capacity INT NOT NULL" +
-
                     ")";
-            // Pega uma conexão ao banco de dados e prepara o comando SQL
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Executa o comando SQL
             pstmt.execute();
 
-            // Define o comando SQL para criar a tabela dos Espaços de Café
             sql = "CREATE TABLE IF NOT EXISTS coffees (" +
-
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                    "name VARCHAR(50) NOT NULL)";
-
-            // Pega uma conexão ao banco de dados e prepara o comando SQL
+                    "name VARCHAR(50) NOT NULL" +
+                    ")";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Executa o comando SQL
             pstmt.execute();
 
-            // Define o comando SQL para criar a tabela das Pessoas
             sql = "CREATE TABLE IF NOT EXISTS users (" +
-              
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "name VARCHAR(50) NOT NULL, " +
                     "id_room1 INT NOT NULL, " +
                     "id_room2 INT NOT NULL, " +
                     "id_coffee1 INT NOT NULL, " +
                     "id_coffee2 INT NOT NULL, " +
-                    // Define o relacionamento entre Users e Rooms para a etapa 1
                     "CONSTRAINT fk_Room1 FOREIGN KEY (id_room1) REFERENCES rooms (id), " +
-                    // Define o relacionamento entre Users e Rooms para a etapa 2
                     "CONSTRAINT fk_Room2 FOREIGN KEY (id_room2) REFERENCES rooms (id), " +
-                    // Define o relacionamento entre Users e Coffees para a etapa 1
                     "CONSTRAINT fk_Coffee1 FOREIGN KEY (id_coffee1) REFERENCES coffees (id), " +
-                    // Define o relacionamento entre Users e Coffees para a etapa 1
                     "CONSTRAINT fk_Coffee2 FOREIGN KEY (id_coffee2) REFERENCES coffees (id)" +
-
                     ")";
-            // Pega uma conexão ao banco de dados e prepara o comando SQL
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Executa o comando SQL
             pstmt.execute();
 
         }catch (Exception error){
-            System.out.println(error.getMessage());
+            throw new CustomException("Erro ao criar o banco de dados: " + error.getMessage());
         } finally{
             try{
-                // Finaliza o PrepareStatement
-                pstmt.close();
+                if (pstmt != null){
+                    pstmt.close();
+                }
             } catch (Exception error){
-                System.out.println(error.getMessage());
+                throw new CustomException("Erro ao fechar o PrepareStatement: " + error.getMessage());
             }
-
-            // Fecha a conexão com o MySQL
             ConnectionFactory.closeConnectionMySQL();
-
-            // Fecha a conexão com o banco de dados
             ConnectionFactory.closeConnectionDatabase();
         }
     }

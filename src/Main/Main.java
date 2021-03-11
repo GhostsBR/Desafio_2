@@ -1,9 +1,5 @@
 package Main;
 
-import Database.DatabaseCreator;
-import Test.Model.TestCoffe;
-import Test.Model.TestCoffeeDAO;
-
 public class Main {
     public static void main(String[] args) {
 
