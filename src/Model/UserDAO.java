@@ -23,9 +23,13 @@ public class UserDAO {
      */
     public void createUser(User user){
         try{
-            String sql = "INSERT INTO users VALUES (?)";
+            String sql = "INSERT INTO users VALUES (?,?,?,?,?)";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,user.getNameUser());
+            pstmt.setInt(2,user.getRoom1User());
+            pstmt.setInt(3,user.getRoom2User());
+            pstmt.setInt(4,user.getCoffee1User());
+            pstmt.setInt(5,user.getCoffee2User());
             pstmt.execute();
         }catch (Exception error){
             System.out.println("Falha ao cadastrar o Usuário. Erro: "+error.getMessage());
@@ -78,10 +82,10 @@ public class UserDAO {
         try {
             String sql = "UPDATE users SET room1 = ?, room2 = ?, coffee1 = ?, coffee2 = ? WHERE id = ?";
             PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setString(1,user.getRoom1User());
-            pstmt.setString(2,user.getRoom2User());
-            pstmt.setString(3,user.getCoffee1User());
-            pstmt.setString(4,user.getCoffee2User());
+            pstmt.setInt(1,user.getRoom1User());
+            pstmt.setInt(2,user.getRoom2User());
+            pstmt.setInt(3,user.getCoffee1User());
+            pstmt.setInt(4,user.getCoffee2User());
             pstmt.execute();
         }catch (Exception error){
             System.out.println("Falha ao atualizar as Salas e Espaços de Café do Usuário. Erro: "+error.getMessage());
@@ -91,9 +95,7 @@ public class UserDAO {
     /**
      * Método para retornar todos os Usuários cadastrados no
      * banco de dados em uma lista de objetos User
-     * Obs: Retorna uma lista vazia caso nenhum Usuário esteja cadastrado.
-     * Obs2: Retornará os valores de null para as entradas de Salas e
-     * Espaços de Café que não sejam cadastrados
+     * Obs: Retorna uma lista vazia caso nenhum Usuário esteja cadastrado
      * @return List<User>
      */
     public List<User> getUsers(){
@@ -104,8 +106,8 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
                 User user = new User(rs.getInt("id"), rs.getString("name"),
-                        rs.getString("room1"),rs.getString("room2"),
-                        rs.getString("coffee1"), rs.getString("coffee2"));
+                        rs.getInt("room1"),rs.getInt("room2"),
+                        rs.getInt("coffee1"), rs.getInt("coffee2"));
                 users.add(user);
             }
         }catch (Exception error){
