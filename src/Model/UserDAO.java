@@ -39,9 +39,8 @@ public class UserDAO {
      */
     public void createUser(User user) throws CustomException{
         try{
-            System.out.println(user.getRoom1User().getNameRoom());
-            System.out.println(user.getRoom2User().getNameRoom());
-            String sql = "INSERT INTO users VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO users (name, id_room1, id_room2, id_coffee1, id_coffee2) " +
+                    "VALUES (?,?,?,?,?)";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,user.getNameUser());
             pstmt.setInt(2,user.getRoom1User().getIdRoom());
@@ -128,7 +127,7 @@ public class UserDAO {
      */
     public void updateRoomCoffeeUser(User user) throws CustomException{
         try {
-            String sql = "UPDATE users SET name=?, id_room1=?, id_room2=?, id_coffee1=?, id_coffee1=? WHERE id = ?";
+            String sql = "UPDATE users SET name=?, id_room1=?, id_room2=?, id_coffee1=?, id_coffee1=? WHERE id =?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,user.getNameUser());
             pstmt.setInt(2,user.getRoom1User().getIdRoom());
@@ -136,7 +135,6 @@ public class UserDAO {
             pstmt.setInt(4,user.getCoffee1User().getIdCoffee());
             pstmt.setInt(5,user.getCoffee2User().getIdCoffee());
             pstmt.setInt(6,user.getIdUser());
-
             pstmt.execute();
         }catch (Exception error){
             throw new CustomException("Erro ao alterar o usuário: " + error.getMessage());
