@@ -6,6 +6,7 @@ import CustomExceptions.CustomException;
  * Classe representativa para um Espaço de Café.
  *
  * @author Thiago
+ * @author João
  */
 public class Coffee {
 
@@ -68,7 +69,7 @@ public class Coffee {
     /**
      * Método Setter do atributo nameCoffe.
      *
-     * Define o valor do nameCoffee, rrealizando validação para textos vazios,
+     * Define o valor do nameCoffee, realizando validação para textos vazios,
      * só espaços, com menos de 50 caracteres e valor nulo.
      *
      * @exception CustomException quando for informado um valor inválido

@@ -1,5 +1,6 @@
 package Controller;
 
+import CustomExceptions.CustomException;
 import Model.Room;
 import Model.RoomDAO;
 
@@ -18,11 +19,21 @@ public class RoomController {
      * Apôs o recebimento de uma lista de objetos, o método separa as salas
      * e realiza o envio ao método responsável por inserir no banco de dados.
      *
+     * @exception CustomException se ocorrer erro ao salvar no banco
+     *
      * @param rooms List<Room> Lista de objetos de salas.
      */
-    public static void insertRoom(List<Room> rooms) {
-        for(int i=0; i < rooms.size(); i++) {
-            new RoomDAO().createRoom(rooms.get(i));
+    public static void insertRoom(List<Room> rooms) throws CustomException{
+        try{
+            for(Room r : rooms) {
+                if (r.getIdRoom() == null){
+                    new RoomDAO().createRoom(r);
+                } else{
+                    new RoomDAO().updateRoom(r);
+                }
+            }
+        } catch(Exception error){
+            throw new CustomException("Erro ao enviar as Salas para salvar no banco de dados: " + error.getMessage());
         }
     }
 }

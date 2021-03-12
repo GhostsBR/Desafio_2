@@ -79,9 +79,7 @@ public class DatabaseCreator {
                 if (pstmt != null){
                     pstmt.close();
                 }
-            } catch (Exception error){
-                throw new CustomException("Erro ao fechar o PrepareStatement: " + error.getMessage());
-            }
+            } catch (Exception error){}
             ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }

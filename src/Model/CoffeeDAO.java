@@ -17,6 +17,15 @@ import java.util.List;
  */
 public class CoffeeDAO {
 
+    /**
+     * Objeto PreparedStatement usado no DAO.
+     *
+     * Definido objeto PreparedStatement utilizado pelo DAO,
+     * facilitando seu uso e fechamento.
+     */
+    private PreparedStatement pstmt = null;
+
+    /**
     //Cria uma nova entrada na tabela de Espaços de Café.
     public void createCoffee(String name) throws CustomException{
         try {
@@ -27,7 +36,7 @@ public class CoffeeDAO {
         }catch (Exception error){
             throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
         }
-    }
+    }*/
 
     /**
      * Método para registrar no banco um novo Espaço de Café.
@@ -43,24 +52,32 @@ public class CoffeeDAO {
      */
     public void createCoffee(Coffee coffee) throws CustomException{
         try {
-            String sql = "INSERT INTO coffees (name) VALUES (?)";
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setString(1,coffee.getNameCoffee());
-            pstmt.execute();
+            int quantidadeEspacosSalvos = getCoffees().size();
+            if (quantidadeEspacosSalvos < 2){
+                String sql = "INSERT INTO coffees (name) VALUES (?)";
+                pstmt = ConnectionFactory.connect().prepareStatement(sql);
+                pstmt.setString(1,coffee.getNameCoffee());
+                pstmt.execute();
+            } else{
+                throw new CustomException("Erro: Limite de espaços de café cadastrados atingido!");
+            }
         }catch (Exception error){
             throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionMySQL();
+            ConnectionFactory.closeConnectionDatabase();
         }
     }
 
     /**
-     * Obs: no caso do DELETE, não será preciso
-     * enviar um objeto Coffee como parâmetro, pois
-     * somente o ID é necessário para o comando SQL.
-     * Já nos métodos CREATE e UPDATE, enviar um objeto Coffe
-     * facilita pois você terá certeza que todos os atributos
-     * serão enviados, não precisando adicionar novos parâmetros
-     * no método caso a tabela venha a ser alterada, contendo mais colunas.
-     * Somente a classe Coffee precisará ser atualizada!
+     * Método para excluir um Espaço de café
+     *
+     * Exclui um Espaço de café do banco de dados usando o ID.
      *
      * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
      *
@@ -72,14 +89,23 @@ public class CoffeeDAO {
     public void deleteCoffee (int id) throws CustomException{
         try {
             String sql = "DELETE FROM coffees WHERE id = ?";
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
+            throw new CustomException("Erro ao excluir um Espaço de Café: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionMySQL();
+            ConnectionFactory.closeConnectionDatabase();
         }
     }
 
+    /**
     //Atualiza uma entrada na tabela de Espaços de Café.
     public void updateCoffee (int id, String name) throws CustomException{
         try {
@@ -96,7 +122,7 @@ public class CoffeeDAO {
         }catch (Exception error){
             throw new CustomException("Erro ao atualizar o Espaço de Café. Erro: " + error.getMessage());
         }
-    }
+    }*/
 
     /**
      * Método para alterar o Espaço de Café.
@@ -114,12 +140,20 @@ public class CoffeeDAO {
     public void updateCoffee (Coffee coffee) throws CustomException{
         try {
             String sql = "UPDATE coffees SET name=? WHERE id = ?";
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,coffee.getNameCoffee());
             pstmt.setInt(2,coffee.getIdCoffee());
             pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao atualizar o Espaço de Café. Erro: " + error.getMessage());
+            throw new CustomException("Erro ao atualizar o Espaço de Café: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionMySQL();
+            ConnectionFactory.closeConnectionDatabase();
         }
     }
 
@@ -131,7 +165,7 @@ public class CoffeeDAO {
      * Obs: retorna uma lista vazia caso nenhum Espaço
      * de Café seja encontrado no banco!
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     * @exception CustomException se ocorrer erro de SQL ou no Statement
      *
      * @author João
      * @author Thiago
@@ -140,16 +174,29 @@ public class CoffeeDAO {
      */
     public List<Coffee> getCoffees() throws CustomException{
         List<Coffee> coffes = new ArrayList<Coffee>();
+        Statement stmt = null;
+        ResultSet rs = null;
         try {
             String sql = "SELECT * FROM coffees";
-            Statement stmt = ConnectionFactory.connect().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            stmt = ConnectionFactory.connect().createStatement();
+            rs = stmt.executeQuery(sql);
             while(rs.next()){
                 Coffee coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
                 coffes.add(coffee);
             }
         } catch (Exception error) {
             throw new CustomException("Erro ao selecionar o Espaço de Café: " + error.getMessage());
+        } finally{
+            try{
+                if (stmt != null){
+                    stmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionMySQL();
+            ConnectionFactory.closeConnectionDatabase();
         }
         return coffes;
     }
@@ -171,17 +218,29 @@ public class CoffeeDAO {
      */
     public Coffee getCoffee(Integer id) throws CustomException{
         Coffee coffee = new Coffee();
+        ResultSet rs = null;
         try {
             String sql = "SELECT * FROM coffees WHERE id = ?";
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
-            ResultSet rs = pstmt.getResultSet();
+            rs = pstmt.getResultSet();
             if(rs.next()){
                 coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
             }
         } catch (Exception error) {
             throw new CustomException("Erro ao buscar o Espaço de Café: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionMySQL();
+            ConnectionFactory.closeConnectionDatabase();
         }
         return coffee;
     }
