@@ -1,5 +1,6 @@
 package Controller;
 
+import CustomExceptions.CustomException;
 import Model.Coffee;
 import Model.CoffeeDAO;
 
@@ -21,7 +22,11 @@ public class CoffeeController {
      */
     public static void insertCoffee(List<Coffee> coffees) {
         for (int i=0; i < coffees.size(); i++) {
-            new CoffeeDAO().createCoffee(coffees.get(i));
+            try {
+                new CoffeeDAO().createCoffee(coffees.get(i));
+            } catch (CustomException error) {
+                System.out.println(error.getMessage());
+            }
         }
     }
 }
