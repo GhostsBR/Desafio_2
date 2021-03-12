@@ -69,7 +69,6 @@ public class CoffeeDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -100,7 +99,6 @@ public class CoffeeDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -152,7 +150,6 @@ public class CoffeeDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -195,7 +192,6 @@ public class CoffeeDAO {
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
         return coffes;
@@ -239,7 +235,6 @@ public class CoffeeDAO {
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
         return coffee;

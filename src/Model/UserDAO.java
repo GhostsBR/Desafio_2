@@ -39,6 +39,8 @@ public class UserDAO {
      */
     public void createUser(User user) throws CustomException{
         try{
+            System.out.println(user.getRoom1User().getNameRoom());
+            System.out.println(user.getRoom2User().getNameRoom());
             String sql = "INSERT INTO users VALUES (?,?,?,?,?)";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,user.getNameUser());
@@ -55,7 +57,6 @@ public class UserDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -83,7 +84,6 @@ public class UserDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -113,7 +113,6 @@ public class UserDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -144,7 +143,6 @@ public class UserDAO {
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -198,7 +196,6 @@ public class UserDAO {
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
         return users;

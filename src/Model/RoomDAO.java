@@ -53,7 +53,6 @@ public class RoomDAO{
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -84,7 +83,6 @@ public class RoomDAO{
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -117,7 +115,6 @@ public class RoomDAO{
                     pstmt.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
     }
@@ -159,7 +156,6 @@ public class RoomDAO{
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
         return rooms;
@@ -202,7 +198,6 @@ public class RoomDAO{
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionMySQL();
             ConnectionFactory.closeConnectionDatabase();
         }
         return room;
