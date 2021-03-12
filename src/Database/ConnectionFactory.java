@@ -27,6 +27,11 @@ public class ConnectionFactory {
     private static Connection connectDatabase = null;
 
     /**
+     * Objeto Connection para conexão extra com o banco de dados fornecido pela classe.
+     */
+    private static Connection connectDatabaseExtra = null;
+
+    /**
      * URL para criar a conexão com o MySQL.
      */
     private static String urlMySQL = "jdbc:mysql://localhost:3306";
@@ -107,6 +112,36 @@ public class ConnectionFactory {
     }
 
     /**
+     * Método para criar uma conexão com o banco de dados.
+     *
+     * Verifica se o objeto Connection da classe referente ao acesso ao banco de dados
+     * "event" é nulo, para então criar uma nova conexão e retorná-la. Caso não for nulo,
+     * verifica se a conexão já está aberta, retornando-a em caso positivo. Caso esta
+     * não esteja aberta, cria uma nova conexão e a retorna.
+     *
+     * @exception CustomException se connectDatabase for nulo
+     *
+     * @author João
+     * @author Thiago
+     *
+     * @return Connection nova conexão extra com o banco de dados
+     */
+    public static Connection connectExtra() throws CustomException{
+        if (connectDatabaseExtra == null){
+            newConnectionDatabaseExtra();
+        } else {
+            try{
+                if (connectDatabaseExtra.isClosed()){
+                    newConnectionDatabaseExtra();
+                }
+            } catch(Exception error){
+                throw new CustomException("Erro ao verificar se a conexão ao banco está fechada: " + error.getMessage());
+            }
+        }
+        return connectDatabaseExtra;
+    }
+
+    /**
      * Método interno para gerar uma nova conexão ao MySQL.
      *
      * Gera uma nova conexão ao MySQL através dos dados da URL,
@@ -143,6 +178,24 @@ public class ConnectionFactory {
     }
 
     /**
+     * Método interno para gerar uma nova conexão ao banco de dados.
+     *
+     * Gera uma nova conexão ao banco de dados através dos dados da URL,
+     * usuário e senha.
+     *
+     * @exception CustomException se ocorrer erros de acesso ao banco de dados
+     *
+     * @author Thiago
+     */
+    private static void newConnectionDatabaseExtra() throws CustomException{
+        try {
+            connectDatabaseExtra = DriverManager.getConnection(urlDatabase,user,password);
+        }catch (Exception error){
+            throw new CustomException("Erro ao solicitar uma nova conexão ao banco de dados: " + error.getMessage());
+        }
+    }
+
+    /**
      * Método para fechar a conexão com o MySQL.
      *
      * Deve ser chamado toda vez que finalizar o processo de utilização
@@ -173,6 +226,24 @@ public class ConnectionFactory {
     public static void closeConnectionDatabase() throws CustomException{
         try{
             connectDatabase.close();
+        } catch(Exception error){
+            throw new CustomException("Erro ao fechar a conexão ao MySQL: " + error.getMessage());
+        }
+    }
+
+    /**
+     * Método para fechar a conexão com o banco de dados.
+     *
+     * Deve ser chamado toda vez que finalizar o processo de utilização
+     * da conexão ao banco de dados.
+     *
+     * @exception CustomException se connectMySQL for nulo
+     *
+     * @author Thiago
+     */
+    public static void closeConnectionDatabaseExtra() throws CustomException{
+        try{
+            connectDatabaseExtra.close();
         } catch(Exception error){
             throw new CustomException("Erro ao fechar a conexão ao MySQL: " + error.getMessage());
         }

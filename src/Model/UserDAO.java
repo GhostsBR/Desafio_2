@@ -128,15 +128,18 @@ public class UserDAO {
      */
     public void updateRoomCoffeeUser(User user) throws CustomException{
         try {
-            String sql = "UPDATE users SET id_room1 = ?, id_room2 = ?, id_coffee1 = ?, id_coffee2 = ? WHERE id = ?";
+            String sql = "UPDATE users SET name=?, id_room1=?, id_room2=?, id_coffee1=?, id_coffee1=? WHERE id = ?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setInt(1,user.getRoom1User().getIdRoom());
-            pstmt.setInt(2,user.getRoom2User().getIdRoom());
-            pstmt.setInt(3,user.getCoffee1User().getIdCoffee());
-            pstmt.setInt(4,user.getCoffee2User().getIdCoffee());
+            pstmt.setString(1,user.getNameUser());
+            pstmt.setInt(2,user.getRoom1User().getIdRoom());
+            pstmt.setInt(3,user.getRoom2User().getIdRoom());
+            pstmt.setInt(4,user.getCoffee1User().getIdCoffee());
+            pstmt.setInt(5,user.getCoffee2User().getIdCoffee());
+            pstmt.setInt(6,user.getIdUser());
+
             pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao atualizar as Salas e Espaços de Café do Usuário: " + error.getMessage());
+            throw new CustomException("Erro ao alterar o usuário: " + error.getMessage());
         } finally{
             try{
                 if (pstmt != null){
@@ -166,33 +169,38 @@ public class UserDAO {
         List<User> users = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
-        Room room1;
-        Room room2;
-        Coffee coffee1;
-        Coffee coffee2;
+        Integer id;
+        String nome;
+        Integer room1;
+        Integer room2;
+        Integer coffee1;
+        Integer coffee2;
         try {
             String sql = "SELECT * FROM users";
-            stmt = ConnectionFactory.connect().createStatement();
+            stmt = ConnectionFactory.connectExtra().createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()){
-                room1 = new RoomDAO().getRoom(rs.getInt("id_room1"));
-                room2 = new RoomDAO().getRoom(rs.getInt("id_room2"));
-                coffee1 = new CoffeeDAO().getCoffee(rs.getInt("id_coffee1"));
-                coffee2 = new CoffeeDAO().getCoffee(rs.getInt("id_coffee2"));
-                User user = new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        room1, room2, coffee1, coffee2);
+                id = rs.getInt("id");
+                nome = rs.getString("name");
+                room1 = rs.getInt("id_room1");
+                room2 = rs.getInt("id_room2");
+                coffee1 = rs.getInt("id_coffee1");
+                coffee2 = rs.getInt("id_coffee2");
+                User user = new User( id, nome,
+                        new RoomDAO().getRoom(room1),
+                        new RoomDAO().getRoom(room2),
+                        new CoffeeDAO().getCoffee(coffee1),
+                        new CoffeeDAO().getCoffee(coffee2));
                 users.add(user);
             }
         }catch (Exception error){
             throw new CustomException("Erro ao selecionar os Usuários: " + error.getMessage());
         } finally{
             try{
-                if (stmt != null){
+                if (stmt != null && !stmt.isClosed()){
                     stmt.close();
                 }
-                if (rs != null){
+                if (rs != null && !rs.isClosed()){
                     rs.close();
                 }
             } catch (Exception error){}
