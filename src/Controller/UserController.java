@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Coffee;
 import Model.Room;
+import Model.User;
+import Model.UserDAO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,18 +15,33 @@ import java.util.List;
  * @author Gustavo Lemos
  */
 public class UserController {
+
+    /**
+     * Método responsável por separar e enviar os usuários para serem inseridos no banco de dados.
+     *
+     * Apôs o recebimento de uma lista de objetos, o método separa os usuários
+     * e realiza o envido ao método responsável por inserir no banco de dados.
+     *
+     * @param users List<User> Lista de objetos de usuários.
+     */
+    public static void insertUser(List<User> users) {
+        for(int i=0; i < users.size(); i++) {
+            new UserDAO().createUser(users.get(i));
+        }
+    }
+
     /**
      * Método responsável por selecionar os salas e espaços dos jogadores.
      *
      * São inseridas as salas, espaços e jogadores, o algoritmo seleciona as salas e espaços
-     * nas duas estapas, em seguida armazena os dados em um objeto e retorna.
+     * nas duas estapas, em seguida armazena os dados em uma lista objetos e retorna.
      *
      * @param users
-     * @param rooms
-     * @param coffees
+     * @param rooms List<Room> Lista de objetos de sala.
+     * @param coffees List<Coffee> Lista de objetos de espaços.
      * @return
      */
-    public static Object userRaffle(ArrayList<String> users, List<Room> rooms, List<Coffee> coffees) {
+    public static Object userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) {
         Collections.shuffle(users); // Embaralhar ordem da lista de usuários
 
         int room = 0;
@@ -34,7 +51,6 @@ public class UserController {
         int smallestRoom = 0;
         int biggestRoom = 0;
         int totalRoom = 0;
-        String[][]SelectedPeople = new String[users.size()][5];
 
         // Verifica qual é a menor sala.
         for(int i=0; i < rooms.size(); i++) {
@@ -85,9 +101,8 @@ public class UserController {
             }
 
 
-            SelectedPeople[i][0] = users.get(i);
-
-            SelectedPeople[i][1] = String.valueOf(room);
+            users.get(i).setRoom1User(rooms.get(room).getIdRoom());
+            users.get(i).setPosicionRoom(room);
             rooms.get(room).setQuantity1(rooms.get(room).getQuantity1() + 1);
 
 
@@ -104,7 +119,8 @@ public class UserController {
                 coffee = 0;
             }
 
-            SelectedPeople[i][3] = String.valueOf(coffee);
+            users.get(i).setCoffee1User(coffees.get(coffee).getIdCoffee());
+            users.get(i).setPosicionCoffee(coffee);
             coffee++;
         }
 
@@ -114,7 +130,7 @@ public class UserController {
             Exemplo: Etapa 1: Sala 3 Etapa 2: Sala 4.
          */
         for(int i=0; i < users.size(); i++) {
-            room2 = (Integer.parseInt(SelectedPeople[i][1]) + 1);
+            room2 = (users.get(i).getPosicionRoom() + 1);
             if(room2 >= rooms.size()) {
                 room2 = 0;
             }
@@ -133,9 +149,8 @@ public class UserController {
                 room2 = 0;
             }
 
-            System.out.println("Inserindo: " + (rooms.get(room2).getQuantity2() + 1));
             rooms.get(room2).setQuantity2(rooms.get(room2).getQuantity2() + 1);
-            SelectedPeople[i][2] = String.valueOf(room2);
+            users.get(i).setRoom2User(rooms.get(room2).getIdRoom());
         }
 
         /*
@@ -144,21 +159,21 @@ public class UserController {
             Exemplo: Etapa anterior: 1 Etapa atual: 2.
         */
         for(int i=0; i < users.size(); i++) {
-            coffee2 = Integer.parseInt(SelectedPeople[i][3]) + 1;
+            coffee2 = (users.get(i).getPosicionCoffee() + 1);
             if(coffee2 >= coffees.size()) {
                 coffee2 = 0;
             }
 
-            SelectedPeople[i][4] = String.valueOf(coffee2);
-            System.out.println("Nome: " + SelectedPeople[i][0] + " \t|\t Primeira Sala: " + SelectedPeople[i][1] + "\t|\tPrimeiro Espaço: " + SelectedPeople[i][3] + "\t|\tSegunda Sala: " + SelectedPeople[i][2] + "\t|\tSegundo Café: " + SelectedPeople[i][4]);
+            users.get(i).setCoffee2User(coffees.get(coffee2).getIdCoffee());
+            System.out.println("Nome: " + users.get(i).getNameUser() + "\t|\t Primeira Sala: " +users.get(i).getRoom1User() + "\t|\t Primeiro Espaço: " +users.get(i).getCoffee1User() + "\t|\t Segunda Sala: " +users.get(i).getRoom2User() + "\t|\t Segundo Espaço: " +users.get(i).getCoffee2User());
         }
 
         for(int i=0; i < rooms.size(); i++) {
-            System.out.println("Usuários na sala " + i + "\n P1: " + rooms.get(i).getQuantity1() + " P2: " + rooms.get(i).getQuantity2());
+            System.out.println("Usuários na sala " + (i + 1) + "\n P1: " + rooms.get(i).getQuantity1() + " P2: " + rooms.get(i).getQuantity2());
         }
 
         //Retorna a lista de usuários em forma de matriz na seguinde ordem: NOME, PRIMEIRA SALA, PRIMEIRO ESPAÇO, SEGUNDA SALA, SEGUNDO ESPAÇO.
-        return SelectedPeople;
+        return users;
     }
 
 
