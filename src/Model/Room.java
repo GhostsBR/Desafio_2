@@ -1,26 +1,55 @@
 package Model;
 
+import CustomExceptions.CustomException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe representativa para uma Sala.
+ *
+ * @author Thiago
+ * @author João
+ */
 public class Room {
 
-    //Atributo ID da classe Room.
+    /**
+     * Atributo ID da Sala.
+     */
     private Integer idRoom;
 
-    //Atributo NAME da classe Room.
+    /**
+     * Atributo do nome da Sala.
+     */
     private String nameRoom;
 
-    //Atributo CAPACITY da classe Room.
+    /**
+     * Atributo da capacidade da Sala.
+     */
     private Integer capacityRoom;
 
-    //Atributo QUANTITY1 da classe Room.
+    /**
+     * Atributo QUANTITY1 da classe Room.
+     */
     private Integer quantity1 = 0;
 
-    //Atributo QUANTITY2 da classe Room.
+    /**
+     * Atributo QUANTITY2 da classe Room.
+     */
     private Integer quantity2 = 0;
 
-    //Construtor vazio da classe Room.
+    /**
+     * Construtor vazio da classe Room.
+     */
     public Room() {};
 
-    //Construtor com todos os parâmetros da classe Room.
+    /**
+     * Construtor com todos os parâmetros da classe Room.
+     *
+     * @param idRoom Integer
+     * @param nameRoom String
+     * @param capacityRoom Integer
+     */
     public Room(Integer idRoom, String nameRoom, Integer capacityRoom){
         this.idRoom = idRoom;
         this.nameRoom = nameRoom;
@@ -38,101 +67,150 @@ public class Room {
         this.capacityRoom = capacity;
     }
 
-    //Método SET para atributo ID.
-    public void setIdRoom(Integer idRoom){
-        if (idRoom != null){
-            if(idRoom>0){
-                this.idRoom = idRoom;
-            }else{
-                System.out.println("Erro: ID da sala não pode ser negativo ou zero!");
-            }
-        }else {
-            System.out.println("Erro: ID da sala de café não pode ser nulo!");
-        }
-    }
-
-    //Método GET para o atributo ID.
+    /**
+     * Método para retornar o valor do atributo idRoom.
+     *
+     * @return Integer ID da Sala
+     */
     public Integer getIdRoom(){
         return this.idRoom;
     }
 
-    //Método SET para o atributo NAME.
-    public void setNameRoom(String nameRoom){
-        //Verifica se o valor é nulo
-        if(nameRoom!=null){
-            nameRoom = nameRoom.trim();
-
-            //Verifica se existe pelo menos 1 caracter e se não ultrapassa de 50 caracteres.
-            if (nameRoom.length() > 0 && nameRoom.length() <= 50){
-                //Atribui o valor ao NAME
-                this.nameRoom = nameRoom;
-            }else {
-                System.out.println("Erro: Nome da Sala deve conter entre 1 e 50 caracteres!");
+    /**
+     * Método Setter do atributo idRoom.
+     *
+     * Define o valor do idRoom, realizando validação para valores negativos,
+     * zero e nulos.
+     *
+     * @exception CustomException quando for informado um valor inválido
+     *
+     * @author João
+     * @author Thiago
+     *
+     * @param id Integer ID da Sala
+     */
+    public void setIdRoom(Integer id) throws CustomException {
+        if (id != null){
+            if(id>0){
+                this.idRoom = id;
+            }else{
+                throw new CustomException("Erro: informado um ID negativo ou igual a zero!");
             }
         }else {
-            System.out.println("Erro: Nome da Sala não pode ser nulo!");
+            throw new CustomException("Erro: informado um ID nulo!");
         }
     }
 
-    //Método GET para o valor do atributo NOME.
+    /**
+     * Método para retornar o valor do atributo nameRoom.
+     *
+     * @return String nome da Sala
+     */
     public String getNameRoom(){
         return this.nameRoom;
     }
 
-    //Método SET para o atributo CAPACITY.
-    public void setCapacityRoom(Integer capacityRoom){
-        //Verifica se o valor é nulo.
-        if (capacityRoom!= null){
-            //Verifica se o valor é menor que 1
-            if(capacityRoom>0){
-                this.capacityRoom = capacityRoom;
+    /**
+     * Método Setter do atributo nameRoom.
+     *
+     * Define o valor do nameRoom, realizando validação para textos vazios,
+     * só espaços, com menos de 50 caracteres e valor nulo.
+     *
+     * @exception CustomException quando for informado um valor inválido
+     *
+     * @author João
+     * @author Thiago
+     *
+     * @param name String nome da Sala
+     */
+    public void setNameRoom(String name) throws CustomException {
+        if(name!=null){
+            name = name.trim();
+            if (name.length() > 0 && name.length() <= 50){
+                this.nameRoom = name;
             }else {
-                System.out.println("Erro: a capacidade da Sala não pode ser igual ou menor que zero!");
+                throw new CustomException("Erro: informado um nome vazio ou com mais de 50 caracteres!");
             }
         }else {
-            System.out.println("Erro: a capacidade sa Sala não pode ser nulo!");
+            throw new CustomException("Erro: informado um nome nulo!");
         }
     }
 
-    //Mátodo de GET para o valor do atributo CAPACITY.
+    /**
+     * Método para retornar o valor do atributo capacityRoom.
+     *
+     * @return Integer capacidade da Sala
+     */
     public Integer getCapacityRoom(){
         return this.capacityRoom;
     }
 
-    //Método de SET do atributo QUANTITY1.
-    public void setQuantity1(Integer quantity1){
-        if (quantity1 != null){
-            //Verifica se o valor é menor que 1
-            if (quantity1 > 0){
-                this.quantity1 = quantity1;
+    /**
+     * Método Setter do atributo capacityRoom.
+     *
+     * Define o valor do capacityRoom, realizando validação para valores negativos,
+     * zero e nulos.
+     *
+     * @exception CustomException quando for informado um valor inválido
+     *
+     * @author João
+     * @author Thiago
+     *
+     * @param capacityRoom Integer capacityRoom da Sala
+     */
+    public void setCapacityRoom(Integer capacityRoom) throws CustomException {
+        if (capacityRoom != null){
+            if(capacityRoom > 0){
+                this.capacityRoom = capacityRoom;
             }else {
-                System.out.println("Erro: a quantidade de pessoas na Sala não pode ser negativa!");
+                throw new CustomException("Erro: informado uma capacidade negativa ou igual a zero!");
             }
         }else {
-            System.out.println("Erro: a capacidade da Sala não pode ser nulo!");
+            throw new CustomException("Erro: informado uma capacidade nula!");
         }
     }
-    //Método do GET do atributo QUANTITY1.
+
+    /**
+     * Método para retornar o valor do atributo quantity1Room.
+     *
+     * @return Integer quantidade da Sala na etapa 1
+     */
     public Integer getQuantity1(){
         return this.quantity1;
     }
 
-    //Método de SET do atributo QUANTITY2.
-    public void setQuantity2(Integer quantity2){
-        if (quantity2 != null){
-            //Verifica se o valor é menor que 1.
-            if (quantity2 > 0){
-                this.quantity2 = quantity2;
-            }else {
-                System.out.println("Erro: a quantidade de pessoas na Sala não pode ser negativa!");
-            }
-        }else {
-            System.out.println("Erro: a capacidade da Sala não pode ser nulo!");
-        }
+    /**
+     * Método Setter do atributo quantity1.
+     *
+     * Define o valor do quantity1
+     *
+     * @author João
+     *
+     * @param quantidade Integer quantity1 da Sala
+     */
+    public void setQuantity1(Integer quantidade){
+        this.quantity1 = quantity1;
     }
-    //Método do GET do atributo QUANTITY2.
+
+    /**
+     * Método para retornar o valor do atributo quantity2Room.
+     *
+     * @return Integer quantidade da Sala na etapa 2
+     */
     public Integer getQuantity2(){
         return this.quantity2;
     }
 
+    /**
+     * Método Setter do atributo quantity2.
+     *
+     * Define o valor do quantity2
+     *
+     * @author João
+     *
+     * @param quantidade Integer quantity2 da Sala
+     */
+    public void setQuantity2(Integer quantidade){
+        this.quantity2 = quantity2;
+    }
 }

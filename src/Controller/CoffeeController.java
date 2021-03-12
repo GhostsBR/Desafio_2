@@ -18,15 +18,21 @@ public class CoffeeController {
      * Apôs o recebimento de uma lista de objetos, o método separa as salas
      * e realiza o envio ao método responsável por inserir no banco de dados.
      *
+     * @exception CustomException se ocorrer erro ao salvar no banco
+     *
      * @param coffees List<Coffee> Lista de objetos de espaços.
      */
-    public static void insertCoffee(List<Coffee> coffees) {
-        for (int i=0; i < coffees.size(); i++) {
-            try {
-                new CoffeeDAO().createCoffee(coffees.get(i));
-            } catch (CustomException error) {
-                System.out.println(error.getMessage());
+    public static void insertCoffee(List<Coffee> coffees) throws CustomException{
+        try{
+            for (Coffee c : coffees) {
+                if(c.getIdCoffee() == null){
+                    new CoffeeDAO().createCoffee(c);
+                } else{
+                    new CoffeeDAO().updateCoffee(c);
+                }
             }
+        } catch(Exception error){
+            throw new CustomException("Erro ao enviar os espaços para salvar no banco: " + error.getMessage());
         }
     }
 }

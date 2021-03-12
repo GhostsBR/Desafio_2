@@ -1,28 +1,46 @@
 package Main;
 
+import CustomExceptions.CustomException;
+import Database.ConnectionFactory;
+import Database.DatabaseCreator;
+import Test.Model.TestCoffee;
+import Test.Model.TestCoffeeDAO;
+
 public class Main {
     public static void main(String[] args) {
 
         /**
          * Cria um novo teste da classe Coffee e chama o método de testes
-
-        TestCoffe testCoffe = new TestCoffe();
-        testCoffe.test();
-         */
+         *
+         TestCoffee testCoffe = new TestCoffee();
+         try{
+         testCoffe.test();
+         } catch(CustomException error){
+         System.out.println(error.getMessage());
+         }
+         //*/
 
         /**
-         * Cria um novo teste da classe CoffeeDAO e chama o método de testes
+         * Cria um novo teste da classe CoffeeDAO e chama o método de teste
+         *
+         TestCoffeeDAO testCoffeeDAO = new TestCoffeeDAO();
+         try{
+         testCoffeeDAO.test();
+         } catch(CustomException error){
+         System.out.println(error.getMessage());
+         }
+         //*/
 
-        TestCoffeeDAO testCoffeeDAO = new TestCoffeeDAO();
-        testCoffeeDAO.test();
-         */
 
         /**
          * Cria um objeto DatabaseCreator e chama o método para criar o banco de dados
-
-        DatabaseCreator dataBase = new DatabaseCreator();
-        dataBase.createDatabase();
-         */
-
+         *
+         DatabaseCreator dataBase = new DatabaseCreator();
+         try{
+            dataBase.createDatabase();
+         } catch(CustomException error){
+            System.out.println(error.getMessage());
+         }
+         //*/
     }
 }
