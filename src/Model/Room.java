@@ -188,7 +188,7 @@ public class Room {
      *
      * @param quantidade Integer quantity1 da Sala
      */
-    public void setQuantity1(Integer quantidade){
+    public void setQuantity1(Integer quantity1){
         this.quantity1 = quantity1;
     }
 
@@ -210,7 +210,7 @@ public class Room {
      *
      * @param quantidade Integer quantity2 da Sala
      */
-    public void setQuantity2(Integer quantidade){
+    public void setQuantity2(Integer quantity2){
         this.quantity2 = quantity2;
     }
 }
