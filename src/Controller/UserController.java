@@ -23,7 +23,7 @@ public class UserController {
      * Apôs o recebimento de uma lista de objetos, o método separa os usuários
      * e realiza o envido ao método responsável por inserir no banco de dados.
      *
-     * @param users List<User> Lista de objetos de usuários.
+     * @param users List<User> Lista de usuários
      */
     public static void insertUser(List<User> users) throws CustomException {
         for(int i=0; i < users.size(); i++) {
@@ -47,13 +47,13 @@ public class UserController {
      * São inseridas as salas, espaços e jogadores, o algoritmo seleciona as salas e espaços
      * nas duas estapas, em seguida armazena os dados em uma lista objetos e retorna.
      *
-     * @param users
-     * @param rooms List<Room> Lista de objetos de sala.
-     * @param coffees List<Coffee> Lista de objetos de espaços.
-     * @return
+     * @param users List<User> Lista de usuários
+     * @param rooms List<Room> Lista de salas
+     * @param coffees List<Coffee> Lista de espaços
+     * @return List<User> Lista de usuários com as salas e espaços definidas
      */
     public static Object userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) {
-        Collections.shuffle(users); // Embaralhar ordem da lista de usuários
+        Collections.shuffle(users);
 
         int room = 0;
         int room2 = 0;
@@ -63,7 +63,6 @@ public class UserController {
         int biggestRoom = 0;
         int totalRoom = 0;
 
-        // Verifica qual é a menor sala.
         for(int i=0; i < rooms.size(); i++) {
             if(i == 0) {
                 smallestRoom = rooms.get(i).getCapacityRoom();
@@ -78,20 +77,12 @@ public class UserController {
             }
         }
 
-        // verifica se existem mais usuários que vagas disponíveis.
         totalRoom = ((smallestRoom * rooms.size()) + biggestRoom);
         if(users.size() > totalRoom) {
             System.out.println("ERRO: Foi adicionado mais usuários do que possível!");
             return null;
         }
 
-        System.out.println("Lotação máxima: " + totalRoom);
-
-        /*
-            Define a primeira sala dos usuários.
-            Distribuindo os usuários pelas salas disponíveis em ordem.
-            Exemplo: Se existirem 3 salas, serão adicionados usuários na ordem: 1, 2, 3, 1, 2, 3...
-        */
         for(int i=0; i < users.size(); i++) {
             if(room >= rooms.size()) {
                 room = 0;
@@ -99,11 +90,11 @@ public class UserController {
 
             if(rooms.get(room).getCapacityRoom() == smallestRoom) {
                 if((rooms.get(room).getQuantity1() + 1) > (smallestRoom)) {
-                    room = verifyBetterRoom(rooms, room, 1, smallestRoom);
+                    room = verifyBetterRoom(rooms, 1, smallestRoom);
                 }
             } else {
                 if((rooms.get(room).getQuantity1() + 1) > (rooms.get(room).getCapacityRoom() + 1)) {
-                    room = verifyBetterRoom(rooms, room, 1, smallestRoom);
+                    room = verifyBetterRoom(rooms, 1, smallestRoom);
                 }
             }
 
@@ -124,11 +115,6 @@ public class UserController {
             room++;
         }
 
-        /*
-            Define qual o primeiro espaço de café.
-            Distribuindo os usuários pelas salas disponíveis.
-            Exemplo: Se existirem duas salas serão adicionados usuários na ordem: 1, 2, 1, 2...
-        */
         for(int i=0; i < users.size(); i++) {
             if(coffee >= coffees.size()) {
                 coffee = 0;
@@ -143,11 +129,6 @@ public class UserController {
             coffee++;
         }
 
-        /*
-            Define a segunda sala dos usuários
-            Distribuindo os usuários pelas salas disponíveis, sempre começando da proxima sala em consideração a sala da primeira etapa.
-            Exemplo: Etapa 1: Sala 3 Etapa 2: Sala 4.
-         */
         for(int i=0; i < users.size(); i++) {
             room2 = (users.get(i).getPositionRoom() + 1);
             if(room2 >= rooms.size()) {
@@ -156,11 +137,11 @@ public class UserController {
 
             if(rooms.get(room2).getCapacityRoom() == smallestRoom) {
                 if((rooms.get(room2).getQuantity2() + 1) > (smallestRoom)) {
-                    room2 = verifyBetterRoom(rooms, room2, 2, smallestRoom);
+                    room2 = verifyBetterRoom(rooms,2, smallestRoom);
                 }
             } else {
                 if((rooms.get(room2).getQuantity2() + 1) > (rooms.get(room2).getCapacityRoom() + 1)) {
-                    room2 = verifyBetterRoom(rooms, room2, 2, smallestRoom);
+                    room2 = verifyBetterRoom(rooms, 2, smallestRoom);
                 }
             }
 
@@ -176,11 +157,6 @@ public class UserController {
             }
         }
 
-        /*
-            Define qual o segundo espaço de café.
-            Enviando o usuário para a proxima sala, em relação a etapa anterior.
-            Exemplo: Etapa anterior: 1 Etapa atual: 2.
-        */
         for(int i=0; i < users.size(); i++) {
             coffee2 = (users.get(i).getPosictonCoffee() + 1);
             if(coffee2 >= coffees.size()) {
@@ -199,7 +175,6 @@ public class UserController {
             System.out.println("Usuários na sala " + (i + 1) + "\n P1: " + rooms.get(i).getQuantity1() + " P2: " + rooms.get(i).getQuantity2());
         }
 
-        //Retorna a lista de usuários em forma de matriz na seguinde ordem: NOME, PRIMEIRA SALA, PRIMEIRO ESPAÇO, SEGUNDA SALA, SEGUNDO ESPAÇO.
         return users;
     }
 
@@ -209,13 +184,12 @@ public class UserController {
      *
      * Caso a sala atual esteja cheia, é selecionada a sala com mais espaços livres.
      *
-     * @param rooms
-     * @param room
-     * @param stage
-     * @param smallestRoom
-     * @return
+     * @param rooms List<Room> Lista de salas
+     * @param stage int Informa qual etapa está sendo analisada.
+     * @param smallestRoom int Informal qual a menor sala.
+     * @return int Retorna o ID da melhor sala
      */
-    private static int verifyBetterRoom(List<Room> rooms, int room, int stage, int smallestRoom) {
+    private static int verifyBetterRoom(List<Room> rooms, int stage, int smallestRoom) {
         int betterRoom = 0;
         for(int i=0; i < rooms.size(); i++) {
             if(stage == 1) {

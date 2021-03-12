@@ -20,7 +20,7 @@ public class CoffeeController {
      *
      * @exception CustomException se ocorrer erro ao salvar no banco
      *
-     * @param coffees List<Coffee> Lista de objetos de espaços.
+     * @param coffees List<Coffee> Lista de objetos de espaços
      */
     public static void insertCoffee(List<Coffee> coffees) throws CustomException{
         try{
