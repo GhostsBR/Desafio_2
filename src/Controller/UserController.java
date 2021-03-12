@@ -1,5 +1,6 @@
 package Controller;
 
+import CustomExceptions.CustomException;
 import Model.Coffee;
 import Model.Room;
 import Model.User;
@@ -24,9 +25,19 @@ public class UserController {
      *
      * @param users List<User> Lista de objetos de usuários.
      */
-    public static void insertUser(List<User> users) {
+    public static void insertUser(List<User> users) throws CustomException {
         for(int i=0; i < users.size(); i++) {
-            new UserDAO().createUser(users.get(i));
+            try {
+                for (User c : users) {
+                    if(c.getIdUser() == null) {
+                        new UserDAO().createUser(c);
+                    } else {
+                        new UserDAO().updateUser(c);
+                    }
+                }
+            } catch (Exception error) {
+                throw new CustomException("Erro ao enviar pessoas para salvar no banco: " + error.getMessage());
+            }
         }
     }
 
@@ -101,8 +112,12 @@ public class UserController {
             }
 
 
-            users.get(i).setRoom1User(rooms.get(room).getIdRoom());
-            users.get(i).setPosicionRoom(room);
+            try {
+                users.get(i).setRoom1User(rooms.get(room));
+            } catch (CustomException error) {
+                System.out.println("Erro ao definir o número de usuários na sala 1: " + error.getMessage());
+            }
+            users.get(i).setPositionRoom(room);
             rooms.get(room).setQuantity1(rooms.get(room).getQuantity1() + 1);
 
 
@@ -119,8 +134,12 @@ public class UserController {
                 coffee = 0;
             }
 
-            users.get(i).setCoffee1User(coffees.get(coffee).getIdCoffee());
-            users.get(i).setPosicionCoffee(coffee);
+            try {
+                users.get(i).setCoffee1User(coffees.get(coffee));
+            } catch (CustomException error) {
+                System.out.println("Erro ao definir o número de usuários da espaço 1: " + error.getMessage());
+            }
+            users.get(i).setPositionCoffee(coffee);
             coffee++;
         }
 
@@ -130,7 +149,7 @@ public class UserController {
             Exemplo: Etapa 1: Sala 3 Etapa 2: Sala 4.
          */
         for(int i=0; i < users.size(); i++) {
-            room2 = (users.get(i).getPosicionRoom() + 1);
+            room2 = (users.get(i).getPositionRoom() + 1);
             if(room2 >= rooms.size()) {
                 room2 = 0;
             }
@@ -150,7 +169,11 @@ public class UserController {
             }
 
             rooms.get(room2).setQuantity2(rooms.get(room2).getQuantity2() + 1);
-            users.get(i).setRoom2User(rooms.get(room2).getIdRoom());
+            try {
+                users.get(i).setRoom2User(rooms.get(room2));
+            } catch (CustomException error) {
+                System.out.println("Erro ao definir o número de usuários na sala 2: " + error.getMessage());
+            }
         }
 
         /*
@@ -159,13 +182,17 @@ public class UserController {
             Exemplo: Etapa anterior: 1 Etapa atual: 2.
         */
         for(int i=0; i < users.size(); i++) {
-            coffee2 = (users.get(i).getPosicionCoffee() + 1);
+            coffee2 = (users.get(i).getPosictonCoffee() + 1);
             if(coffee2 >= coffees.size()) {
                 coffee2 = 0;
             }
 
-            users.get(i).setCoffee2User(coffees.get(coffee2).getIdCoffee());
-            System.out.println("Nome: " + users.get(i).getNameUser() + "\t|\t Primeira Sala: " +users.get(i).getRoom1User() + "\t|\t Primeiro Espaço: " +users.get(i).getCoffee1User() + "\t|\t Segunda Sala: " +users.get(i).getRoom2User() + "\t|\t Segundo Espaço: " +users.get(i).getCoffee2User());
+            try {
+                users.get(i).setCoffee2User(coffees.get(coffee2));
+            } catch (CustomException error) {
+                System.out.println("Erro ao definir o número de usuários no espaço 2: " + error.getMessage());
+            }
+            System.out.println("Nome: " + users.get(i).getNameUser() + "\t|\t Primeira Sala: " +users.get(i).getRoom1User().getIdRoom() + "\t|\t Primeiro Espaço: " +users.get(i).getCoffee1User().getIdCoffee() + "\t|\t Segunda Sala: " +users.get(i).getRoom2User().getIdRoom() + "\t|\t Segundo Espaço: " +users.get(i).getCoffee2User().getIdCoffee());
         }
 
         for(int i=0; i < rooms.size(); i++) {
