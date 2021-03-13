@@ -41,7 +41,11 @@ public class Main {
          }
          //*/
 
-        UserView view = new UserView();
+        /*
+         ViewTest test = new ViewTest();
+         test.run();
+         */
         
+        UserView view = new UserView();
     }
 }

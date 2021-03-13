@@ -50,7 +50,7 @@ public class UserController {
      * @param coffees List<Coffee> Lista de espaços
      * @return List<User> Lista de usuários com as salas e espaços definidas
      */
-    public static List<User> userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) {
+    public static List<User> userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) throws CustomException{
         Collections.shuffle(users);
 
         int room = 0;
@@ -77,8 +77,7 @@ public class UserController {
 
         totalRoom = ((smallestRoom * rooms.size()) + biggestRoom);
         if(users.size() > totalRoom) {
-            System.out.println("ERRO: Foi adicionado mais usuários do que possível!");
-            return null;
+            throw new CustomException("ERRO: Foi adicionado mais usuários do que possível!");
         }
 
         for(int i=0; i < users.size(); i++) {
@@ -208,7 +207,6 @@ public class UserController {
                 }
             }
         }
-
         return betterRoom;
     }
 }
