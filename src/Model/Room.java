@@ -39,6 +39,16 @@ public class Room {
     private Integer quantity2 = 0;
 
     /**
+     *
+     */
+    private List<User> usersStage1;
+
+    /**
+     *
+     */
+    private List<User> usersStage2;
+
+    /**
      * Construtor vazio da classe Room.
      */
     public Room() {};
@@ -186,7 +196,7 @@ public class Room {
      *
      * @author João
      *
-     * @param quantidade Integer quantity1 da Sala
+     * @param quantity1 Integer quantity1 da Sala
      */
     public void setQuantity1(Integer quantity1){
         this.quantity1 = quantity1;
@@ -208,9 +218,43 @@ public class Room {
      *
      * @author João
      *
-     * @param quantidade Integer quantity2 da Sala
+     * @param quantity2 Integer quantity2 da Sala
      */
     public void setQuantity2(Integer quantity2){
         this.quantity2 = quantity2;
+    }
+
+    public List<User> getUsersStage1() {
+        return usersStage1;
+    }
+
+    public void setUsersStage1(List<User> usersStage1) {
+        this.usersStage1 = usersStage1;
+    }
+
+    public List<User> getUsersStage2() {
+        return usersStage2;
+    }
+
+    public void setUsersStage2(List<User> usersStage2) {
+        this.usersStage2 = usersStage2;
+    }
+
+    public String usersStage1ToString (){
+        String users = "";
+        for (User u: usersStage1) {
+            users += u.getNameUser() + ", ";
+        }
+        users = users.substring(0, users.length() - 3);
+        return users;
+    }
+
+    public String usersStage2ToString (){
+        String users = "";
+        for (User u: usersStage2) {
+            users += u.getNameUser() + ", ";
+        }
+        users = users.substring(0, users.length() - 3);
+        return users;
     }
 }

@@ -2,6 +2,8 @@ package Model;
 
 import CustomExceptions.CustomException;
 
+import java.util.List;
+
 /**
  * Classe representativa para um Espaço de Café.
  *
@@ -19,6 +21,16 @@ public class Coffee {
      * Atributo do nome do Espaço de Café.
      */
     private String nameCoffee;
+
+    /**
+     *
+     */
+    private List<User> usersStage1;
+
+    /**
+     *
+     */
+    private List<User> usersStage2;
 
     /**
      * Construtor vazio da classe Coffee.
@@ -98,5 +110,39 @@ public class Coffee {
      */
     public String getNameCoffee (){
         return this.nameCoffee;
+    }
+
+    public List<User> getUsersStage1() {
+        return usersStage1;
+    }
+
+    public void setUsersStage1(List<User> usersStage1) {
+        this.usersStage1 = usersStage1;
+    }
+
+    public List<User> getUsersStage2() {
+        return usersStage2;
+    }
+
+    public void setUsersStage2(List<User> usersStage2) {
+        this.usersStage2 = usersStage2;
+    }
+
+    public String usersStage1ToString (){
+        String users = "";
+        for (User u: usersStage1) {
+            users += u.getNameUser() + ", ";
+        }
+        users = users.substring(0, users.length() - 3);
+        return users;
+    }
+
+    public String usersStage2ToString (){
+        String users = "";
+        for (User u: usersStage2) {
+            users += u.getNameUser() + ", ";
+        }
+        users = users.substring(0, users.length() - 3);
+        return users;
     }
 }
