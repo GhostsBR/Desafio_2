@@ -26,18 +26,16 @@ public class UserController {
      * @param users List<User> Lista de usuários
      */
     public static void insertUser(List<User> users) throws CustomException {
-        for(int i=0; i < users.size(); i++) {
-            try {
-                for (User c : users) {
-                    if(c.getIdUser() == null) {
-                        new UserDAO().createUser(c);
-                    } else {
-                        new UserDAO().updateUser(c);
-                    }
+        try {
+            for (User c : users) {
+                if(c.getIdUser() == null) {
+                    new UserDAO().createUser(c);
+                } else {
+                    new UserDAO().updateUser(c);
                 }
-            } catch (Exception error) {
-                throw new CustomException("Erro ao enviar pessoas para salvar no banco: " + error.getMessage());
             }
+        } catch (Exception error) {
+            throw new CustomException("Erro ao enviar pessoas para salvar no banco: " + error.getMessage());
         }
     }
 
@@ -52,7 +50,7 @@ public class UserController {
      * @param coffees List<Coffee> Lista de espaços
      * @return List<User> Lista de usuários com as salas e espaços definidas
      */
-    public static Object userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) {
+    public static List<User> userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) {
         Collections.shuffle(users);
 
         int room = 0;
