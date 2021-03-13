@@ -5,6 +5,7 @@ import Database.ConnectionFactory;
 import Database.DatabaseCreator;
 import Test.Model.TestCoffee;
 import Test.Model.TestCoffeeDAO;
+import View.ViewTest;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,10 +32,9 @@ public class Main {
          }
          //*/
 
-
         /**
          * Cria um objeto DatabaseCreator e chama o método para criar o banco de dados
-         *
+         */
          DatabaseCreator dataBase = new DatabaseCreator();
          try{
             dataBase.createDatabase();
@@ -42,5 +42,8 @@ public class Main {
             System.out.println(error.getMessage());
          }
          //*/
+
+        ViewTest view = new ViewTest();
+        view.run();
     }
 }
