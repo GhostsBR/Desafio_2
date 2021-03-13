@@ -207,6 +207,8 @@ public class UserDAO {
         return users;
     }
 
+
+    /*
     /**
      * Retorna uma lista de Usuários a partir de um identificador de Sala ou Espaço.
      *
@@ -220,7 +222,7 @@ public class UserDAO {
      * @param param
      * @return
      * @throws CustomException
-     */
+
 
     public List<User> getUsersRoom(int identifier, int param) throws CustomException{
         String sql = "";
@@ -284,4 +286,63 @@ public class UserDAO {
         }
         return users;
     }
+    */
+
+    /**
+     * Teste para o Gustavo
+     * 
+     * @param nomeProcura
+     * @param param
+     * @return
+     * @throws CustomException
+     */
+
+    public List<User> getUsersRoom(String nomeProcura, int param) throws CustomException{
+        String sql = "SELECT * FROM users WHERE ? = ?";
+
+        List<User> users = new ArrayList<>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        Integer id;
+        String nome;
+        Integer room1;
+        Integer room2;
+        Integer coffee1;
+        Integer coffee2;
+        try {
+            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt.setString(1,nomeProcura);
+            pstmt.setInt(2, param);
+            pstmt.execute();
+            rs = pstmt.getResultSet();
+            while (rs.next()){
+                id = rs.getInt("id");
+                nome = rs.getString("name");
+                room1 = rs.getInt("id_room1");
+                room2 = rs.getInt("id_room2");
+                coffee1 = rs.getInt("id_coffee1");
+                coffee2 = rs.getInt("id_coffee2");
+                User user = new User( id, nome,
+                        new RoomDAO().getRoom(room1),
+                        new RoomDAO().getRoom(room2),
+                        new CoffeeDAO().getCoffee(coffee1),
+                        new CoffeeDAO().getCoffee(coffee2));
+                users.add(user);
+            }
+        }catch (Exception error){
+            throw new CustomException("Erro ao selecionar os Usuários: " + error.getMessage());
+        } finally{
+            try{
+                if (stmt != null && !stmt.isClosed()){
+                    stmt.close();
+                }
+                if (rs != null && !rs.isClosed()){
+                    rs.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionDatabase();
+        }
+        return users;
+    }
+
 }
