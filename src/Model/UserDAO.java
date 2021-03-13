@@ -298,7 +298,7 @@ public class UserDAO {
      */
 
     public List<User> getUsersRoom(String nomeProcura, int param) throws CustomException{
-        String sql = "SELECT * FROM users WHERE ? = ?";
+        String sql = "SELECT * FROM users WHERE " + nomeProcura + " = ?" ;
 
         List<User> users = new ArrayList<>();
         Statement stmt = null;
@@ -310,9 +310,8 @@ public class UserDAO {
         Integer coffee1;
         Integer coffee2;
         try {
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setString(1,nomeProcura);
-            pstmt.setInt(2, param);
+            pstmt = ConnectionFactory.connectExtra().prepareStatement(sql);
+            pstmt.setInt(1, param);
             pstmt.execute();
             rs = pstmt.getResultSet();
             while (rs.next()){
