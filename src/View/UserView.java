@@ -9,12 +9,12 @@ package View;
  *
  * @author Administrador
  */
-public class Home extends javax.swing.JFrame {
+public class UserView extends javax.swing.JFrame {
 
     /**
      * Creates new form Home
      */
-    public Home() {
+    public UserView() {
         initComponents();
     }
 
@@ -30,14 +30,13 @@ public class Home extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         sala3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         btn_eventos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         aluno3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        cadastrarAluno = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
         cadastrarAluno1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaSala = new javax.swing.JTable();
@@ -45,9 +44,7 @@ public class Home extends javax.swing.JFrame {
         salaPesquisada = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(900, 610));
         setMinimumSize(new java.awt.Dimension(900, 610));
-        setPreferredSize(new java.awt.Dimension(873, 610));
         getContentPane().setLayout(null);
 
         jPanel6.setBackground(new java.awt.Color(54, 33, 89));
@@ -62,29 +59,29 @@ public class Home extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("PESQUISAR ESPAÇO");
+        jLabel11.setText("ESPAÇOS");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         javax.swing.GroupLayout sala3Layout = new javax.swing.GroupLayout(sala3);
         sala3.setLayout(sala3Layout);
         sala3Layout.setHorizontalGroup(
             sala3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sala3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel8)
-                .addGap(43, 43, 43)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel13)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel11)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         sala3Layout.setVerticalGroup(
             sala3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sala3Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(sala3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
+                    .addComponent(jLabel13)
                     .addComponent(jLabel11))
                 .addGap(29, 29, 29))
         );
@@ -98,29 +95,29 @@ public class Home extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("PESQUISA SALA");
+        jLabel1.setText("SALAS");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         javax.swing.GroupLayout btn_eventosLayout = new javax.swing.GroupLayout(btn_eventos);
         btn_eventos.setLayout(btn_eventosLayout);
         btn_eventosLayout.setHorizontalGroup(
             btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_eventosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel7)
-                .addGap(45, 45, 45)
+                .addGap(42, 42, 42)
+                .addComponent(jLabel10)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         btn_eventosLayout.setVerticalGroup(
             btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_eventosLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
+                    .addComponent(jLabel10)
                     .addComponent(jLabel1))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -134,40 +131,32 @@ public class Home extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel12.setText("PESQUISAR ALUNO");
+        jLabel12.setText("PESSOAS");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         javax.swing.GroupLayout aluno3Layout = new javax.swing.GroupLayout(aluno3);
         aluno3.setLayout(aluno3Layout);
         aluno3Layout.setHorizontalGroup(
             aluno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aluno3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel9)
-                .addGap(48, 48, 48)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel14)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel12)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         aluno3Layout.setVerticalGroup(
             aluno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aluno3Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(aluno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
+                .addGap(15, 15, 15)
+                .addGroup(aluno3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14)
                     .addComponent(jLabel12))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
-
-        cadastrarAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/iconmonstr-friend-2-24.png"))); // NOI18N
-        cadastrarAluno.setText("CADASTRAR ALUNO");
-        cadastrarAluno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarAlunoActionPerformed(evt);
-            }
-        });
 
         cadastrarAluno1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/iconmonstr-friend-2-24.png"))); // NOI18N
         cadastrarAluno1.setText("CADASTRAR SALA");
@@ -186,9 +175,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(aluno3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cadastrarAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cadastrarAluno1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cadastrarAluno1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
         jPanel6Layout.setVerticalGroup(
@@ -200,9 +187,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(sala3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(aluno3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(cadastrarAluno)
-                .addGap(18, 18, 18)
+                .addGap(111, 111, 111)
                 .addComponent(cadastrarAluno1)
                 .addContainerGap(108, Short.MAX_VALUE))
         );
@@ -212,13 +197,10 @@ public class Home extends javax.swing.JFrame {
 
         tabelaSala.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "NOME", "LOTAÇÃO"
             }
         ));
         jScrollPane1.setViewportView(tabelaSala);
@@ -242,7 +224,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btn_eventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eventosMouseClicked
         // TODO add your handling code here:
-        new Home().setVisible(true);
+        new UserView().setVisible(true);
         dispose();
 
     }//GEN-LAST:event_btn_eventosMouseClicked
@@ -253,11 +235,6 @@ public class Home extends javax.swing.JFrame {
         dispose();
 
     }//GEN-LAST:event_aluno3MouseClicked
-
-    private void cadastrarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarAlunoActionPerformed
-        // TODO add your handling code here:
-        new CadastroNovoAluno().setVisible(true);
-    }//GEN-LAST:event_cadastrarAlunoActionPerformed
 
     private void cadastrarAluno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarAluno1ActionPerformed
         // TODO add your handling code here:
@@ -291,52 +268,38 @@ public class Home extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home().setVisible(true);
+                new UserView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel aluno;
-    private javax.swing.JPanel aluno1;
     private javax.swing.JPanel aluno3;
     private javax.swing.JPanel btn_eventos;
-    private javax.swing.JButton cadastrarAluno;
     private javax.swing.JButton cadastrarAluno1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton pesquisarSala;
-    private javax.swing.JPanel sala;
-    private javax.swing.JPanel sala1;
     private javax.swing.JPanel sala3;
     private javax.swing.JTextField salaPesquisada;
     private javax.swing.JTable tabelaSala;

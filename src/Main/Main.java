@@ -1,10 +1,8 @@
 package Main;
 
 import CustomExceptions.CustomException;
-import Database.ConnectionFactory;
 import Database.DatabaseCreator;
-import Test.Model.TestCoffee;
-import Test.Model.TestCoffeeDAO;
+import View.UserView;
 import View.ViewTest;
 
 public class Main {
@@ -43,7 +41,7 @@ public class Main {
          }
          //*/
 
-        ViewTest view = new ViewTest();
-        view.run();
+        UserView view = new UserView();
+        
     }
 }

@@ -52,14 +52,13 @@ public class Find extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         sala = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         btn_eventos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         aluno = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        cadastrarAluno = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         cadastrarAluno1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaEspaco = new javax.swing.JTable();
@@ -79,31 +78,31 @@ public class Find extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("PESQUISAR ESPAÇO");
+        jLabel2.setText("ESPAÇOS");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         org.jdesktop.layout.GroupLayout salaLayout = new org.jdesktop.layout.GroupLayout(sala);
         sala.setLayout(salaLayout);
         salaLayout.setHorizontalGroup(
             salaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(salaLayout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, salaLayout.createSequentialGroup()
                 .add(31, 31, 31)
-                .add(jLabel8)
-                .add(43, 43, 43)
+                .add(jLabel6)
+                .add(33, 33, 33)
                 .add(jLabel2)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         salaLayout.setVerticalGroup(
             salaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, salaLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .add(salaLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jLabel8)
-                    .add(jLabel2))
-                .add(29, 29, 29))
+                    .add(jLabel2)
+                    .add(jLabel6))
+                .add(24, 24, 24))
         );
 
         btn_eventos.setBackground(new java.awt.Color(54, 33, 89));
@@ -115,29 +114,29 @@ public class Find extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("PESQUISA SALA");
+        jLabel1.setText("SALAS");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         org.jdesktop.layout.GroupLayout btn_eventosLayout = new org.jdesktop.layout.GroupLayout(btn_eventos);
         btn_eventos.setLayout(btn_eventosLayout);
         btn_eventosLayout.setHorizontalGroup(
             btn_eventosLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(btn_eventosLayout.createSequentialGroup()
-                .add(32, 32, 32)
-                .add(jLabel7)
-                .add(45, 45, 45)
+                .add(28, 28, 28)
+                .add(jLabel9)
+                .add(34, 34, 34)
                 .add(jLabel1)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         btn_eventosLayout.setVerticalGroup(
             btn_eventosLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(btn_eventosLayout.createSequentialGroup()
                 .add(26, 26, 26)
                 .add(btn_eventosLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jLabel7)
+                    .add(jLabel9)
                     .add(jLabel1))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -151,35 +150,32 @@ public class Find extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel3.setText("PESQUISAR ALUNO");
+        jLabel3.setText("PESSOAS");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/LUPA.jpg"))); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
 
         org.jdesktop.layout.GroupLayout alunoLayout = new org.jdesktop.layout.GroupLayout(aluno);
         aluno.setLayout(alunoLayout);
         alunoLayout.setHorizontalGroup(
             alunoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(alunoLayout.createSequentialGroup()
-                .add(26, 26, 26)
-                .add(jLabel9)
-                .add(48, 48, 48)
+                .add(33, 33, 33)
+                .add(jLabel5)
+                .add(30, 30, 30)
                 .add(jLabel3)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         alunoLayout.setVerticalGroup(
             alunoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(alunoLayout.createSequentialGroup()
-                .add(23, 23, 23)
-                .add(alunoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel9)
+                .add(15, 15, 15)
+                .add(alunoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jLabel5)
                     .add(jLabel3))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
-
-        cadastrarAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/iconmonstr-friend-2-24.png"))); // NOI18N
-        cadastrarAluno.setText("CADASTRAR ALUNO");
 
         cadastrarAluno1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/iconmonstr-friend-2-24.png"))); // NOI18N
         cadastrarAluno1.setText("CADASTRAR SALA");
@@ -192,10 +188,8 @@ public class Find extends javax.swing.JFrame {
             .add(btn_eventos, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(aluno, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(cadastrarAluno, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(cadastrarAluno1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE)
+                .add(cadastrarAluno1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(50, 50, 50))
         );
         jPanel3Layout.setVerticalGroup(
@@ -207,11 +201,9 @@ public class Find extends javax.swing.JFrame {
                 .add(sala, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(aluno, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(54, 54, 54)
-                .add(cadastrarAluno)
-                .add(33, 33, 33)
+                .add(120, 120, 120)
                 .add(cadastrarAluno1)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel3);
@@ -219,10 +211,7 @@ public class Find extends javax.swing.JFrame {
 
         tabelaEspaco.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -255,7 +244,7 @@ public class Find extends javax.swing.JFrame {
 
     private void btn_eventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eventosMouseClicked
         // TODO add your handling code here:
-        new Home().setVisible(true);
+        new UserView().setVisible(true);
         dispose();
       
     }//GEN-LAST:event_btn_eventosMouseClicked
@@ -314,14 +303,13 @@ public class Find extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aluno;
     private javax.swing.JPanel btn_eventos;
-    private javax.swing.JButton cadastrarAluno;
     private javax.swing.JButton cadastrarAluno1;
     private javax.swing.JTextField espacoPesquisado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

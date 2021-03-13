@@ -10,7 +10,7 @@ package View;
  * @author Administrador
  */
 public class CadastroNovoAluno extends javax.swing.JFrame {
-
+ 
     /**
      * Creates new form CadastroNovoAluno
      */

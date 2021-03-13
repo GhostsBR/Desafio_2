@@ -36,4 +36,14 @@ public class RoomController {
             throw new CustomException("Erro ao enviar as Salas para salvar no banco de dados: " + error.getMessage());
         }
     }
+    
+    public static List<Room> findRooms() throws CustomException{
+        List<Room> rooms;
+        try{
+            rooms = new RoomDAO().getRooms();
+        } catch(Exception error){
+            throw new CustomException("Erro ao consultar no banco de dados: " + error.getMessage());
+        }
+        return rooms;
+    }
 }
