@@ -3,6 +3,8 @@ package Controller;
 import CustomExceptions.CustomException;
 import Model.Room;
 import Model.RoomDAO;
+import Model.User;
+import Model.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +40,28 @@ public class RoomController {
     }
     
     public static List<Room> findRooms() throws CustomException{
-        List<Room> rooms;
-        try{
-            rooms = new RoomDAO().getRooms();
-        } catch(Exception error){
-            throw new CustomException("Erro ao consultar no banco de dados: " + error.getMessage());
+        RoomDAO rd = new RoomDAO();
+        UserDAO ud = new UserDAO();
+
+        List<Room> rooms = rd.getRooms();
+        List<User> us = ud.getUsers();
+        for (int i=0; i < rooms.size(); i++) {
+            System.out.println("Buscou sala");
+            List<User> e1 = new ArrayList<User>();
+            List<User> e2 = new ArrayList<User>();
+            for (int n=0; n < ud.getUsers().size(); n++) {
+                System.out.println("Buscou user");
+                if(rooms.get(i).getIdRoom() == us.get(n).getRoom1User().getIdRoom()) {
+                    e1.add(ud.getUsers().get(n));
+                }
+                if(rooms.get(i).getIdRoom() == us.get(n).getRoom2User().getIdRoom()) {
+                    e2.add(ud.getUsers().get(n));
+                }
+            }
+            rooms.get(i).setUsersStage1(e1);
+            rooms.get(i).setUsersStage1(e2);
         }
+
         return rooms;
     }
 }
