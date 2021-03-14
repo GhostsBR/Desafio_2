@@ -40,28 +40,20 @@ public class RoomController {
     }
     
     public static List<Room> findRooms() throws CustomException{
-        RoomDAO rd = new RoomDAO();
-        UserDAO ud = new UserDAO();
+        try {
+            RoomDAO rd = new RoomDAO();
+            UserDAO ud = new UserDAO();
 
-        List<Room> rooms = rd.getRooms();
-        List<User> us = ud.getUsers();
-        for (int i=0; i < rooms.size(); i++) {
-            System.out.println("Buscou sala");
-            List<User> e1 = new ArrayList<User>();
-            List<User> e2 = new ArrayList<User>();
-            for (int n=0; n < ud.getUsers().size(); n++) {
-                System.out.println("Buscou user");
-                if(rooms.get(i).getIdRoom() == us.get(n).getRoom1User().getIdRoom()) {
-                    e1.add(ud.getUsers().get(n));
-                }
-                if(rooms.get(i).getIdRoom() == us.get(n).getRoom2User().getIdRoom()) {
-                    e2.add(ud.getUsers().get(n));
-                }
+            List<Room> rooms = rd.getRooms();
+            for (int i=0; i < rooms.size(); i++) {
+                rooms.get(i).setUsersStage1(ud.getUsersRoom("id_room1", rooms.get(i).getIdRoom()));
+                rooms.get(i).setUsersStage2(ud.getUsersRoom("id_room2", rooms.get(i).getIdRoom()));
             }
-            rooms.get(i).setUsersStage1(e1);
-            rooms.get(i).setUsersStage1(e2);
-        }
 
-        return rooms;
+
+            return rooms;
+        } catch (CustomException error) {
+            throw new CustomException("ERRO: " + error.getMessage());
+        }
     }
 }
