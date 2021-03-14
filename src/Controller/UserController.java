@@ -106,11 +106,14 @@ public class UserController {
                 System.out.println("Erro ao definir o número de usuários na sala 1: " + error.getMessage());
             }
             users.get(i).setPositionRoom(room);
+            users.get(i).setIdTemp(i);
+            rooms.get(room).setUsers(users.get(i));
             rooms.get(room).setQuantity1(rooms.get(room).getQuantity1() + 1);
 
 
             room++;
         }
+
 
         for(int i=0; i < users.size(); i++) {
             if(coffee >= coffees.size()) {
@@ -126,6 +129,7 @@ public class UserController {
             coffee++;
         }
 
+        /*
         for(int i=0; i < users.size(); i++) {
             room2 = (users.get(i).getPositionRoom() + 1);
             if(room2 >= rooms.size()) {
@@ -153,6 +157,46 @@ public class UserController {
                 System.out.println("Erro ao definir o número de usuários na sala 2: " + error.getMessage());
             }
         }
+
+         */
+
+        for (int i=0; i < rooms.size(); i++) {
+            room2++;
+            for (int n=0; n < rooms.get(i).getUsers().size(); n++) {
+                if(room2 >= rooms.size()) {
+                    room2 = 0;
+                }
+
+                /*
+                if(rooms.get(room2).getCapacityRoom() == smallestRoom) {
+                    if((rooms.get(room2).getQuantity2() + 1) > (smallestRoom)) {
+                        room2 = verifyBetterRoom(rooms,2, smallestRoom);
+                    }
+                } else {
+                    if((rooms.get(room2).getQuantity2() + 1) > (rooms.get(room2).getCapacityRoom() + 1)) {
+                        room2 = verifyBetterRoom(rooms, 2, smallestRoom);
+                    }
+                }
+
+                 */
+
+                if(room2 >= rooms.size()) {
+                    room2 = 0;
+                }
+
+
+                rooms.get(room2).setQuantity2(rooms.get(room2).getQuantity2() + 1);
+
+                try {
+                    users.get(rooms.get(i).getUsers().get(n).getIdTemp()).setRoom2User(rooms.get(room2));
+                } catch (CustomException error) {
+                    System.out.println("Erro ao definir o número de usuários na sala 2: " + error.getMessage());
+                }
+
+                room2++;
+            }
+        }
+
 
         for(int i=0; i < users.size(); i++) {
             coffee2 = (users.get(i).getPosictonCoffee() + 1);
