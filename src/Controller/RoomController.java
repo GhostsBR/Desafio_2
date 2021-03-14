@@ -50,7 +50,6 @@ public class RoomController {
                 rooms.get(i).setUsersStage2(ud.getUsersRoom("id_room2", rooms.get(i).getIdRoom()));
             }
 
-
             return rooms;
         } catch (CustomException error) {
             throw new CustomException("ERRO: " + error.getMessage());

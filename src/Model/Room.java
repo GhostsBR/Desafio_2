@@ -49,6 +49,11 @@ public class Room {
     private List<User> usersStage2;
 
     /**
+     *
+     */
+    private List<User> users;
+
+    /**
      * Construtor vazio da classe Room.
      */
     public Room() {};
@@ -256,5 +261,21 @@ public class Room {
         }
         users = users.substring(0, users.length() - 2);
         return users;
+    }
+
+    /**
+     *
+     * @return Lista de usuários
+     */
+    public List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     *
+     * @param user User
+     */
+    public void setUsers(User user) {
+        this.users.add(user);
     }
 }
