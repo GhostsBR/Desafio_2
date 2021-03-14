@@ -98,6 +98,8 @@ public class User {
      * @param id Integer
      */
     public void setIdUser(Integer id) throws CustomException {
+        this.idUser = id;
+        /*
         if (id != null) {
             if (id > 0) {
                 this.idUser = id;
@@ -106,7 +108,7 @@ public class User {
             }
         } else {
             throw new CustomException("Erro: informado um Id nulo!");
-        }
+        }*/
     }
 
     /**
