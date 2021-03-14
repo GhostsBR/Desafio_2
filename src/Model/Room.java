@@ -51,7 +51,7 @@ public class Room {
     /**
      *
      */
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
 
     /**
      * Construtor vazio da classe Room.
