@@ -133,7 +133,7 @@ public class Coffee {
         for (User u: usersStage1) {
             users += u.getNameUser() + ", ";
         }
-        users = users.substring(0, users.length() - 3);
+        users = users.substring(0, users.length() - 2);
         return users;
     }
 
@@ -142,7 +142,7 @@ public class Coffee {
         for (User u: usersStage2) {
             users += u.getNameUser() + ", ";
         }
-        users = users.substring(0, users.length() - 3);
+        users = users.substring(0, users.length() - 2);
         return users;
     }
 }
