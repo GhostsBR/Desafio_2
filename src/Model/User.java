@@ -49,6 +49,8 @@ public class User {
      */
     private Integer positionCoffee = 0;
 
+    private Integer idTemp = 0;
+
     /**
      * Construtor vazio da classe User
      */
@@ -290,5 +292,13 @@ public class User {
      */
     public Integer getPosictonCoffee() {
         return this.positionCoffee;
+    }
+
+    public Integer getIdTemp() {
+        return idTemp;
+    }
+
+    public Integer getPositionCoffee() {
+        return positionCoffee;
     }
 }
