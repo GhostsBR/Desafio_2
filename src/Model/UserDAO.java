@@ -3,12 +3,10 @@ package Model;
 import CustomExceptions.CustomException;
 import Database.ConnectionFactory;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,11 +29,10 @@ public class UserDAO {
      *
      * Cadastra um novo usuário no banco utilizando um objeto User.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      *
      * @param user User
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void createUser(User user) throws CustomException{
         try{
@@ -61,13 +58,15 @@ public class UserDAO {
     }
 
     /**
-     * Método para deletar um Usuário do banco de dados
+     * Método para deletar um Usuário do banco de dados.
+     *
      * Neste caso, somente é requerido um ID para o comando
      * do SQL, portanto não é necessário passar um objeto.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     * @author João
      *
      * @param id Integer
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void deleteUser(int id) throws CustomException{
         try{
@@ -117,13 +116,15 @@ public class UserDAO {
     }
 
     /**
-     * Método para atualizar as Salas e Espaços de um Usuário
-     * utilizando um objeto User, onde o idUser será utilizado para
-     * controlar qual Usuário será modificado
+     * Método para atualizar um Usuário.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
+     * Atualiza os dados de um usuário no banco, até mesmo as suas salas
+     * e espaços em cada etapa.
+     *
+     * @author João
      *
      * @param user User
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void updateRoomCoffeeUser(User user) throws CustomException{
         try {
@@ -156,12 +157,11 @@ public class UserDAO {
      *
      * Obs: Retorna uma lista vazia caso nenhum Usuário esteja cadastrado.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @return List<User> Lista de usuários
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public List<User> getUsers() throws CustomException{
         List<User> users = new ArrayList<>();
@@ -202,11 +202,10 @@ public class UserDAO {
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionDatabase();
+            ConnectionFactory.closeConnectionDatabaseExtra();
         }
         return users;
     }
-
 
     /*
     /**
@@ -289,59 +288,52 @@ public class UserDAO {
     */
 
     /**
-     * Teste para o Gustavo
+     * Retorna uma lista de Usuários a partir de um identificador de Sala ou Espaço.
+     *
+     * Retorna uma lista de Usuários que estarão lotados na sala ou espaço e na etapa pesquisados.
+     * O parâmetro "param" é utilizado para determinar a sala ou espaço requerido da seguinte forma:
+     * "id_room1" -> Sala da Primeira etapa
+     * "id_room1" -> Sala da Segunda etapa
+     * "id_coffee1" -> Espaço de Café da primeira etapa
+     * "id_coffee2" -> Espaço de Café da segunda etapa
+     * O parâmetro id será da sala ou espaço pesquisado.
      * 
-     * @param nomeProcura
-     * @param param
-     * @return
-     * @throws CustomException
+     * @param param String sala ou espaço e etapa pesquisados
+     * @param id Integer
+     * @return Lista de User
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-
-    public List<User> getUsersRoom(String nomeProcura, int param) throws CustomException{
-        String sql = "SELECT * FROM users WHERE " + nomeProcura + " = ?" ;
-
+    public List<User> getUsersRoom(String param, int id) throws CustomException{
         List<User> users = new ArrayList<>();
-        Statement stmt = null;
         ResultSet rs = null;
-        Integer id;
-        String nome;
-        Integer room1;
-        Integer room2;
-        Integer coffee1;
-        Integer coffee2;
         try {
+            String sql = "SELECT * FROM users WHERE " + param + " = ?" ;
             pstmt = ConnectionFactory.connectExtra().prepareStatement(sql);
-            pstmt.setInt(1, param);
+            pstmt.setInt(1, id);
             pstmt.execute();
             rs = pstmt.getResultSet();
             while (rs.next()){
-                id = rs.getInt("id");
-                nome = rs.getString("name");
-                room1 = rs.getInt("id_room1");
-                room2 = rs.getInt("id_room2");
-                coffee1 = rs.getInt("id_coffee1");
-                coffee2 = rs.getInt("id_coffee2");
-                User user = new User( id, nome,
-                        new RoomDAO().getRoom(room1),
-                        new RoomDAO().getRoom(room2),
-                        new CoffeeDAO().getCoffee(coffee1),
-                        new CoffeeDAO().getCoffee(coffee2));
+                User user = new User( rs.getInt("id"),
+                        rs.getString("name"),
+                        new RoomDAO().getRoom(rs.getInt("id_room1")),
+                        new RoomDAO().getRoom(rs.getInt("id_room2")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee1")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee2")));
                 users.add(user);
             }
         }catch (Exception error){
             throw new CustomException("Erro ao selecionar os Usuários: " + error.getMessage());
         } finally{
             try{
-                if (stmt != null && !stmt.isClosed()){
-                    stmt.close();
+                if (pstmt != null && !pstmt.isClosed()){
+                    pstmt.close();
                 }
                 if (rs != null && !rs.isClosed()){
                     rs.close();
                 }
             } catch (Exception error){}
-            ConnectionFactory.closeConnectionDatabase();
+            ConnectionFactory.closeConnectionDatabaseExtra();
         }
         return users;
     }
-
 }

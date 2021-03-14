@@ -26,29 +26,15 @@ public class CoffeeDAO {
     private PreparedStatement pstmt = null;
 
     /**
-    //Cria uma nova entrada na tabela de Espaços de Café.
-    public void createCoffee(String name) throws CustomException{
-        try {
-            String sql = "INSERT INTO coffees (name) VALUES (?)";
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setString(1,name);
-            pstmt.execute();
-        }catch (Exception error){
-            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
-        }
-    }*/
-
-    /**
      * Método para registrar no banco um novo Espaço de Café.
      *
      * Cadastra um novo espaço de café no banco utilizando um objeto Coffee.
-     *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
      *
      * @author João
      * @author Thiago
      *
      * @param coffee Coffee
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void createCoffee(Coffee coffee) throws CustomException{
         try {
@@ -78,12 +64,11 @@ public class CoffeeDAO {
      *
      * Exclui um Espaço de café do banco de dados usando o ID.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @param id Integer
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void deleteCoffee (int id) throws CustomException{
         try {
@@ -104,36 +89,16 @@ public class CoffeeDAO {
     }
 
     /**
-    //Atualiza uma entrada na tabela de Espaços de Café.
-    public void updateCoffee (int id, String name) throws CustomException{
-        try {
-            // Define o comando SQL
-            String sql = "UPDATE coffees SET name=? WHERE id = ?";
-            // Pega uma conexão do banco e gera um PreparedStatement
-            PreparedStatement pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            // Define os paramêtros do comando SQL
-            pstmt.setString(1,name);
-            // Define os paramêtros do comando SQL
-            pstmt.setInt(2,id);
-            // Executa o comando SQL para alterar no banco
-            pstmt.execute();
-        }catch (Exception error){
-            throw new CustomException("Erro ao atualizar o Espaço de Café. Erro: " + error.getMessage());
-        }
-    }*/
-
-    /**
      * Método para alterar o Espaço de Café.
      *
      * Realiza alterações dos dados de Espaço de café no banco,
      * utilizando um objeto Coffee.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @param coffee Coffee
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void updateCoffee (Coffee coffee) throws CustomException{
         try {
@@ -162,12 +127,11 @@ public class CoffeeDAO {
      * Obs: retorna uma lista vazia caso nenhum Espaço
      * de Café seja encontrado no banco!
      *
-     * @exception CustomException se ocorrer erro de SQL ou no Statement
-     *
      * @author João
      * @author Thiago
      *
      * @return List<Coffee> Lista de Espaços de café
+     * @throws CustomException se ocorrer erro de SQL ou no Statement
      */
     public List<Coffee> getCoffees() throws CustomException{
         List<Coffee> coffes = new ArrayList<Coffee>();
@@ -205,12 +169,12 @@ public class CoffeeDAO {
      * Obs: retorna um objeto vazio caso nenhum Espaço
      * de Café seja encontrado no banco!
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
+     * @param id Integer
      * @return Coffee
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public Coffee getCoffee(Integer id) throws CustomException{
         Coffee coffee = new Coffee();

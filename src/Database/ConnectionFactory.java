@@ -59,12 +59,11 @@ public class ConnectionFactory {
      * se a conexão já está aberta, retornando-a em caso positivo. Caso esta não
      * esteja aberta, cria uma nova conexão e a retorna.
      *
-     * @exception CustomException se connectMySQL for nulo
-     *
      * @author João
      * @author Thiago
      *
      * @return Connection nova conexão com o MySQL
+     * @throws CustomException se connectMySQL for nulo
      */
     public static Connection preConnect() throws CustomException {
         if (connectMySQL == null){
@@ -89,12 +88,11 @@ public class ConnectionFactory {
      * verifica se a conexão já está aberta, retornando-a em caso positivo. Caso esta
      * não esteja aberta, cria uma nova conexão e a retorna.
      *
-     * @exception CustomException se connectDatabase for nulo
-     *
      * @author João
      * @author Thiago
      *
      * @return Connection nova conexão com o banco de dados
+     * @throws CustomException se connectDatabase for nulo
      */
     public static Connection connect() throws CustomException{
         if (connectDatabase == null){
@@ -119,12 +117,11 @@ public class ConnectionFactory {
      * verifica se a conexão já está aberta, retornando-a em caso positivo. Caso esta
      * não esteja aberta, cria uma nova conexão e a retorna.
      *
-     * @exception CustomException se connectDatabase for nulo
-     *
      * @author João
      * @author Thiago
      *
      * @return Connection nova conexão extra com o banco de dados
+     * @throws CustomException se connectDatabase for nulo
      */
     public static Connection connectExtra() throws CustomException{
         if (connectDatabaseExtra == null){
@@ -147,9 +144,8 @@ public class ConnectionFactory {
      * Gera uma nova conexão ao MySQL através dos dados da URL,
      * usuário e senha.
      *
-     * @exception CustomException se ocorrer erros de acesso ao MySQL
-     *
      * @author Thiago
+     * @throws CustomException se ocorrer erros de acesso ao MySQL
      */
     private static void newConnectionMySQL() throws CustomException{
         try {
@@ -165,9 +161,8 @@ public class ConnectionFactory {
      * Gera uma nova conexão ao banco de dados através dos dados da URL,
      * usuário e senha.
      *
-     * @exception CustomException se ocorrer erros de acesso ao banco de dados
-     *
      * @author Thiago
+     * @throws CustomException se ocorrer erros de acesso ao banco de dados
      */
     private static void newConnectionDatabase() throws CustomException{
         try {
@@ -183,9 +178,8 @@ public class ConnectionFactory {
      * Gera uma nova conexão ao banco de dados através dos dados da URL,
      * usuário e senha.
      *
-     * @exception CustomException se ocorrer erros de acesso ao banco de dados
-     *
      * @author Thiago
+     * @throws CustomException se ocorrer erros de acesso ao banco de dados
      */
     private static void newConnectionDatabaseExtra() throws CustomException{
         try {
@@ -201,9 +195,8 @@ public class ConnectionFactory {
      * Deve ser chamado toda vez que finalizar o processo de utilização
      * da conexão ao MySQL.
      *
-     * @exception CustomException se connectMySQL for nulo
-     *
      * @author Thiago
+     * @throws CustomException se connectMySQL for nulo
      */
     public static void closeConnectionMySQL() throws CustomException{
         try{
@@ -219,9 +212,8 @@ public class ConnectionFactory {
      * Deve ser chamado toda vez que finalizar o processo de utilização
      * da conexão ao banco de dados.
      *
-     * @exception CustomException se connectMySQL for nulo
-     *
      * @author Thiago
+     * @throws CustomException se connectMySQL for nulo
      */
     public static void closeConnectionDatabase() throws CustomException{
         try{
@@ -237,9 +229,8 @@ public class ConnectionFactory {
      * Deve ser chamado toda vez que finalizar o processo de utilização
      * da conexão ao banco de dados.
      *
-     * @exception CustomException se connectMySQL for nulo
-     *
      * @author Thiago
+     * @throws CustomException se connectMySQL for nulo
      */
     public static void closeConnectionDatabaseExtra() throws CustomException{
         try{

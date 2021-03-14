@@ -10,45 +10,57 @@ import CustomExceptions.CustomException;
 public class User {
 
     /**
-     * Atributo ID da pessoa
+     * Atributo ID da pessoa.
      */
     private Integer idUser;
 
     /**
-     * Atributo nome da pessoa
+     * Atributo nome da pessoa.
      */
     private String nameUser;
 
     /**
-     * Atributa da sala onde a pessoa vai estar na etapa 1
+     * Atributa da sala onde a pessoa vai estar na etapa 1.
      */
     private Room room1User;
 
     /**
-     * Atributa da sala onde a pessoa vai estar na etapa 2
+     * Atributa da sala onde a pessoa vai estar na etapa 2.
      */
     private Room room2User;
 
     /**
-     * Atributa do espaço onde a pessoa vai estar na etapa 1
+     * Atributa do espaço onde a pessoa vai estar na etapa 1.
      */
     private Coffee coffee1User;
 
     /**
-     * Atributa do espaço onde a pessoa vai estar na etapa 2
+     * Atributa do espaço onde a pessoa vai estar na etapa 2.
      */
     private Coffee coffee2User;
 
     /**
+     * Atributo positionRoom da classe User.
      *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Não é salvo em banco de dados.
      */
     private Integer positionRoom = 0;
 
     /**
+     * Atributo positionCoffee da classe User.
      *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Não é salvo em banco de dados.
      */
     private Integer positionCoffee = 0;
 
+    /**
+     * Atributo idTemp da classe User.
+     *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Não é salvo em banco de dados.
+     */
     private Integer idTemp = 0;
 
     /**
@@ -93,13 +105,11 @@ public class User {
     /**
      * Método Setter do atributo idUser.
      *
-     * Define o valor do Id do User realizando validação para valores negativos, nulos e zero.
-     *
-     * @exception CustomException quando for informado um valor inválido
+     * Define o valor do Id do User.
      *
      * @param id Integer
      */
-    public void setIdUser(Integer id) throws CustomException {
+    public void setIdUser(Integer id) {
         this.idUser = id;
         /*
         if (id != null) {
@@ -128,9 +138,8 @@ public class User {
      * Define um valor para o nome do User realizando validação para textos vazios,
      * somente espaços, menos de 50 caracteres ou valor nulo.
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @param name String
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setNameUser(String name) throws CustomException {
         if (name != null) {
@@ -159,9 +168,8 @@ public class User {
      *
      * Define um Room correspondente a Sala onde a pessoa ficará durante a Etapa 1
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @param room1 Room
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setRoom1User(Room room1) throws CustomException{
         if (room1 != null) {
@@ -185,9 +193,8 @@ public class User {
      *
      * Define um Room correspondente a Sala onde a pessoa ficará durante a Etapa 2
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @param room2 Room
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setRoom2User(Room room2) throws CustomException{
         if(room2 != null){
@@ -211,9 +218,8 @@ public class User {
      *
      * Define um Coffee correspondente ao Espaço onde a pessoa ficará durante a Etapa 1
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @param coffee1 Coffee
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setCoffee1User(Coffee coffee1) throws CustomException{
         if(coffee1 != null){
@@ -237,9 +243,8 @@ public class User {
      *
      * Define um Coffee correspondente ao Espaço onde a pessoa ficará durante a Etapa 2
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @param coffee2 Coffee
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setCoffee2User(Coffee coffee2) throws CustomException{
         if(coffee2 != null){
@@ -290,14 +295,22 @@ public class User {
      *
      * @return Integer
      */
-    public Integer getPosictonCoffee() {
+    public Integer getPositionCoffee() {
         return this.positionCoffee;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getIdTemp() {
         return idTemp;
     }
 
+    /**
+     *
+     * @param idTemp
+     */
     public void setIdTemp(Integer idTemp) {
         this.idTemp = idTemp;
     }
