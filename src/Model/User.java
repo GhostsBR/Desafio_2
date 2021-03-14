@@ -298,7 +298,7 @@ public class User {
         return idTemp;
     }
 
-    public Integer getPositionCoffee() {
-        return positionCoffee;
+    public void setIdTemp(Integer idTemp) {
+        this.idTemp = idTemp;
     }
 }
