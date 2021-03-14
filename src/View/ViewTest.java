@@ -206,7 +206,7 @@ public class ViewTest {
         System.out.println("------------------------------------------------------------------------------------------------");
         System.out.println("\t|" + formatText("Pessoa") +
                             "| " + formatText("Sala Etapa 1") +
-                            "| " + formatText("Sala Etapa 1") +
+                            "| " + formatText("Sala Etapa 2") +
                             "| " + formatText("Espaço Café Etapa 1") +
                             "| " + formatText("Espaço Café Etapa 2") + "|");
         for (User u: pessoas) {
@@ -290,7 +290,7 @@ public class ViewTest {
             atualizarLotacao();
         } catch(CustomException error){
             System.out.println(error.getMessage());
-        } catch (InputMismatchException error){
+        } catch (Exception error){
             System.out.println("Informe um valor válido!");
         }
         System.out.println("***************************************************************************************************************************");
@@ -322,7 +322,7 @@ public class ViewTest {
             }
         } catch(CustomException error){
             System.out.println(error.getMessage());
-        } catch (InputMismatchException error){
+        } catch (Exception error){
             System.out.println("Informe um valor válido!");
         }
         System.out.println("***************************************************************************************************************************");
@@ -348,7 +348,7 @@ public class ViewTest {
             }
         } catch(CustomException error){
             System.out.println(error.getMessage());
-        } catch (InputMismatchException error){
+        } catch (Exception error){
             System.out.println("Informe um valor válido!");
         }
         System.out.println("***************************************************************************************************************************");

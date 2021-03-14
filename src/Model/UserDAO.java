@@ -128,7 +128,7 @@ public class UserDAO {
      */
     public void updateRoomCoffeeUser(User user) throws CustomException{
         try {
-            String sql = "UPDATE users SET name=?, id_room1=?, id_room2=?, id_coffee1=?, id_coffee1=? WHERE id =?";
+            String sql = "UPDATE users SET name=?, id_room1=?, id_room2=?, id_coffee1=?, id_coffee2=? WHERE id =?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setString(1,user.getNameUser());
             pstmt.setInt(2,user.getRoom1User().getIdRoom());
