@@ -38,7 +38,16 @@ public class RoomController {
             throw new CustomException("Erro ao enviar as Salas para salvar no banco de dados: " + error.getMessage());
         }
     }
-    
+
+    /**
+     * Método responsável retornar a lista de salas.
+     *
+     * Retorna uma lista de salas com uma lista de usuários presentes em cada turno.
+     *
+     * @return List<Room> Lista de Salas
+     *
+     * @throws CustomException
+     */
     public static List<Room> findRooms() throws CustomException{
         try {
             RoomDAO rd = new RoomDAO();

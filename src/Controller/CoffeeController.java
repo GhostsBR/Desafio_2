@@ -35,6 +35,15 @@ public class CoffeeController {
         }
     }
 
+    /**
+     * Método responsável por retornar uma lista de espaços.
+     *
+     * Retorna uma lista de espaços com uma lista de usuários presentes em cada turno.
+     *
+     * @return List<Coffee> Lista de Espaços
+     *
+     * @throws CustomException
+     */
     public static List<Coffee> findCoffees() throws CustomException{
         try {
             CoffeeDAO cd = new CoffeeDAO();
