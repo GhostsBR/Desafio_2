@@ -1,8 +1,7 @@
 package Controller;
 
 import CustomExceptions.CustomException;
-import Model.Coffee;
-import Model.CoffeeDAO;
+import Model.*;
 
 import java.util.List;
 
@@ -33,6 +32,23 @@ public class CoffeeController {
             }
         } catch(Exception error){
             throw new CustomException("Erro ao enviar os espaços para salvar no banco: " + error.getMessage());
+        }
+    }
+
+    public static List<Coffee> findCoffees() throws CustomException{
+        try {
+            CoffeeDAO cd = new CoffeeDAO();
+            UserDAO ud = new UserDAO();
+
+            List<Coffee> coffees = cd.getCoffees();
+            for (int i=0; i < coffees.size(); i++) {
+                coffees.get(i).setUsersStage1(ud.getUsersRoom("id_coffee1", coffees.get(i).getIdCoffee()));
+                coffees.get(i).setUsersStage2(ud.getUsersRoom("id_coffee2", coffees.get(i).getIdCoffee()));
+            }
+
+            return coffees;
+        } catch (CustomException error) {
+            throw new CustomException("ERRO: " + error.getMessage());
         }
     }
 }
