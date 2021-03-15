@@ -5,16 +5,15 @@
  */
 package View;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.table.DefaultTableModel;
-
 import Controller.RoomController;
 import CustomExceptions.CustomException;
 import Model.Room;
 import Model.RoomDAO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -28,7 +27,10 @@ public class UserView extends javax.swing.JFrame {
     public UserView() {
         initComponents();
 
-    readJTable();
+        DefaultTableModel modelo = (DefaultTableModel) tabelaSala.getModel();
+        tabelaSala.setRowSorter(new TableRowSorter(modelo));
+
+        readJTable();
 
     }
 
@@ -315,7 +317,7 @@ public class UserView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void iniciarPrograma() {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

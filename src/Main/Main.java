@@ -46,6 +46,6 @@ public class Main {
          //test.run();
          //*/
         
-       UserView.iniciarPrograma();
+        UserView view = new UserView();
     }
 }
