@@ -5,14 +5,6 @@
  */
 package View;
 
-import CustomExceptions.CustomException;
-import Model.User;
-import Model.UserDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
 /**
  *
  * @author Administrador
@@ -24,30 +16,6 @@ public class Aluno extends javax.swing.JFrame {
      */
     public Aluno() {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) tabelaAluno.getModel();
-        tabelaAluno.setRowSorter(new TableRowSorter(modelo));
-
-        try {
-            readJTableee();
-        } catch (CustomException ex) {
-            Logger.getLogger(CadastroAluno.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void readJTableee() throws CustomException {
-        DefaultTableModel modelo = (DefaultTableModel) tabelaAluno.getModel();
-        modelo.setRowCount(0);
-        UserDAO usdao = new UserDAO();
-
-        for (User user : usdao.getUsers()) {
-
-            modelo.addRow(new Object[]{
-                user.getIdUser(), user.getNameUser(), user.getRoom1User(), user.getRoom2User(),
-                user.getCoffee1User(), user.getCoffee2User()
-
-            });
-        }
     }
 
     /**
@@ -59,22 +27,21 @@ public class Aluno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaAluno = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         sala3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        btn_eventos = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         aluno3 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         cadastrarAluno1 = new javax.swing.JButton();
-        salaPesquisa = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lupaPesquisarAluno = new javax.swing.JButton();
         nomePesquisado = new javax.swing.JTextField();
-        btPesquisaPessoa = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaAluno = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -82,6 +49,21 @@ public class Aluno extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(873, 610));
         setPreferredSize(new java.awt.Dimension(873, 610));
         getContentPane().setLayout(null);
+
+        tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NOME", "IDADE"
+            }
+        ));
+        tabelaAluno.setMaximumSize(new java.awt.Dimension(870, 610));
+        tabelaAluno.setMinimumSize(new java.awt.Dimension(870, 610));
+        jScrollPane1.setViewportView(tabelaAluno);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(270, 0, 600, 300);
 
         jPanel6.setBackground(new java.awt.Color(54, 33, 89));
 
@@ -109,7 +91,7 @@ public class Aluno extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel11)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         sala3Layout.setVerticalGroup(
             sala3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +100,43 @@ public class Aluno extends javax.swing.JFrame {
                 .addGroup(sala3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel16)
                     .addComponent(jLabel11))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        btn_eventos.setBackground(new java.awt.Color(54, 33, 89));
+        btn_eventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eventosMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("SALAS");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
+
+        javax.swing.GroupLayout btn_eventosLayout = new javax.swing.GroupLayout(btn_eventos);
+        btn_eventos.setLayout(btn_eventosLayout);
+        btn_eventosLayout.setHorizontalGroup(
+            btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_eventosLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(jLabel14)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addContainerGap(133, Short.MAX_VALUE))
+        );
+        btn_eventosLayout.setVerticalGroup(
+            btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_eventosLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(btn_eventosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel1))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         aluno3.setBackground(new java.awt.Color(85, 65, 118));
@@ -165,107 +183,45 @@ public class Aluno extends javax.swing.JFrame {
             }
         });
 
-        salaPesquisa.setBackground(new java.awt.Color(54, 33, 89));
-        salaPesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                salaPesquisaMouseClicked(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel12.setText("SALAS");
-
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/WhatsApp Image 2021-03-12 at 17.26.12.jpeg"))); // NOI18N
-
-        javax.swing.GroupLayout salaPesquisaLayout = new javax.swing.GroupLayout(salaPesquisa);
-        salaPesquisa.setLayout(salaPesquisaLayout);
-        salaPesquisaLayout.setHorizontalGroup(
-            salaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, salaPesquisaLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel18)
-                .addGap(39, 39, 39)
-                .addComponent(jLabel12)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        salaPesquisaLayout.setVerticalGroup(
-            salaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(salaPesquisaLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(salaPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel12))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(sala3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_eventos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(aluno3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cadastrarAluno1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
-            .addComponent(salaPesquisa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(salaPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(115, 115, 115)
+                .addComponent(btn_eventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sala3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(aluno3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(133, 133, 133)
                 .addComponent(cadastrarAluno1)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel6);
         jPanel6.setBounds(0, 0, 270, 610);
-        getContentPane().add(nomePesquisado);
-        nomePesquisado.setBounds(460, 430, 220, 30);
 
-        btPesquisaPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/lupaPreta (1).png"))); // NOI18N
-        btPesquisaPessoa.addActionListener(new java.awt.event.ActionListener() {
+        lupaPesquisarAluno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/lupaPreta (1).png"))); // NOI18N
+        lupaPesquisarAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisaPessoaActionPerformed(evt);
+                lupaPesquisarAlunoActionPerformed(evt);
             }
         });
-        getContentPane().add(btPesquisaPessoa);
-        btPesquisaPessoa.setBounds(690, 430, 40, 30);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("NOME");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(400, 430, 50, 30);
-
-        tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "NOME", "SALA", "SALA 2", "Sala Café 1", "Sala Café 2"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tabelaAluno);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(270, 0, 600, 402);
+        getContentPane().add(lupaPesquisarAluno);
+        lupaPesquisarAluno.setBounds(430, 400, 30, 30);
+        getContentPane().add(nomePesquisado);
+        nomePesquisado.setBounds(520, 400, 220, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -275,6 +231,12 @@ public class Aluno extends javax.swing.JFrame {
         new Find().setVisible(true);
         dispose();
     }//GEN-LAST:event_sala3MouseClicked
+
+    private void btn_eventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eventosMouseClicked
+        // TODO add your handling code here:
+        new UserView().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_eventosMouseClicked
 
     private void aluno3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aluno3MouseClicked
         // TODO add your handling code here:
@@ -287,15 +249,9 @@ public class Aluno extends javax.swing.JFrame {
         new CadastroTotal().setVisible(true);
     }//GEN-LAST:event_cadastrarAluno1ActionPerformed
 
-    private void salaPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salaPesquisaMouseClicked
+    private void lupaPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lupaPesquisarAlunoActionPerformed
         // TODO add your handling code here:
-        new UserView().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_salaPesquisaMouseClicked
-
-    private void btPesquisaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaPessoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btPesquisaPessoaActionPerformed
+    }//GEN-LAST:event_lupaPesquisarAlunoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,20 +290,19 @@ public class Aluno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aluno3;
-    private javax.swing.JButton btPesquisaPessoa;
+    private javax.swing.JPanel btn_eventos;
     private javax.swing.JButton cadastrarAluno1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lupaPesquisarAluno;
     private javax.swing.JTextField nomePesquisado;
     private javax.swing.JPanel sala3;
-    private javax.swing.JPanel salaPesquisa;
     private javax.swing.JTable tabelaAluno;
     // End of variables declaration//GEN-END:variables
 }

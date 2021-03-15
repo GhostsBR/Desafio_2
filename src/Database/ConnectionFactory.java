@@ -19,12 +19,12 @@ public class ConnectionFactory {
     /**
      * Objeto Connection para conexão com o MySQL fornecido pela classe.
      */
-    public static Connection connectMySQL = null;
+    private static Connection connectMySQL = null;
 
     /**
      * Objeto Connection para conexão com o banco de dados fornecido pela classe.
      */
-    public static Connection connectDatabase = null;
+    private static Connection connectDatabase = null;
 
     /**
      * Objeto Connection para conexão extra com o banco de dados fornecido pela classe.
@@ -49,7 +49,7 @@ public class ConnectionFactory {
     /**
      * Senha utilizado para criar as conexões.
      */
-    private static String password = "123456";
+    private static String password = "";
 
     /**
      * Método para criar uma conexão com o MySQL e permitir criar o banco de dados.
@@ -96,7 +96,7 @@ public class ConnectionFactory {
      *
      * @return Connection nova conexão com o banco de dados
      */
-    public static  Connection connect() throws CustomException{
+    public static Connection connect() throws CustomException{
         if (connectDatabase == null){
             newConnectionDatabase();
         } else {
@@ -151,7 +151,7 @@ public class ConnectionFactory {
      *
      * @author Thiago
      */
-    public static void newConnectionMySQL() throws CustomException{
+    private static void newConnectionMySQL() throws CustomException{
         try {
             connectMySQL = DriverManager.getConnection(urlMySQL,user,password);
         }catch (Exception error){
