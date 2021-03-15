@@ -46,9 +46,8 @@ public class TestCoffeeDAO extends Test {
      * seu ID. Caso o objeto retornar com um ID diferente de nulo, significa que a exclusão falhou.
      * Ao final, verifica-se a lista de erros e define se a classe passou nos testes.
      *
-     * @exception CustomException se ocorrer erros no teste
-     *
      * @author Thiago
+     * @throws CustomException se ocorrer erros no teste
      */
     @Override
     public void test() throws CustomException{

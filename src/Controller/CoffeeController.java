@@ -11,15 +11,15 @@ import java.util.List;
  * @author Gustavo Lemos
  */
 public class CoffeeController {
+
     /**
      * Método responsável por separar e enviar os espaços para serem inseridos no banco de dados.
      *
      * Apôs o recebimento de uma lista de objetos, o método separa as salas
      * e realiza o envio ao método responsável por inserir no banco de dados.
      *
-     * @exception CustomException se ocorrer erro ao salvar no banco
-     *
      * @param coffees Lista de objetos de espaços
+     * @throws CustomException se ocorrer erro ao salvar no banco
      */
     public static void insertCoffee(List<Coffee> coffees) throws CustomException{
         try{
@@ -38,10 +38,10 @@ public class CoffeeController {
     /**
      * Método responsável por retornar uma lista de espaços.
      *
-     * Retorna uma lista de espaços com uma lista de usuários presentes em cada turno.
+     * Retorna uma lista de espaços com uma lista de usuários presentes em cada etapa.
      *
+     * @author Gustavo
      * @return List<Coffee> Lista de Espaços
-     *
      * @throws CustomException
      */
     public static List<Coffee> findCoffees() throws CustomException{

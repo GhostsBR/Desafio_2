@@ -23,12 +23,12 @@ public class Coffee {
     private String nameCoffee;
 
     /**
-     *
+     * Lista de pessoas lotadas no espaço durante a Etapa 1
      */
     private List<User> usersStage1;
 
     /**
-     *
+     * Lista de pessoas lotadas no espaço durante a Etapa 1
      */
     private List<User> usersStage2;
 
@@ -50,12 +50,9 @@ public class Coffee {
      *
      * Define o valor do idCoffee, realizando validação para valores negativos,
      * zero e nulos.
-     *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @author Thiago
-     *
      * @param id Integer ID do Espaço de café
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setIdCoffee(Integer id) throws CustomException {
         if (id != null){
@@ -72,7 +69,7 @@ public class Coffee {
     /**
      * Método para retornar o valor do atributo idCoffee.
      *
-     * @return Integer ID do Espaço de café
+     * @return
      */
     public Integer getIdCoffee (){
         return this.idCoffee;
@@ -84,11 +81,9 @@ public class Coffee {
      * Define o valor do nameCoffee, realizando validação para textos vazios,
      * só espaços, com menos de 50 caracteres e valor nulo.
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @author Thiago
-     *
      * @param name String nome do Espaço de café
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setNameCoffee(String name) throws CustomException {
         if (name != null){
@@ -112,22 +107,48 @@ public class Coffee {
         return this.nameCoffee;
     }
 
+    /**
+     * Método de retorno do atributo getUsersStage1.
+     *
+     * @return Lista de pessoas lotadas no espaço durante a Etapa 1
+     */
     public List<User> getUsersStage1() {
         return usersStage1;
     }
 
+    /**
+     * Método para adicionar pessoas que estarão lotadas no espaço durante a Etapa 1.
+     *
+     * @param usersStage1 User
+     */
     public void setUsersStage1(List<User> usersStage1) {
         this.usersStage1 = usersStage1;
     }
 
+    /**
+     * Método de retorno do atributo getUsersStage1.
+     *
+     * @return Lista de pessoas lotadas no espaço durante a Etapa 2
+     */
     public List<User> getUsersStage2() {
         return usersStage2;
     }
 
+    /**
+     * Método para adicionar pessoas que estarão lotadas no espaço durante a Etapa 2.
+     *
+     * @param usersStage2 User
+     */
     public void setUsersStage2(List<User> usersStage2) {
         this.usersStage2 = usersStage2;
     }
 
+    /**
+     * Método para retornar uma String contendo o nome da pessoas
+     * lotadas no espaço durante a Etapa 1.
+     *
+     * @return String lista com os nomes das pessoas
+     */
     public String usersStage1ToString (){
         String users = "";
         for (User u: usersStage1) {
@@ -137,6 +158,12 @@ public class Coffee {
         return users;
     }
 
+    /**
+     * Método para retornar uma String contendo o nome da pessoas
+     * lotadas no espaço durante a Etapa 2.
+     *
+     * @return String lista com os nomes das pessoas
+     */
     public String usersStage2ToString (){
         String users = "";
         for (User u: usersStage2) {

@@ -30,26 +30,45 @@ public class Room {
 
     /**
      * Atributo QUANTITY1 da classe Room.
+     *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Define a quantidade de pessoas já lotadas na sala durante a Etapa 1.
+     * Não é salvo em banco de dados.
      */
     private Integer quantity1 = 0;
 
     /**
      * Atributo QUANTITY2 da classe Room.
+     *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Define a quantidade de pessoas já lotadas na sala durante a Etapa 2.
+     * Não é salvo em banco de dados.
      */
     private Integer quantity2 = 0;
 
     /**
+     * Lista de pessoas lotadas na sala durante a etapa 1.
      *
+     * Atributo utilizado pelo método de mostrar as pessoas lotadas
+     * na sala durante a Etapa 1.
+     * Não é salvo em banco de dados.
      */
     private List<User> usersStage1;
 
     /**
+     * Lista de pessoas lotadas na sala durante a etapa 2.
      *
+     * Atributo utilizado pelo método de mostrar as pessoas lotadas
+     * na sala durante a Etapa 2.
+     * Não é salvo em banco de dados.
      */
     private List<User> usersStage2;
 
     /**
+     * Lista de pessoas lotadas na sala.
      *
+     * Atributo utilizado pelo método de definir a lotação das pessoas.
+     * Não é salvo em banco de dados.
      */
     private List<User> users = new ArrayList<User>();
 
@@ -72,10 +91,11 @@ public class Room {
     }
 
     /**
-     * Construtor com o parâmetro nameRoom e capacityRoom da classe Room
-     * usado para criar entradas novas na tabela de Salas
+     * Construtor com o parâmetro nameRoom e capacityRoom da classe Room.
+     *
+     * Usado para criar entradas novas na tabela de Salas
      * Obs: estas entradas novas vão receber somente o nome e lotação da nova Sala
-     * e seu idRoom será atribuído diretamente no Banco de Dados
+     * e seu idRoom será atribuído diretamente no Banco de Dados.
      */
     public Room(String name, int capacity){
         this.nameRoom = name;
@@ -97,12 +117,11 @@ public class Room {
      * Define o valor do idRoom, realizando validação para valores negativos,
      * zero e nulos.
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @author João
      * @author Thiago
      *
      * @param id Integer ID da Sala
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setIdRoom(Integer id) throws CustomException {
         if (id != null){
@@ -131,12 +150,11 @@ public class Room {
      * Define o valor do nameRoom, realizando validação para textos vazios,
      * só espaços, com menos de 50 caracteres e valor nulo.
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @author João
      * @author Thiago
      *
      * @param name String nome da Sala
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setNameRoom(String name) throws CustomException {
         if(name!=null){
@@ -166,12 +184,11 @@ public class Room {
      * Define o valor do capacityRoom, realizando validação para valores negativos,
      * zero e nulos.
      *
-     * @exception CustomException quando for informado um valor inválido
-     *
      * @author João
      * @author Thiago
      *
      * @param capacityRoom Integer capacityRoom da Sala
+     * @throws CustomException quando for informado um valor inválido
      */
     public void setCapacityRoom(Integer capacityRoom) throws CustomException {
         if (capacityRoom != null){
@@ -229,22 +246,42 @@ public class Room {
         this.quantity2 = quantity2;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<User> getUsersStage1() {
         return usersStage1;
     }
 
+    /**
+     *
+     * @param usersStage1
+     */
     public void setUsersStage1(List<User> usersStage1) {
         this.usersStage1 = usersStage1;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<User> getUsersStage2() {
         return usersStage2;
     }
 
+    /**
+     *
+     * @param usersStage2
+     */
     public void setUsersStage2(List<User> usersStage2) {
         this.usersStage2 = usersStage2;
     }
 
+    /**
+     *
+     * @return
+     */
     public String usersStage1ToString (){
         String users = "";
         for (User u: usersStage1) {
@@ -254,6 +291,10 @@ public class Room {
         return users;
     }
 
+    /**
+     *
+     * @return
+     */
     public String usersStage2ToString (){
         String users = "";
         for (User u: usersStage2) {
