@@ -1,6 +1,6 @@
 package View;
 
-import Controller.Controller;
+//**import Controller.Controller;
 import CustomExceptions.CustomException;
 import Model.*;
 
@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class ViewTest {
 
+	/*
     private final Scanner scanner = new Scanner(System.in);
     private int opcao = 0;
     private List<User> pessoas = new ArrayList<User>();
@@ -263,7 +264,7 @@ public class ViewTest {
 
         } catch(CustomException error){
             System.out.println(error.getMessage());
-        }*/
+       
     }
 
     private void excluirSala(){
@@ -302,5 +303,5 @@ public class ViewTest {
         } catch(CustomException error){
             System.out.println(error.getMessage());
         }
-    }
+    } */
 }

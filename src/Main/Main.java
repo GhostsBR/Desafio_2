@@ -3,7 +3,6 @@ package Main;
 import CustomExceptions.CustomException;
 import Database.DatabaseCreator;
 import View.UserView;
-import View.ViewTest;
 
 public class Main {
     public static void main(String[] args) {

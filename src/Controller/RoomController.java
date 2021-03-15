@@ -1,13 +1,14 @@
 package Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import CustomExceptions.CustomException;
 import Model.Room;
 import Model.RoomDAO;
-import Model.User;
 import Model.UserDAO;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe responsável pelo controle de salas.
@@ -63,5 +64,28 @@ public class RoomController {
         } catch (CustomException error) {
             throw new CustomException("ERRO: " + error.getMessage());
         }
+        
+        
+    }
+   
+    public static List <Room> findRoomByName(String name) throws CustomException{
+        List<Room> rooms= new ArrayList<Room>();
+        RoomDAO dao = new RoomDAO();
+        try {
+            if (name.isEmpty() ) {
+            	rooms = dao.getRooms();
+            }
+            	
+            else { 
+            	 rooms = dao.getRoomByName(name);
+            }
+            
+           
+        } catch (CustomException ex) {
+            Logger.getLogger(RoomController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rooms;
+        
     }
 }

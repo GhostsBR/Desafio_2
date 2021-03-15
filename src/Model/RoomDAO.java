@@ -202,4 +202,36 @@ public class RoomDAO{
         }
         return room;
     }
+    
+    public List<Room> getRoomByName(String name) throws CustomException {
+        List<Room> rooms = new ArrayList<Room>();
+      
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM rooms WHERE NAME LIKE ?";
+            pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt.setString(1,"%"+name+"%");
+            pstmt.execute();
+            rs = pstmt.getResultSet();
+            while(rs.next()){
+                rooms.add(new Room(rs.getInt("id"), rs.getString("name"), rs.getInt("capacity"))) ;
+            }
+        } catch (Exception error) {
+            error.printStackTrace();
+            throw new CustomException("Erro ao buscar a Sala: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            } catch (Exception error){}
+           
+            ConnectionFactory.closeConnectionDatabase();
+        }
+        return rooms;
+        
+      }
 }

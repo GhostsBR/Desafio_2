@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.User;
+
 /**
  *
  * @author Administrador
@@ -170,7 +172,7 @@ public class CadastroNovoAluno extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("CADASTRO DE ALUNOS");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(260, 10, 132, 16);
+        jLabel5.setBounds(210, 10, 132, 16);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
@@ -216,10 +218,7 @@ public class CadastroNovoAluno extends javax.swing.JFrame {
 
         tabelaAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "ID", "NOME", "SALA"
@@ -287,6 +286,7 @@ public class CadastroNovoAluno extends javax.swing.JFrame {
 
     private void addCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCadastroActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_addCadastroActionPerformed
 
     /**

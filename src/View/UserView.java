@@ -7,27 +7,59 @@ package View;
 
 import Controller.RoomController;
 import CustomExceptions.CustomException;
+import Model.Room;
+import Model.RoomDAO;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Administrador
  */
 public class UserView extends javax.swing.JFrame {
- 
-    /**
-     * Creates new form Home
+
+    //**
+    /*variavel global para conexão com o banco
      */
     public UserView() {
         initComponents();
+
+        DefaultTableModel modelo = (DefaultTableModel) tabelaSala.getModel();
+        tabelaSala.setRowSorter(new TableRowSorter(modelo));
+
+        readJTable();
+
     }
-    
-    private void buscarSalas() {
-    	 try {
-			RoomController.findRooms();
-		} catch (CustomException e) {
-			e.printStackTrace();
-		}
+
+    public void readJTable() {
+        
+        RoomDAO rdao = new RoomDAO();
+
+        try {
+            preencherTabelaSala(rdao.getRooms());
+        } catch (CustomException ex) {
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
+
+    private List<Room> preencherTabelaSala(List<Room> listaDeSala) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaSala.getModel();
+        modelo.setNumRows(0);
+        for (Room room : listaDeSala) {
+
+            modelo.addRow(new Object[]{
+                room.getIdRoom(), room.getNameRoom(), room.getCapacityRoom()
+
+            });
+        }
+
+        return listaDeSala;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,8 +82,9 @@ public class UserView extends javax.swing.JFrame {
         cadastrarAluno1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaSala = new javax.swing.JTable();
-        pesquisarSala = new javax.swing.JButton();
         salaPesquisada = new javax.swing.JTextField();
+        btPesquisaPessoa = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 610));
@@ -99,7 +132,12 @@ public class UserView extends javax.swing.JFrame {
         btn_eventos.setBackground(new java.awt.Color(85, 65, 118));
         btn_eventos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_eventosMouseClicked(evt);
+                try {
+					btn_eventosMouseClicked(evt);
+				} catch (CustomException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -217,22 +255,27 @@ public class UserView extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(265, 0, 570, 402);
+        getContentPane().add(salaPesquisada);
+        salaPesquisada.setBounds(400, 470, 240, 30);
 
-        pesquisarSala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/lupaPreta (1).png"))); // NOI18N
-        pesquisarSala.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisaPessoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagenss/lupaPreta (1).png"))); // NOI18N
+        btPesquisaPessoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisarSalaActionPerformed(evt);
+                btPesquisaPessoaActionPerformed(evt);
             }
         });
-        getContentPane().add(pesquisarSala);
-        pesquisarSala.setBounds(440, 470, 30, 30);
-        getContentPane().add(salaPesquisada);
-        salaPesquisada.setBounds(480, 470, 220, 30);
+        getContentPane().add(btPesquisaPessoa);
+        btPesquisaPessoa.setBounds(660, 470, 30, 30);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("NOME");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(350, 470, 50, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_eventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eventosMouseClicked
+    private void btn_eventosMouseClicked(java.awt.event.MouseEvent evt) throws CustomException {//GEN-FIRST:event_btn_eventosMouseClicked
         // TODO add your handling code here:
         new UserView().setVisible(true);
         dispose();
@@ -257,9 +300,19 @@ public class UserView extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_sala3MouseClicked
 
-    private void pesquisarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarSalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pesquisarSalaActionPerformed
+    private void btPesquisaPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisaPessoaActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            preencherTabelaSala(RoomController.findRoomByName(salaPesquisada.getText()));
+            
+        } catch (CustomException ex) {
+            Logger.getLogger(UserView.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+
+
+    }//GEN-LAST:event_btPesquisaPessoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,8 +350,10 @@ public class UserView extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aluno3;
+    private javax.swing.JButton btPesquisaPessoa;
     private javax.swing.JPanel btn_eventos;
     private javax.swing.JButton cadastrarAluno1;
     private javax.swing.JLabel jLabel1;
@@ -307,9 +362,9 @@ public class UserView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton pesquisarSala;
     private javax.swing.JPanel sala3;
     private javax.swing.JTextField salaPesquisada;
     private javax.swing.JTable tabelaSala;
