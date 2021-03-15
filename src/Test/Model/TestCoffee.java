@@ -36,8 +36,9 @@ public class TestCoffee extends Test{
      * só com espaços, com mais de 50 caracteres ou nulo para o nome, a classe não passa
      * nos testes. Ao final, verifica-se a lista de erros e define se a classe passou nos testes.
      *
+     * @exception CustomException se ocorrer erros no teste
+     *
      * @author Thiago
-     * @throws CustomException se ocorrer erros no teste
      */
     @Override
     public void test() throws CustomException{

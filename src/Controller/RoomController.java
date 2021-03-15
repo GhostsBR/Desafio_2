@@ -16,16 +16,15 @@ import Model.UserDAO;
  * @author Gustavo Lemos
  */
 public class RoomController {
-
     /**
      * Método responsável por separar e enviar as salas para serem inseridas no banco de dados.
      *
      * Apôs o recebimento de uma lista de objetos, o método separa as salas
      * e realiza o envio ao método responsável por inserir no banco de dados.
      *
-     * @author Gustavo
+     * @exception CustomException se ocorrer erro ao salvar no banco
+     *
      * @param rooms List<Room> Lista de objetos de salas.
-     * @throws CustomException se ocorrer erro ao salvar no banco
      */
     public static void insertRoom(List<Room> rooms) throws CustomException{
         try{
@@ -46,8 +45,8 @@ public class RoomController {
      *
      * Retorna uma lista de salas com uma lista de usuários presentes em cada turno.
      *
-     * @author Gustavo
      * @return List<Room> Lista de Salas
+     *
      * @throws CustomException
      */
     public static List<Room> findRooms() throws CustomException{
