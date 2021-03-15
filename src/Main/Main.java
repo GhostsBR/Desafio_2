@@ -1,9 +1,6 @@
 package Main;
 
-import CustomExceptions.CustomException;
-import Database.DatabaseCreator;
-import View.UserView;
-import View.ViewTest;
+import View.ViewCMD;
 
 public class Main {
     public static void main(String[] args) {
@@ -43,7 +40,7 @@ public class Main {
 
         /**
          */
-         ViewTest test = new ViewTest();
+         ViewCMD test = new ViewCMD();
          test.run();
          //*/
         

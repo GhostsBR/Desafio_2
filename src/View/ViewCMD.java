@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ViewTest {
+public class ViewCMD {
 
     private final Scanner scanner = new Scanner(System.in);
     private int opcao = 0;
