@@ -26,7 +26,7 @@ public abstract class Test{
     /**
      * Método abstrato para realizar o teste.
      *
-     * @exception CustomException se ocorrer erros no teste
+     * @throws CustomException se ocorrer erros no teste
      */
     public abstract void test() throws CustomException;
 

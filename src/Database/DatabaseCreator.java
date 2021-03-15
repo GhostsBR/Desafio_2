@@ -28,11 +28,10 @@ public class DatabaseCreator {
      * gerar a tabela "users" e criar os relacionamentos entre ela e as tabelas "rooms" e "coffees".
      * Ao final, fecha as conexões com o MySQL e com o banco de dados.
      *
-     * @exception CustomException se ocorrer erros de acesso ao banco de dados
-     *
      * @author João
      * @author Gustavo
      * @author Thiago
+     * @throws CustomException se ocorrer erros de acesso ao banco de dados
      */
     public void createDatabase() throws CustomException{
         PreparedStatement pstmt = null;
@@ -60,10 +59,10 @@ public class DatabaseCreator {
             sql = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "name VARCHAR(50) NOT NULL, " +
-                    "id_room1 INT NOT NULL, " +
-                    "id_room2 INT NOT NULL, " +
-                    "id_coffee1 INT NOT NULL, " +
-                    "id_coffee2 INT NOT NULL, " +
+                    "id_room1 INT, " +
+                    "id_room2 INT, " +
+                    "id_coffee1 INT, " +
+                    "id_coffee2 INT, " +
                     "CONSTRAINT fk_Room1 FOREIGN KEY (id_room1) REFERENCES rooms (id), " +
                     "CONSTRAINT fk_Room2 FOREIGN KEY (id_room2) REFERENCES rooms (id), " +
                     "CONSTRAINT fk_Coffee1 FOREIGN KEY (id_coffee1) REFERENCES coffees (id), " +

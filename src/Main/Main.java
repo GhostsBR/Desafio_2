@@ -40,10 +40,11 @@ public class Main {
          }
          //*/
 
-        /*
-         ViewTest test = new ViewTest();
-         test.run();
+        /**
          */
+         //ViewTest test = new ViewTest();
+         //test.run();
+         //*/
         
         UserView view = new UserView();
     }

@@ -3,7 +3,6 @@ package Model;
 import CustomExceptions.CustomException;
 import Database.ConnectionFactory;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -31,12 +30,11 @@ public class RoomDAO{
      *
      * Cadastra uma nova sala no banco utilizando um objeto Room.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @param room Room
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void createRoom(Room room) throws CustomException{
         try {
@@ -62,18 +60,17 @@ public class RoomDAO{
      *
      * Exclui uma Sala do banco de dados usando o ID.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @param id Integer
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-    public void deleteRoom (int id) throws CustomException{
+    public void deleteRoom(int id) throws CustomException{
         try {
             String sql = "DELETE FROM rooms WHERE id = ?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setInt(1,id);
+            pstmt.setInt(1, id);
             pstmt.execute();
         }catch (Exception error){
             throw new CustomException("Erro ao excluir uma Sala: " + error.getMessage());
@@ -92,12 +89,11 @@ public class RoomDAO{
      *
      * Realiza alterações dos dados da Sala no banco, utilizando um objeto Room.
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
      * @param room Room
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public void updateRoom(Room room) throws CustomException{
         try {
@@ -126,12 +122,11 @@ public class RoomDAO{
      *
      * Obs: retorna uma lista vazia caso nenhuma Sala seja encontrada no banco!
      *
-     * @exception CustomException se ocorrer erro de SQL ou no Statement
-     *
      * @author João
      * @author Thiago
      *
      * @return List<Room> Lista de Salas
+     * @throws CustomException se ocorrer erro de SQL ou no Statement
      */
     public List<Room> getRooms() throws CustomException{
         List<Room> rooms = new ArrayList<>();
@@ -168,12 +163,12 @@ public class RoomDAO{
      *
      * Obs: retorna um objeto vazio caso nenhuma Sala seja encontrada no banco!
      *
-     * @exception CustomException se ocorrer erro de SQL ou no PreparedStatement
-     *
      * @author João
      * @author Thiago
      *
+     * @param id Integer
      * @return Room
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
     public Room getRoom(Integer id) throws CustomException{
         Room room = new Room();

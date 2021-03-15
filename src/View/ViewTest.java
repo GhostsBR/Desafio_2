@@ -1,9 +1,10 @@
 package View;
 
-//**import Controller.Controller;
+import Controller.UserController;
 import CustomExceptions.CustomException;
 import Model.*;
 
+import java.lang.ModuleLayer.Controller;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.Scanner;
 
 public class ViewTest {
 
-	/*
     private final Scanner scanner = new Scanner(System.in);
     private int opcao = 0;
     private List<User> pessoas = new ArrayList<User>();
@@ -255,7 +255,7 @@ public class ViewTest {
     }
 
     private void excluirPessoa(){
-        /**
+       
         System.out.println("Informe o ID da pessoa:");
         Integer idPessoa = scanner.nextInt();
         try{
@@ -303,5 +303,5 @@ public class ViewTest {
         } catch(CustomException error){
             System.out.println(error.getMessage());
         }
-    } */
+    } 
 }
