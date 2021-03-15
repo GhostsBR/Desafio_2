@@ -32,7 +32,7 @@ public class Main {
 
         /**
          * Cria um objeto DatabaseCreator e chama o método para criar o banco de dados
-         */
+         *
          DatabaseCreator dataBase = new DatabaseCreator();
          try{
             dataBase.createDatabase();

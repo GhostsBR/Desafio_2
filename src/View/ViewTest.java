@@ -2,10 +2,10 @@ package View;
 
 import Controller.UserController;
 import CustomExceptions.CustomException;
+import Database.DatabaseCreator;
 import Model.*;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,6 +48,7 @@ public class ViewTest {
     }
 
     private void mostrarMenu(){
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Opções:");
         System.out.println("\t 1 - Cadastrar Nova Pessoa");
         System.out.println("\t 2 - Cadastrar Nova Sala");
@@ -58,7 +59,9 @@ public class ViewTest {
         System.out.println("\t 7 - Mostrar Pessoas");
         System.out.println("\t 8 - Mostrar Salas");
         System.out.println("\t 9 - Mostrar Espaços de Café");
+        System.out.println("\t 10 - Excluir Dados");
         System.out.println("\t 0 - Sair");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
     }
 
     private void pedirOpcao(){
@@ -108,6 +111,9 @@ public class ViewTest {
             case 9:
                 mostrarEspacos();
                 break;
+            case 10:
+                excluirDados();
+                break;
             default:
                 opcao = 0;
         }
@@ -116,6 +122,8 @@ public class ViewTest {
     private void addPessoa(){
         boolean continua = true;
         do {
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("Adicionar Nova pessoa:");
             if (UserController.verifyCapacity(salas, pessoas.size() + 1)){
                 try{
                     System.out.println("Informe o nome da pessoa:");
@@ -123,6 +131,7 @@ public class ViewTest {
                     User pessoa = new User();
                     pessoa.setNameUser(nome);
                     pessoas.add(pessoa);
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                     System.out.println("Adicionar nova pessoa?");
                     System.out.println("\t 1 - Sim");
                     System.out.println("\t 0 - Não");
@@ -132,7 +141,7 @@ public class ViewTest {
                 } catch(CustomException error){
                     System.out.println(error.getMessage());
                     continua = false;
-                } catch (InputMismatchException error){
+                } catch (Exception error){
                     System.out.println("Informe um valor válido!");
                 }
             } else{
@@ -145,6 +154,8 @@ public class ViewTest {
     private void addSala(){
         boolean continua = true;
         do {
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("Adicionar Nova Sala:");
             try{
                 System.out.println("Informe o nome da sala:");
                 String nome = scanner.nextLine();
@@ -158,6 +169,7 @@ public class ViewTest {
                 if (UserController.verifyCapacity(rooms, pessoas.size())){
                     new RoomDAO().createRoom(sala);
                     atualizarLotacao();
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                     System.out.println("Adicionar nova sala?");
                     System.out.println("\t 1 - Sim");
                     System.out.println("\t 0 - Não");
@@ -170,7 +182,7 @@ public class ViewTest {
                 }
             } catch(CustomException error){
                 System.out.println(error.getMessage());
-            } catch (InputMismatchException error){
+            } catch (Exception error){
                 System.out.println("Informe um valor válido!");
             }
         } while (continua);
@@ -179,6 +191,8 @@ public class ViewTest {
     private void addEspaco(){
         boolean continua = true;
         do {
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("Adicionar Novo Espaço de Café:");
             try{
                 System.out.println("Informe o nome do espaço de café:");
                 String nome = scanner.nextLine();
@@ -186,6 +200,7 @@ public class ViewTest {
                 espaco.setNameCoffee(nome);
                 new CoffeeDAO().createCoffee(espaco);
                 atualizarLotacao();
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                 System.out.println("Adicionar novo espaço de café?");
                 System.out.println("\t 1 - Sim");
                 System.out.println("\t 0 - Não");
@@ -195,7 +210,7 @@ public class ViewTest {
             } catch(CustomException error){
                 System.out.println(error.getMessage());
                 break;
-            } catch (InputMismatchException error){
+            } catch (Exception error){
                 System.out.println("Informe um valor válido!");
             }
         } while (continua);
@@ -203,18 +218,19 @@ public class ViewTest {
 
     private void mostrarPessoas(){
         System.out.println("Pessoas cadastradas:");
-        System.out.println("------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("\t|" + formatText("Pessoa") +
-                            "| " + formatText("Sala Etapa 1") +
-                            "| " + formatText("Sala Etapa 2") +
-                            "| " + formatText("Espaço Café Etapa 1") +
-                            "| " + formatText("Espaço Café Etapa 2") + "|");
+                "| " + formatText("Sala Etapa 1") +
+                "| " + formatText("Sala Etapa 2") +
+                "| " + formatText("Espaço Café Etapa 1") +
+                "| " + formatText("Espaço Café Etapa 2") + "|");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         for (User u: pessoas) {
             System.out.println("\t|" + formatText(u.getNameUser()) +
-                            "| " + formatText(u.getRoom1User().getNameRoom()) +
-                            "| " + formatText(u.getRoom2User().getNameRoom()) +
-                            "| " + formatText(u.getCoffee1User().getNameCoffee()) +
-                            "| " + formatText(u.getCoffee2User().getNameCoffee()) + "|");
+                    "| " + formatText(u.getRoom1User().getNameRoom()) +
+                    "| " + formatText(u.getRoom2User().getNameRoom()) +
+                    "| " + formatText(u.getCoffee1User().getNameCoffee()) +
+                    "| " + formatText(u.getCoffee2User().getNameCoffee()) + "|");
         }
         System.out.println("***************************************************************************************************************************");
     }
@@ -222,7 +238,7 @@ public class ViewTest {
     private void mostrarSalas(){
         try{
             System.out.println("Salas cadastradas:");
-            System.out.println("------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
             if (salas.size() > 0){
                 UserDAO dao = new UserDAO();
                 for (Room r: salas) {
@@ -237,7 +253,7 @@ public class ViewTest {
                     for (User u: users2) {
                         System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                     }
-                    System.out.println("------------------------------------------------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                 }
             } else{
                 System.out.println("Nenhuma sala encontrada!");
@@ -251,7 +267,7 @@ public class ViewTest {
     private void mostrarEspacos(){
         try{
             System.out.println("Espaços cadastrados:");
-            System.out.println("------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
             if (espacos.size() > 0){
                 UserDAO dao = new UserDAO();
                 for (Coffee c: espacos) {
@@ -270,7 +286,7 @@ public class ViewTest {
                             System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                         }
                     }
-                    System.out.println("------------------------------------------------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                 }
             } else{
                 System.out.println("Nenhum espaço de café encontrado!");
@@ -282,6 +298,12 @@ public class ViewTest {
     }
 
     private void excluirPessoa(){
+        System.out.println("Pessoas Cadastradas:");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        for (User u: pessoas) {
+            System.out.println("\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID da pessoa:");
         try{
             Integer idPessoa = Integer.parseInt(scanner.nextLine());
@@ -297,6 +319,14 @@ public class ViewTest {
     }
 
     private void excluirSala(){
+        System.out.println("Salas Cadastradas:");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        for (Room r: salas) {
+            System.out.println("\t ID: " + formatText("" + r.getIdRoom()) +
+                    "\t| Nome: " + formatText(r.getNameRoom()) +
+                    "\t| Capacidade: " + formatText("" + r.getCapacityRoom()));
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID da sala:");
         try{
             Integer idSala = Integer.parseInt(scanner.nextLine());
@@ -329,6 +359,13 @@ public class ViewTest {
     }
 
     private void excluirEspaco(){
+        System.out.println("Espaços de Café Cadastrados:");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        for (Coffee c: espacos) {
+            System.out.println("\t ID: " + formatText("" + c.getIdCoffee()) +
+                    "\t| Nome: " + formatText(c.getNameCoffee()));
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID do espaço:");
         try{
             int idEspaco = Integer.parseInt(scanner.nextLine());
@@ -444,5 +481,23 @@ public class ViewTest {
             }
         }
         return text;
+    }
+
+    private void excluirDados(){
+        try{
+            System.out.println("Desaja realmente excluir os dados do banco?");
+            System.out.println("\t 1 - Sim");
+            System.out.println("\t 0 - Não");
+            if (Integer.parseInt(scanner.nextLine()) == 1){
+                new DatabaseCreator().createDatabase();
+            } else{
+                System.out.println("Comando cancelado!");
+            }
+        } catch(CustomException error){
+            System.out.println(error.getMessage());
+        } catch (Exception error){
+            System.out.println("Informe um valor válido!");
+            System.out.println("Comando cancelado!");
+        }
     }
 }

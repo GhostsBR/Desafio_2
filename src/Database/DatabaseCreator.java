@@ -36,7 +36,11 @@ public class DatabaseCreator {
     public void createDatabase() throws CustomException{
         PreparedStatement pstmt = null;
         try{
-            String sql = "CREATE DATABASE IF NOT EXISTS event " +
+            String sql = "DROP DATABASE IF EXISTS event";
+            pstmt = ConnectionFactory.preConnect().prepareStatement(sql);
+            pstmt.execute();
+
+            sql = "CREATE DATABASE IF NOT EXISTS event " +
                     "DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci";
             pstmt = ConnectionFactory.preConnect().prepareStatement(sql);
             pstmt.execute();
