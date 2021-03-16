@@ -21,7 +21,7 @@ public class RoomController {
      * Apôs o recebimento de uma lista de objetos, o método separa as salas
      * e realiza o envio ao método responsável por inserir no banco de dados.
      *
-     * @author Gustavo
+     * @author Gustavo Lemos
      * @param rooms List<Room> Lista de objetos de salas.
      * @throws CustomException se ocorrer erro ao salvar no banco
      */
@@ -44,7 +44,7 @@ public class RoomController {
      *
      * Retorna uma lista de salas com uma lista de usuários presentes em cada turno.
      *
-     * @author Gustavo
+     * @author Gustavo Lemos
      * @return List<Room> Lista de Salas
      * @throws CustomException
      */
