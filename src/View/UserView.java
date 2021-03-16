@@ -22,11 +22,7 @@ public class UserView extends javax.swing.JFrame {
     }
     
     private void buscarSalas() {
-    	 try {
-			RoomController.findRooms();
-		} catch (CustomException e) {
-			e.printStackTrace();
-		}
+        RoomController.findRooms();
     }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -256,4 +256,48 @@ public class UserDAO {
         }
         return users;
     }
+
+    /**
+     * Método para retornar uma Pessoa.
+     *
+     * Realiza a busca e retorno de uma Pessoa salva no banco através do id.
+     *
+     * Obs: retorna um objeto vazio caso nenhuma Pessoa seja encontrada no banco!
+     *
+     * @param id Integer
+     * @return User
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
+     */
+    public User getUser(Integer id) throws CustomException{
+        User user = new User();
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM users WHERE id = ?";
+            pstmt = ConnectionFactory.connectExtra().prepareStatement(sql);
+            pstmt.setInt(1,id);
+            pstmt.execute();
+            rs = pstmt.getResultSet();
+            if(rs.next()){
+                user = new User( rs.getInt("id"),
+                        rs.getString("name"),
+                        new RoomDAO().getRoom(rs.getInt("id_room1")),
+                        new RoomDAO().getRoom(rs.getInt("id_room2")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee1")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee2")));
+            }
+        } catch (Exception error) {
+            throw new CustomException("Erro ao buscar a Sala: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null){
+                    pstmt.close();
+                }
+                if (rs != null){
+                    rs.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionDatabase();
+        }
+        return user;
+    }
 }

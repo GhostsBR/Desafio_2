@@ -1,5 +1,7 @@
 package View;
 
+import Controller.CoffeeController;
+import Controller.RoomController;
 import Controller.UserController;
 import CustomExceptions.CustomException;
 import Database.DatabaseCreator;
@@ -9,203 +11,302 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe responsável pela interação com o usuário através do CMD.
+ */
 public class ViewCMD {
 
     private final Scanner scanner = new Scanner(System.in);
-    private int opcao = 0;
-    private List<User> pessoas;
-    private List<Room> salas;
-    private List<Coffee> espacos;
+    private int optionMenu = 0;
+    private int optionSubMenu = 0;
+    private List<User> users;
+    private List<Room> rooms;
+    private List<Coffee> coffees;
 
+    /**
+     * Método para executar a aplicação via CMD.
+     */
     public void run(){
         do {
-            carregarDados();
-            mostrarMenu();
-            pedirOpcao();
-            verificarOpcao();
-        } while (opcao != 0);
+            updateUsers();
+            updateRooms();
+            updateCoffees();
+            showMenu();
+            requestOptionMenu();
+            checkOptions();
+        } while (optionMenu != 0);
     }
 
-    private void carregarDados(){
-        try{
-            pessoas = new UserDAO().getUsers();
-        } catch(CustomException error){
-            System.out.println(error.getMessage());
-            pessoas = new ArrayList<User>();
-        }
-        try{
-            salas = new RoomDAO().getRooms();
-        } catch(CustomException error){
-            System.out.println(error.getMessage());
-            salas = new ArrayList<Room>();
-        }
-        try{
-            espacos = new CoffeeDAO().getCoffees();
-        } catch(CustomException error){
-            System.out.println(error.getMessage());
-            espacos = new ArrayList<Coffee>();
-        }
+    /**
+     * Método para carregar os espaços.
+     */
+    private void updateCoffees(){
+        coffees = CoffeeController.findCoffees();
     }
 
-    private void mostrarMenu(){
+    /**
+     * Método para carregar as pessoas.
+     */
+    private void updateUsers(){
+        users = UserController.findUsers();
+    }
+
+    /**
+     * Método para carregar as salas.
+     */
+    private void updateRooms(){
+        rooms = RoomController.findRooms();
+    }
+
+    /**
+     * Método para mostrar o Menu Principal.
+     */
+    private void showMenu(){
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Opções:");
-        System.out.println("\t 1 - Cadastrar Nova Pessoa");
-        System.out.println("\t 2 - Cadastrar Nova Sala");
-        System.out.println("\t 3 - Cadastrar Novo Espaço de Café");
-        System.out.println("\t 4 - Excluir Pessoa");
-        System.out.println("\t 5 - Excluir Sala");
-        System.out.println("\t 6 - Excluir Espaço de Café");
-        System.out.println("\t 7 - Mostrar Pessoas");
-        System.out.println("\t 8 - Mostrar Salas");
-        System.out.println("\t 9 - Mostrar Espaços de Café");
-        System.out.println("\t 10 - Excluir Dados");
+        System.out.println("Menu Principal:");
+        System.out.println("\t 1 - Pessoa");
+        System.out.println("\t 2 - Sala");
+        System.out.println("\t 3 - Espaço de Café");
+        System.out.println("\t 4 - Excluir Dados");
         System.out.println("\t 0 - Sair");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
     }
 
-    private void pedirOpcao(){
-        boolean continua = true;
+    /**
+     * Método para mostrar o submenu.
+     */
+    private void showSubMenu(){
+        System.out.println("\t 1 - Cadastrar");
+        System.out.println("\t 2 - Mostrar Todos");
+        System.out.println("\t 3 - Pesquisar por ID");
+        System.out.println("\t 4 - Excluir");
+        System.out.println("\t 0 - Voltar");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    /**
+     * Método para solicitar qual opção do Menu Principal desejada pelo usuário.
+     */
+    private void requestOptionMenu(){
+        boolean remake = true;
         do {
             try{
                 System.out.println("Informe a opção desejada:");
-                opcao = Integer.parseInt(scanner.nextLine());
-                continua = false;
+                optionMenu = Integer.parseInt(scanner.nextLine());
+                remake = false;
             } catch(Exception error){
                 System.out.println("Informe uma opção válida!");
             }
-        } while(continua);
+        } while(remake);
     }
 
-    private void verificarOpcao(){
-        switch (opcao){
+    /**
+     * Método para solicitar qual opção do Sub Menu desejada pelo usuário.
+     */
+    private void requestOptionSubMenu(){
+        boolean remake = true;
+        do {
+            try{
+                System.out.println("Informe a opção desejada:");
+                optionSubMenu = Integer.parseInt(scanner.nextLine());
+                remake = false;
+            } catch(Exception error){
+                System.out.println("Informe uma opção válida!");
+            }
+        } while(remake);
+    }
+
+    /**
+     * Método para verificar as opções selecionadas pelo usuário no Menu Principal e SubMenu.
+     */
+    private void checkOptions(){
+        switch (optionMenu){
             case 1:
-                if (salas.size() == 0 || espacos.size() == 0){
-                    System.out.println("Não há capacidade suficiente!");
-                } else{
-                    addPessoa();
-                    atualizarLotacao();
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("Opções para Pessoas:");
+                showSubMenu();
+                requestOptionSubMenu();
+                switch (optionSubMenu){
+                    case 1:
+                        if (rooms.size() == 0 || coffees.size() == 0){
+                            System.out.println("Não há capacidade suficiente!");
+                        } else{
+                            addUser();
+                            updateUsersPositions();
+                        }
+                        break;
+                    case 2:
+                        showUsers();
+                        break;
+                    case 3:
+                        showUser();
+                        break;
+                    case 4:
+                        deleteUser();
+                        break;
+                    default:
+                        optionSubMenu = 0;
                 }
+                //waitForContinue();
                 break;
             case 2:
-                addSala();
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("Opções para Salas:");
+                showSubMenu();
+                requestOptionSubMenu();
+                switch (optionSubMenu){
+                    case 1:
+                        addRoom();
+                        RoomController.insertRooms(rooms);
+                        updateRooms();
+                        updateUsersPositions();
+                        break;
+                    case 2:
+                        showRooms();
+                        break;
+                    case 3:
+                        showRoom();
+                        break;
+                    case 4:
+                        deleteRoom();
+                        break;
+                    default:
+                        optionSubMenu = 0;
+                }
+                //waitForContinue();
                 break;
             case 3:
-                addEspaco();
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("Opções para Espaços:");
+                showSubMenu();
+                requestOptionSubMenu();
+                switch (optionSubMenu){
+                    case 1:
+                        addCoffee();
+                        CoffeeController.insertCoffees(coffees);
+                        updateCoffees();
+                        updateUsersPositions();
+                        break;
+                    case 2:
+                        showCoffees();
+                        break;
+                    case 3:
+                        showCoffee();
+                        break;
+                    case 4:
+                        excluirEspaco();
+                        break;
+                    default:
+                        optionSubMenu = 0;
+                }
+                //waitForContinue();
                 break;
             case 4:
-                excluirPessoa();
-                break;
-            case 5:
-                excluirSala();
-                break;
-            case 6:
-                excluirEspaco();
-                break;
-            case 7:
-                mostrarPessoas();
-                break;
-            case 8:
-                mostrarSalas();
-                break;
-            case 9:
-                mostrarEspacos();
-                break;
-            case 10:
-                excluirDados();
+                deleteData();
+                //waitForContinue();
                 break;
             default:
-                opcao = 0;
+                optionMenu = 0;
         }
     }
 
-    private void addPessoa(){
-        boolean continua = true;
+    /**
+     * Método para adicionar novas pessoas.
+     */
+    private void addUser(){
+        boolean newUser = true;
         do {
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("Adicionar Nova pessoa:");
-            if (UserController.verifyCapacity(salas, pessoas.size() + 1)){
+            if (UserController.verifyCapacity(rooms, users.size() + 1)){
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("Adicionar Nova pessoa:");
                 try{
                     System.out.println("Informe o nome da pessoa:");
-                    String nome = scanner.nextLine();
-                    User pessoa = new User();
-                    pessoa.setNameUser(nome);
-                    pessoas.add(pessoa);
+                    String name = scanner.nextLine();
+                    User user = new User();
+                    user.setNameUser(name);
+                    users.add(user);
                     System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                     System.out.println("Adicionar nova pessoa?");
                     System.out.println("\t 1 - Sim");
                     System.out.println("\t 0 - Não");
                     if (Integer.parseInt(scanner.nextLine()) != 1){
-                        continua = false;
+                        newUser = false;
                     }
                 } catch(CustomException error){
                     System.out.println(error.getMessage());
-                    continua = false;
+                    newUser = false;
                 } catch (Exception error){
                     System.out.println("Informe um valor válido!");
                 }
             } else{
                 System.out.println("Não há capacidade suficiente!");
-                continua = false;
+                newUser = false;
             }
-        } while (continua);
+        } while (newUser);
     }
 
-    private void addSala(){
-        boolean continua = true;
+    /**
+     * Método para adicionar novas salas.
+     */
+    private void addRoom(){
+        boolean newRoom = true;
         do {
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
             System.out.println("Adicionar Nova Sala:");
             try{
                 System.out.println("Informe o nome da sala:");
-                String nome = scanner.nextLine();
+                String name = scanner.nextLine();
                 System.out.println("Informe a capacidade da sala:");
-                int capacidade = Integer.parseInt(scanner.nextLine());
-                Room sala = new Room();
-                sala.setNameRoom(nome);
-                sala.setCapacityRoom(capacidade);
-                List<Room> rooms = salas;
-                rooms.add(sala);
-                if (UserController.verifyCapacity(rooms, pessoas.size())){
-                    new RoomDAO().createRoom(sala);
-                    atualizarLotacao();
+                int capacity = Integer.parseInt(scanner.nextLine());
+                Room room = new Room();
+                room.setNameRoom(name);
+                room.setCapacityRoom(capacity);
+                List<Room> roomsForVerify = new ArrayList<Room>();
+                for (Room r: rooms) {
+                    roomsForVerify.add(r);
+                }
+                roomsForVerify.add(room);
+                if (UserController.verifyCapacity(roomsForVerify, users.size())){
+                    rooms.add(room);
                     System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                     System.out.println("Adicionar nova sala?");
                     System.out.println("\t 1 - Sim");
                     System.out.println("\t 0 - Não");
                     if (Integer.parseInt(scanner.nextLine()) != 1){
-                        continua = false;
+                        newRoom = false;
                     }
                 } else{
                     System.out.println("Não é possível adicionar a sala: Algumas pessoas não poderão ficar lotadas!");
-                    continua = false;
+                    newRoom = false;
                 }
             } catch(CustomException error){
                 System.out.println(error.getMessage());
             } catch (Exception error){
                 System.out.println("Informe um valor válido!");
             }
-        } while (continua);
+        } while (newRoom);
     }
 
-    private void addEspaco(){
-        boolean continua = true;
+    /**
+     * Método para adicionar novos espaços de café.
+     */
+    private void addCoffee(){
+        boolean newCoffee = true;
         do {
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
             System.out.println("Adicionar Novo Espaço de Café:");
             try{
                 System.out.println("Informe o nome do espaço de café:");
-                String nome = scanner.nextLine();
-                Coffee espaco = new Coffee();
-                espaco.setNameCoffee(nome);
-                new CoffeeDAO().createCoffee(espaco);
-                atualizarLotacao();
+                String name = scanner.nextLine();
+                Coffee coffee = new Coffee();
+                coffee.setNameCoffee(name);
+                coffees.add(coffee);
                 System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                 System.out.println("Adicionar novo espaço de café?");
                 System.out.println("\t 1 - Sim");
                 System.out.println("\t 0 - Não");
                 if (Integer.parseInt(scanner.nextLine()) != 1){
-                    continua = false;
+                    newCoffee = false;
                 }
             } catch(CustomException error){
                 System.out.println(error.getMessage());
@@ -213,10 +314,13 @@ public class ViewCMD {
             } catch (Exception error){
                 System.out.println("Informe um valor válido!");
             }
-        } while (continua);
+        } while (newCoffee);
     }
 
-    private void mostrarPessoas(){
+    /**
+     * Método para mostrar todas as pessoas cadastradas.
+     */
+    private void showUsers(){
         System.out.println("Pessoas cadastradas:");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("\t|" + formatText("Pessoa") +
@@ -225,7 +329,7 @@ public class ViewCMD {
                 "| " + formatText("Espaço Café Etapa 1") +
                 "| " + formatText("Espaço Café Etapa 2") + "|");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        for (User u: pessoas) {
+        for (User u: users) {
             System.out.println("\t|" + formatText(u.getNameUser()) +
                     "| " + formatText(u.getRoom1User().getNameRoom()) +
                     "| " + formatText(u.getRoom2User().getNameRoom()) +
@@ -235,81 +339,180 @@ public class ViewCMD {
         System.out.println("***************************************************************************************************************************");
     }
 
-    private void mostrarSalas(){
+    /**
+     * Método para mostrar uma pessoa pesquisada pelo ID.
+     */
+    private void showUser(){
+        System.out.println("Informe o ID da pessoa:");
         try{
-            System.out.println("Salas cadastradas:");
+            Integer id = Integer.parseInt(scanner.nextLine());
+            System.out.println("Pessoa:");
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-            if (salas.size() > 0){
-                UserDAO dao = new UserDAO();
-                for (Room r: salas) {
-                    System.out.println("\tID: " + r.getIdRoom() + "\t| Nome: " + r.getNameRoom() + "\t| Capacidade: " + r.getCapacityRoom());
-                    System.out.println("\tPessoas na Etapa 1:");
-                    List<User> users1 = dao.getUsersRoom("id_room1", r.getIdRoom());
-                    List<User> users2 = dao.getUsersRoom("id_room2", r.getIdRoom());
-                    for (User u: users1) {
-                        System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
-                    }
-                    System.out.println("\tPessoas na Etapa 2:");
-                    for (User u: users2) {
-                        System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
-                    }
-                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-                }
+            System.out.println("\t|" + formatText("Pessoa") +
+                    "| " + formatText("Sala Etapa 1") +
+                    "| " + formatText("Sala Etapa 2") +
+                    "| " + formatText("Espaço Café Etapa 1") +
+                    "| " + formatText("Espaço Café Etapa 2") + "|");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            User user = UserController.findUser(id);
+            if(user.getIdUser() != null){
+                System.out.println("\t|" + formatText(user.getNameUser()) +
+                        "| " + formatText(user.getRoom1User().getNameRoom()) +
+                        "| " + formatText(user.getRoom2User().getNameRoom()) +
+                        "| " + formatText(user.getCoffee1User().getNameCoffee()) +
+                        "| " + formatText(user.getCoffee2User().getNameCoffee()) + "|");
             } else{
-                System.out.println("Nenhuma sala encontrada!");
+                System.out.println("Nenhuma pessoa encontrada!");
             }
-        } catch(CustomException error){
-            System.out.println(error.getMessage());
+        } catch (Exception error){
+            System.out.println("ID inválido!");
         }
         System.out.println("***************************************************************************************************************************");
     }
 
-    private void mostrarEspacos(){
+    /**
+     * Método para mostrar todas as salas.
+     *
+     * Mostra todas as salas cadastradas com as pessoas que estarão em cada sala
+     * durante cada etapa.
+     */
+    private void showRooms(){
+        System.out.println("Salas cadastradas:");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        if (rooms.size() > 0){
+            for (Room r: rooms) {
+                System.out.println("\tID: " + r.getIdRoom() + "\t| Nome: " + r.getNameRoom() + "\t| Capacidade: " + r.getCapacityRoom());
+                System.out.println("\t\tPessoas na Etapa 1:");
+                List<User> users1 = r.getUsersStage1();
+                for (User u: users1) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                List<User> users2 = r.getUsersStage2();
+                System.out.println("\t\tPessoas na Etapa 2:");
+                for (User u: users2) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            }
+        } else{
+            System.out.println("Nenhuma sala encontrada!");
+        }
+        System.out.println("***************************************************************************************************************************");
+    }
+
+    /**
+     * Método para exibir uma sala pesquisada.
+     *
+     * Mostra uma sala cadastrada pesquisada por ID com as pessoas que estarão em cada etapa.
+     */
+    private void showRoom(){
+        System.out.println("Informe o ID da sala:");
         try{
-            System.out.println("Espaços cadastrados:");
+            Integer id = Integer.parseInt(scanner.nextLine());
+            System.out.println("Sala:");
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-            if (espacos.size() > 0){
-                UserDAO dao = new UserDAO();
-                for (Coffee c: espacos) {
-                    System.out.println("\tID: " + c.getIdCoffee() + "\t| Nome: " + c.getNameCoffee());
-                    List<User> users1 = dao.getUsersRoom("id_coffee1", c.getIdCoffee());
-                    List<User> users2 = dao.getUsersRoom("id_coffee2", c.getIdCoffee());
-                    System.out.println("\tPessoas na Etapa 1:");
-                    for (User u: pessoas) {
-                        if (c.getIdCoffee() == u.getCoffee1User().getIdCoffee()){
-                            System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
-                        }
-                    }
-                    System.out.println("\tPessoas na Etapa 2:");
-                    for (User u: pessoas) {
-                        if (c.getIdCoffee() == u.getCoffee2User().getIdCoffee()){
-                            System.out.println("\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
-                        }
-                    }
-                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            Room room = RoomController.findRoom(id);
+            if(room.getIdRoom() != null){
+                System.out.println("\tID: " + room.getIdRoom() + "\t| Nome: " + room.getNameRoom() + "\t| Capacidade: " + room.getCapacityRoom());
+                System.out.println("\t\tPessoas na Etapa 1:");
+                List<User> users1 = room.getUsersStage1();
+                for (User u: users1) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                List<User> users2 = room.getUsersStage2();
+                System.out.println("\t\tPessoas na Etapa 2:");
+                for (User u: users2) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            } else{
+                System.out.println("Nenhuma sala encontrada!");
+            }
+        } catch (Exception error){
+            System.out.println("ID inválido!");
+        }
+        System.out.println("***************************************************************************************************************************");
+    }
+
+    /**
+     * Método para exibir todos os espaços.
+     *
+     * Mostrar todos os espaços cadastrados com as pessoas que estarão em espaço
+     * durante cada etapa.
+     */
+    private void showCoffees(){
+        System.out.println("Espaços cadastrados:");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        if (coffees.size() > 0){
+            for (Coffee c: coffees) {
+                System.out.println("\tID: " + c.getIdCoffee() + "\t| Nome: " + c.getNameCoffee());
+                System.out.println("\t\tPessoas na Etapa 1:");
+                List<User> usersInCoffee = c.getUsersStage1();
+                for (User u: usersInCoffee) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                usersInCoffee = c.getUsersStage2();
+                System.out.println("\tPessoas na Etapa 2:");
+                for (User u: usersInCoffee) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            }
+        } else{
+            System.out.println("Nenhum espaço de café encontrado!");
+        }
+        System.out.println("***************************************************************************************************************************");
+    }
+
+    /**
+     * Método para exibir um espaço pesquisado.
+     *
+     * Mostra um espaço cadastrado pesquisado por ID com as pessoas que estarão em cada etapa.
+     */
+    private void showCoffee(){
+        System.out.println("Informe o ID do espaço:");
+        try{
+            Integer id = Integer.parseInt(scanner.nextLine());
+            System.out.println("Espaço:");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            Coffee coffee = CoffeeController.findCoffee(id);
+            if (coffee.getIdCoffee() != null){
+                System.out.println("\tID: " + coffee.getIdCoffee() + "\t| Nome: " + coffee.getNameCoffee());
+                System.out.println("\t\tPessoas na Etapa 1:");
+                List<User> usersInCoffee = coffee.getUsersStage1();
+                for (User u: usersInCoffee) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
+                }
+                usersInCoffee = coffee.getUsersStage2();
+                System.out.println("\tPessoas na Etapa 2:");
+                for (User u: usersInCoffee) {
+                    System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                 }
             } else{
                 System.out.println("Nenhum espaço de café encontrado!");
             }
-        } catch(Exception error){
-            System.out.println(error.getMessage());
+        } catch (Exception error){
+            System.out.println("ID inválido!");
         }
         System.out.println("***************************************************************************************************************************");
     }
 
-    private void excluirPessoa(){
+    /**
+     * Método para solicitar a exclusão de uma pessoa.
+     */
+    private void deleteUser(){
         System.out.println("Pessoas Cadastradas:");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        for (User u: pessoas) {
+        for (User u: users) {
             System.out.println("\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
         }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID da pessoa:");
         try{
-            Integer idPessoa = Integer.parseInt(scanner.nextLine());
-            new UserDAO().deleteUser(idPessoa);
-            pessoas = new UserDAO().getUsers();
-            atualizarLotacao();
+            Integer idUser = Integer.parseInt(scanner.nextLine());
+            new UserDAO().deleteUser(idUser);
+            users = UserController.findUsers();
+            updateUsersPositions();
         } catch(CustomException error){
             System.out.println(error.getMessage());
         } catch (Exception error){
@@ -318,10 +521,13 @@ public class ViewCMD {
         System.out.println("***************************************************************************************************************************");
     }
 
-    private void excluirSala(){
+    /**
+     * Método para solicitar uma exclusão de uma sala.
+     */
+    private void deleteRoom(){
         System.out.println("Salas Cadastradas:");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        for (Room r: salas) {
+        for (Room r: rooms) {
             System.out.println("\t ID: " + formatText("" + r.getIdRoom()) +
                     "\t| Nome: " + formatText(r.getNameRoom()) +
                     "\t| Capacidade: " + formatText("" + r.getCapacityRoom()));
@@ -329,21 +535,24 @@ public class ViewCMD {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID da sala:");
         try{
-            Integer idSala = Integer.parseInt(scanner.nextLine());
-            Room salaSelecionada = null;
-            for (Room r: salas) {
-                if(r.getIdRoom() == idSala){
-                    salaSelecionada = r;
+            Integer idRoom = Integer.parseInt(scanner.nextLine());
+            Room roomSelected = null;
+            for (Room r: rooms) {
+                if(r.getIdRoom() == idRoom){
+                    roomSelected = r;
                 }
             }
-            if (salaSelecionada != null){
-                List<Room> roomsAltered = salas;
-                roomsAltered.remove(salaSelecionada);
-                if (UserController.verifyCapacity(roomsAltered, pessoas.size())){
-                    salas = roomsAltered;
-                    limparSala();
-                    new RoomDAO().deleteRoom(idSala);
-                    salas = new RoomDAO().getRooms();
+            if (roomSelected != null){
+                List<Room> roomsAltered = new ArrayList<Room>();
+                for (Room r: rooms) {
+                    roomsAltered.add(r);
+                }
+                roomsAltered.remove(roomSelected);
+                if (UserController.verifyCapacity(roomsAltered, users.size())){
+                    rooms = roomsAltered;
+                    clearRoom();
+                    RoomController.removeRoom(roomSelected);
+                    rooms = new RoomDAO().getRooms();
                 } else{
                     System.out.println("Não é possível excluir a sala: Algumas pessoas não poderão ficar lotadas!");
                 }
@@ -358,28 +567,31 @@ public class ViewCMD {
         System.out.println("***************************************************************************************************************************");
     }
 
+    /**
+     * Método para solicitar a exclusão de um espaço de café.
+     */
     private void excluirEspaco(){
         System.out.println("Espaços de Café Cadastrados:");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        for (Coffee c: espacos) {
+        for (Coffee c: coffees) {
             System.out.println("\t ID: " + formatText("" + c.getIdCoffee()) +
                     "\t| Nome: " + formatText(c.getNameCoffee()));
         }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Informe o ID do espaço:");
         try{
-            int idEspaco = Integer.parseInt(scanner.nextLine());
-            Coffee espacoSelecionado = null;
-            for (Coffee c: espacos) {
-                if(c.getIdCoffee() == idEspaco){
-                    espacoSelecionado = c;
+            int idCoffee = Integer.parseInt(scanner.nextLine());
+            Coffee coffeeSelected = null;
+            for (Coffee c: coffees) {
+                if(c.getIdCoffee() == idCoffee){
+                    coffeeSelected = c;
                 }
             }
-            if (espacoSelecionado != null){
-                espacos.remove(espacoSelecionado);
-                limparEspaco();
-                new CoffeeDAO().deleteCoffee(idEspaco);
-                espacos = new CoffeeDAO().getCoffees();
+            if (coffeeSelected != null){
+                coffees.remove(coffeeSelected);
+                clearCoffee();
+                CoffeeController.removeCoffee(coffeeSelected);
+                coffees = new CoffeeDAO().getCoffees();
             } else{
                 System.out.println("ID inválido!");
             }
@@ -391,86 +603,88 @@ public class ViewCMD {
         System.out.println("***************************************************************************************************************************");
     }
 
-    private void atualizarLotacao(){
-        if (pessoas.size() > 0){
+    /**
+     * Método para atualizar as posições das pessoas nas salas e espaços durante cada etapa.
+     */
+    private void updateUsersPositions(){
+        if (users.size() > 0){
             try{
-                try{
-                    salas = new RoomDAO().getRooms();
-                } catch(CustomException error){
-                    System.out.println(error.getMessage());
-                    salas = new ArrayList<Room>();
-                }
-                try{
-                    espacos = new CoffeeDAO().getCoffees();
-                } catch(CustomException error){
-                    System.out.println(error.getMessage());
-                    espacos = new ArrayList<Coffee>();
-                }
-                for (User u: pessoas) {
+                for (User u: users) {
                     u.setPositionRoom(0);
                     u.setPositionCoffee(0);
                     u.setIdTemp(0);
                 }
-                pessoas = UserController.userRaffle(pessoas, salas, espacos);
-                UserController.insertUser(pessoas);
+                users = UserController.userRaffle(users, rooms, coffees);
+                UserController.insertUsers(users);
             } catch (CustomException error){
                 System.out.println(error.getMessage());
             }
         }
     }
 
-    private void limparSala(){
-        if (pessoas.size() > 0){
+    /**
+     * Método para remover as pessoas da sala.
+     *
+     * Refaz as posições das pessoas sem a sala selecionada para exclusão,
+     * removendo as ligações entre pessoas e a sala, para então poder remove-la.
+     */
+    private void clearRoom(){
+        if (users.size() > 0){
             try{
-                try{
-                    espacos = new CoffeeDAO().getCoffees();
-                } catch(CustomException error){
-                    System.out.println(error.getMessage());
-                    espacos = new ArrayList<Coffee>();
-                }
-                for (Room r: salas) {
+                updateCoffees();
+                for (Room r: rooms) {
                     r.setQuantity1(0);
                     r.setQuantity2(0);
                 }
-                for (User u: pessoas) {
+                for (User u: users) {
                     u.setPositionRoom(0);
                     u.setPositionCoffee(0);
                     u.setIdTemp(0);
                 }
-                pessoas = UserController.userRaffle(pessoas, salas, espacos);
-                UserController.insertUser(pessoas);
+                users = UserController.userRaffle(users, rooms, coffees);
+                UserController.insertUsers(users);
             } catch (CustomException error){
                 System.out.println(error.getMessage());
             }
         }
     }
 
-    private void limparEspaco(){
-        if (pessoas.size() > 0){
+    /**
+     * Método para remover as pessoas do espaço.
+     *
+     * Refaz as posições das pessoas sem o espaço selecionado para exclusão,
+     * removendo as ligações entre pessoas e o espaço, para então poder remove-lo.
+     */
+    private void clearCoffee(){
+        if (users.size() > 0){
             try{
-                try{
-                    salas = new RoomDAO().getRooms();
-                } catch(CustomException error){
-                    System.out.println(error.getMessage());
-                    salas = new ArrayList<Room>();
-                }
-                for (Room r: salas) {
+                updateRooms();
+                for (Room r: rooms) {
                     r.setQuantity1(0);
                     r.setQuantity2(0);
                 }
-                for (User u: pessoas) {
+                for (User u: users) {
                     u.setPositionRoom(0);
                     u.setPositionCoffee(0);
                     u.setIdTemp(0);
                 }
-                pessoas = UserController.userRaffle(pessoas, salas, espacos);
-                UserController.insertUser(pessoas);
+                users = UserController.userRaffle(users, rooms, coffees);
+                UserController.insertUsers(users);
             } catch (CustomException error){
                 System.out.println(error.getMessage());
             }
         }
     }
 
+    /**
+     * Método para formatar o tamanho de textos.
+     *
+     * Formata o texto para até 20 caracteres.
+     * Utilizado para deixar a tabela de dados formatada.
+     *
+     * @param text String
+     * @return String
+     */
     private String formatText(String text){
         while(text.length() < 20){
             text += " ";
@@ -483,7 +697,10 @@ public class ViewCMD {
         return text;
     }
 
-    private void excluirDados(){
+    /**
+     * Método para resetar o banco de dados.
+     */
+    private void deleteData(){
         try{
             System.out.println("Desaja realmente excluir os dados do banco?");
             System.out.println("\t 1 - Sim");
@@ -500,4 +717,22 @@ public class ViewCMD {
             System.out.println("Comando cancelado!");
         }
     }
+
+    /**
+     *
+     *
+    private void waitForContinue(){
+        System.out.println("Aperte Enter para continuar...");
+        scanner.nextLine();
+        try{
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c",
+                        "cls").inheritIO().start().waitFor();
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch(Exception error){
+            System.out.println(error.getMessage());
+        }
+    }
+    //*/
 }

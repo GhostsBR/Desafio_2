@@ -6,6 +6,7 @@ import Model.Room;
 import Model.User;
 import Model.UserDAO;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UserController {
      * @param users List<User> Lista de usuários
      * @throws CustomException se ocorrer erro ao salvar no banco
      */
-    public static void insertUser(List<User> users) throws CustomException {
+    public static void insertUsers(List<User> users) throws CustomException {
         try {
             for (User u : users) {
                 if(u.getIdUser() == null) {
@@ -248,5 +249,39 @@ public class UserController {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Método para buscar todas as pessoas cadastradas.
+     *
+     * @return Lista de Pessoas
+     */
+    public static List<User> findUsers(){
+        UserDAO dao = new UserDAO();
+        List<User> users;
+        try{
+            users = dao.getUsers();
+        } catch (CustomException error){
+            users = new ArrayList<User>();
+        }
+        return users;
+    }
+
+    /**
+     * Método para pesquisar uma pessoa por ID.
+     *
+     * @param id
+     * @return User
+     */
+    public static User findUser(Integer id){
+        UserDAO dao = new UserDAO();
+        User user;
+        try{
+            user = dao.getUser(id);
+        } catch (CustomException error){
+            System.out.println(error.getMessage());
+            user = new User();
+        }
+        return user;
     }
 }
