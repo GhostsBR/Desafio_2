@@ -167,28 +167,17 @@ public class UserDAO {
         List<User> users = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
-        Integer id;
-        String nome;
-        Integer room1;
-        Integer room2;
-        Integer coffee1;
-        Integer coffee2;
         try {
             String sql = "SELECT * FROM users";
             stmt = ConnectionFactory.connectExtra().createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()){
-                id = rs.getInt("id");
-                nome = rs.getString("name");
-                room1 = rs.getInt("id_room1");
-                room2 = rs.getInt("id_room2");
-                coffee1 = rs.getInt("id_coffee1");
-                coffee2 = rs.getInt("id_coffee2");
-                User user = new User( id, nome,
-                        new RoomDAO().getRoom(room1),
-                        new RoomDAO().getRoom(room2),
-                        new CoffeeDAO().getCoffee(coffee1),
-                        new CoffeeDAO().getCoffee(coffee2));
+                User user = new User( rs.getInt("id"),
+                        rs.getString("name"),
+                        new RoomDAO().getRoom(rs.getInt("id_room1")),
+                        new RoomDAO().getRoom(rs.getInt("id_room2")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee1")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee2")));
                 users.add(user);
             }
         }catch (Exception error){
@@ -299,5 +288,47 @@ public class UserDAO {
             ConnectionFactory.closeConnectionDatabase();
         }
         return user;
+    }
+
+    /**
+     * Método para pesquisar os Usuários por nome.
+     *
+     * @param name
+     * @return List<User> Lista de usuários
+     * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
+     */
+    public List<User> getUsers(String name) throws CustomException{
+        List<User> users = new ArrayList<>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM users WHERE name LIKE ?";
+            pstmt = ConnectionFactory.connectExtra().prepareStatement(sql);
+            pstmt.setString(1, "%" + name + "%");
+            pstmt.execute();
+            rs = pstmt.getResultSet();
+            while (rs.next()){
+                User user = new User( rs.getInt("id"),
+                        rs.getString("name"),
+                        new RoomDAO().getRoom(rs.getInt("id_room1")),
+                        new RoomDAO().getRoom(rs.getInt("id_room2")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee1")),
+                        new CoffeeDAO().getCoffee(rs.getInt("id_coffee2")));
+                users.add(user);
+            }
+        }catch (Exception error){
+            throw new CustomException("Erro ao selecionar os Usuários: " + error.getMessage());
+        } finally{
+            try{
+                if (pstmt != null && !pstmt.isClosed()){
+                    pstmt.close();
+                }
+                if (rs != null && !rs.isClosed()){
+                    rs.close();
+                }
+            } catch (Exception error){}
+            ConnectionFactory.closeConnectionDatabaseExtra();
+        }
+        return users;
     }
 }

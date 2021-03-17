@@ -172,11 +172,12 @@ public class User {
      * @throws CustomException quando for informado um valor inválido
      */
     public void setRoom1User(Room room1) throws CustomException{
-        if (room1 != null) {
-            this.room1User = room1;
+        this.room1User = room1;
+        /*if (room1 != null) {
+
         } else{
             throw new CustomException("Erro: informado uma Sala nula!");
-        }
+        }*/
     }
 
     /**
@@ -197,11 +198,12 @@ public class User {
      * @throws CustomException quando for informado um valor inválido
      */
     public void setRoom2User(Room room2) throws CustomException{
-        if(room2 != null){
-            this.room2User = room2;
+        this.room2User = room2;
+        /*if(room2 != null){
+
         } else{
             throw new CustomException("Erro: foi informado uma sala nula!");
-        }
+        }*/
     }
 
     /**
@@ -222,11 +224,12 @@ public class User {
      * @throws CustomException quando for informado um valor inválido
      */
     public void setCoffee1User(Coffee coffee1) throws CustomException{
-        if(coffee1 != null){
-            this.coffee1User = coffee1;
+        this.coffee1User = coffee1;
+        /*if(coffee1 != null){
+
         } else{
             throw new CustomException("Erro: foi informado um espaço nulo!");
-        }
+        }*/
     }
 
     /**
@@ -247,11 +250,12 @@ public class User {
      * @throws CustomException quando for informado um valor inválido
      */
     public void setCoffee2User(Coffee coffee2) throws CustomException{
-        if(coffee2 != null){
-            this.coffee2User = coffee2;
+        this.coffee2User = coffee2;
+        /*if(coffee2 != null){
+
         } else{
             throw new CustomException("Erro: foi informado um espaço nulo!");
-        }
+        }*/
     }
 
     /**

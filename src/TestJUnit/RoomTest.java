@@ -15,8 +15,10 @@ class RoomTest {
 	
 	@Test
 	void testSetIdRoom() throws CustomException {
-		room.setIdRoom(1);	
-		assertEquals(1,room.getIdRoom());
+		int valorEsperado = 1;
+		room.setIdRoom(valorEsperado);
+		int valorRecebido = room.getIdRoom();
+		assertEquals( valorEsperado, valorRecebido);
 	}
 
 	@Test
@@ -69,8 +71,10 @@ class RoomTest {
 	
 	@Test
 	void testSetCapacityRoom() throws CustomException {
+		int valorEsperado = 20;
 		room.setCapacityRoom(20);
-		assertEquals(20,room.getCapacityRoom());
+		int valorRecebido = room.getCapacityRoom();
+		assertEquals( valorEsperado, valorRecebido);
 		}
 	
 	@Test

@@ -55,6 +55,7 @@ public class UserController {
     public static List<User> userRaffle(List<User> users, List<Room> rooms, List<Coffee> coffees) throws CustomException{
 
         Collections.shuffle(users);
+
         int room = 0;
         int room2 = 0;
         int coffee = 0;
@@ -82,6 +83,25 @@ public class UserController {
             throw new CustomException("ERRO: Foi adicionado mais usuários do que possível!");
         }
 
+        // Limpar as variáveis
+        for (Coffee c: coffees) {
+            c.getUsersStage1().clear();
+        }
+        for (User u: users) {
+            u.setPositionRoom(0);
+            u.setPositionCoffee(0);
+            u.setIdTemp(0);
+            u.setRoom1User(null);
+            u.setRoom2User(null);
+            u.setCoffee1User(null);
+            u.setCoffee2User(null);
+        }
+        for (Room r: rooms) {
+            r.setQuantity1(0);
+            r.setQuantity2(0);
+            r.getUsersStage1().clear();
+        }
+
         for(int i=0; i < users.size(); i++) {
             if(room >= rooms.size()) {
                 room = 0;
@@ -98,11 +118,7 @@ public class UserController {
             if(room >= rooms.size()) {
                 room = 0;
             }
-            try {
-                users.get(i).setRoom1User(rooms.get(room));
-            } catch (CustomException error) {
-                System.out.println("Erro ao definir o número de usuários na sala 1: " + error.getMessage());
-            }
+            users.get(i).setRoom1User(rooms.get(room));
             users.get(i).setPositionRoom(room);
             users.get(i).setIdTemp(i);
             rooms.get(room).setUsers(users.get(i));
@@ -116,11 +132,7 @@ public class UserController {
                 coffee = 0;
             }
 
-            try {
-                users.get(i).setCoffee1User(coffees.get(coffee));
-            } catch (CustomException error) {
-                System.out.println("Erro ao definir o número de usuários da espaço 1: " + error.getMessage());
-            }
+            users.get(i).setCoffee1User(coffees.get(coffee));
             users.get(i).setPositionCoffee(coffee);
             coffee++;
         }
@@ -144,11 +156,7 @@ public class UserController {
                     room2 = 0;
                 }
                 rooms.get(room2).setQuantity2(rooms.get(room2).getQuantity2() + 1);
-                try {
-                    users.get(rooms.get(i).getUsers().get(n).getIdTemp()).setRoom2User(rooms.get(room2));
-                } catch (CustomException error) {
-                    System.out.println("Erro ao definir a segunda sala do usuário: " + error.getMessage());
-                }
+                users.get(rooms.get(i).getUsers().get(n).getIdTemp()).setRoom2User(rooms.get(room2));
                 room2++;
             }
         }
@@ -258,7 +266,7 @@ public class UserController {
     /**
      * Método para pesquisar uma pessoa por ID.
      *
-     * @param id
+     * @param id Integer
      * @return User
      */
     public static User findUser(Integer id){
@@ -271,5 +279,23 @@ public class UserController {
             user = new User();
         }
         return user;
+    }
+
+    /**
+     * Método para pesquisar pessoas por nome.
+     *
+     * @param name String
+     * @return Lista de pessoas
+     */
+    public static List<User> findUser(String name){
+        UserDAO dao = new UserDAO();
+        List<User> users;
+        try{
+            users = dao.getUsers(name);
+        } catch (CustomException error){
+            System.out.println(error.getMessage());
+            users = new ArrayList<User>();
+        }
+        return users;
     }
 }

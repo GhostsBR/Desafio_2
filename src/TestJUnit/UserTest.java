@@ -15,8 +15,10 @@ class UserTest {
 
 	@Test
 	void testSetIdUser() throws CustomException {
-		user.setIdUser(1);	
-		assertEquals(1,user.getIdUser());
+		int valorEsperado = 1;
+		user.setIdUser(valorEsperado);
+		int valorRecebido = user.getIdUser();
+		assertEquals( valorEsperado, valorRecebido);
 	}
 	/*
 	@Test

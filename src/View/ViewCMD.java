@@ -78,7 +78,7 @@ public class ViewCMD {
     private void showSubMenu(){
         System.out.println("\t 1 - Cadastrar");
         System.out.println("\t 2 - Mostrar Todos");
-        System.out.println("\t 3 - Pesquisar por ID");
+        System.out.println("\t 3 - Pesquisar");
         System.out.println("\t 4 - Excluir");
         System.out.println("\t 0 - Voltar");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
@@ -131,15 +131,18 @@ public class ViewCMD {
                         if (rooms.size() == 0 || coffees.size() == 0){
                             System.out.println("Não há capacidade suficiente!");
                         } else{
+                            int usersNow = users.size();
                             addUser();
-                            updateUsersPositions();
+                            if(usersNow < users.size()){
+                                updateUsersPositions();
+                            }
                         }
                         break;
                     case 2:
                         showUsers();
                         break;
                     case 3:
-                        showUser();
+                        findUsers();
                         break;
                     case 4:
                         deleteUser();
@@ -194,7 +197,7 @@ public class ViewCMD {
                         showCoffee();
                         break;
                     case 4:
-                        excluirEspaco();
+                        deleteCoffee();
                         break;
                     default:
                         optionSubMenu = 0;
@@ -226,10 +229,15 @@ public class ViewCMD {
                     user.setNameUser(name);
                     users.add(user);
                     System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-                    System.out.println("Adicionar nova pessoa?");
-                    System.out.println("\t 1 - Sim");
-                    System.out.println("\t 0 - Não");
-                    if (Integer.parseInt(scanner.nextLine()) != 1){
+                    if (UserController.verifyCapacity(rooms, users.size() + 1)){
+                        System.out.println("Adicionar nova pessoa?");
+                        System.out.println("\t 1 - Sim");
+                        System.out.println("\t 0 - Não");
+                        if (Integer.parseInt(scanner.nextLine()) != 1){
+                            newUser = false;
+                        }
+                    } else{
+                        System.out.println("Não há capacidade suficiente!");
                         newUser = false;
                     }
                 } catch(CustomException error){
@@ -293,27 +301,39 @@ public class ViewCMD {
     private void addCoffee(){
         boolean newCoffee = true;
         do {
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-            System.out.println("Adicionar Novo Espaço de Café:");
-            try{
-                System.out.println("Informe o nome do espaço de café:");
-                String name = scanner.nextLine();
-                Coffee coffee = new Coffee();
-                coffee.setNameCoffee(name);
-                coffees.add(coffee);
+            if (coffees.size() < 2){
                 System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-                System.out.println("Adicionar novo espaço de café?");
-                System.out.println("\t 1 - Sim");
-                System.out.println("\t 0 - Não");
-                if (Integer.parseInt(scanner.nextLine()) != 1){
-                    newCoffee = false;
+                System.out.println("Adicionar Novo Espaço de Café:");
+                try{
+                    System.out.println("Informe o nome do espaço de café:");
+                    String name = scanner.nextLine();
+                    Coffee coffee = new Coffee();
+                    coffee.setNameCoffee(name);
+                    coffees.add(coffee);
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                    if (coffees.size() < 2){
+                        System.out.println("Adicionar novo espaço de café?");
+                        System.out.println("\t 1 - Sim");
+                        System.out.println("\t 0 - Não");
+                        if (Integer.parseInt(scanner.nextLine()) != 1){
+                            newCoffee = false;
+                        }
+                    } else{
+                        newCoffee = false;
+                        System.out.println("Não é possível adicionar mais espaços de café!");
+                    }
+
+                } catch(CustomException error){
+                    System.out.println(error.getMessage());
+                    break;
+                } catch (Exception error){
+                    System.out.println("Informe um valor válido!");
                 }
-            } catch(CustomException error){
-                System.out.println(error.getMessage());
-                break;
-            } catch (Exception error){
-                System.out.println("Informe um valor válido!");
+            } else{
+                newCoffee = false;
+                System.out.println("Não é possível adicionar mais espaços de café!");
             }
+
         } while (newCoffee);
     }
 
@@ -342,10 +362,10 @@ public class ViewCMD {
     /**
      * Método para mostrar uma pessoa pesquisada pelo ID.
      */
-    private void showUser(){
-        System.out.println("Informe o ID da pessoa:");
+    private void findUsers(){
+        System.out.println("Informe o nome da pessoa:");
         try{
-            Integer id = Integer.parseInt(scanner.nextLine());
+            String name = scanner.nextLine();
             System.out.println("Pessoa:");
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
             System.out.println("\t|" + formatText("Pessoa") +
@@ -354,15 +374,14 @@ public class ViewCMD {
                     "| " + formatText("Espaço Café Etapa 1") +
                     "| " + formatText("Espaço Café Etapa 2") + "|");
             System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-            User user = UserController.findUser(id);
-            if(user.getIdUser() != null){
-                System.out.println("\t|" + formatText(user.getNameUser()) +
-                        "| " + formatText(user.getRoom1User().getNameRoom()) +
-                        "| " + formatText(user.getRoom2User().getNameRoom()) +
-                        "| " + formatText(user.getCoffee1User().getNameCoffee()) +
-                        "| " + formatText(user.getCoffee2User().getNameCoffee()) + "|");
-            } else{
-                System.out.println("Nenhuma pessoa encontrada!");
+
+            List<User> usersFound = UserController.findUser(name);
+            for (User u: usersFound) {
+                System.out.println("\t|" + formatText(u.getNameUser()) +
+                        "| " + formatText(u.getRoom1User().getNameRoom()) +
+                        "| " + formatText(u.getRoom2User().getNameRoom()) +
+                        "| " + formatText(u.getCoffee1User().getNameCoffee()) +
+                        "| " + formatText(u.getCoffee2User().getNameCoffee()) + "|");
             }
         } catch (Exception error){
             System.out.println("ID inválido!");
@@ -452,7 +471,7 @@ public class ViewCMD {
                     System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                 }
                 usersInCoffee = c.getUsersStage2();
-                System.out.println("\tPessoas na Etapa 2:");
+                System.out.println("\t\tPessoas na Etapa 2:");
                 for (User u: usersInCoffee) {
                     System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                 }
@@ -484,7 +503,7 @@ public class ViewCMD {
                     System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                 }
                 usersInCoffee = coffee.getUsersStage2();
-                System.out.println("\tPessoas na Etapa 2:");
+                System.out.println("\t\tPessoas na Etapa 2:");
                 for (User u: usersInCoffee) {
                     System.out.println("\t\t\t ID: " + u.getIdUser() + "\t| Nome: " + u.getNameUser());
                 }
@@ -538,15 +557,12 @@ public class ViewCMD {
             Integer idRoom = Integer.parseInt(scanner.nextLine());
             Room roomSelected = null;
             for (Room r: rooms) {
-                if(r.getIdRoom() == idRoom){
+                if(r.getIdRoom().equals(idRoom)){
                     roomSelected = r;
                 }
             }
             if (roomSelected != null){
-                List<Room> roomsAltered = new ArrayList<Room>();
-                for (Room r: rooms) {
-                    roomsAltered.add(r);
-                }
+                List<Room> roomsAltered = new ArrayList<Room>(rooms);
                 roomsAltered.remove(roomSelected);
                 if (UserController.verifyCapacity(roomsAltered, users.size())){
                     rooms = roomsAltered;
@@ -570,7 +586,7 @@ public class ViewCMD {
     /**
      * Método para solicitar a exclusão de um espaço de café.
      */
-    private void excluirEspaco(){
+    private void deleteCoffee(){
         System.out.println("Espaços de Café Cadastrados:");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         for (Coffee c: coffees) {
@@ -609,11 +625,6 @@ public class ViewCMD {
     private void updateUsersPositions(){
         if (users.size() > 0){
             try{
-                for (User u: users) {
-                    u.setPositionRoom(0);
-                    u.setPositionCoffee(0);
-                    u.setIdTemp(0);
-                }
                 users = UserController.userRaffle(users, rooms, coffees);
                 UserController.insertUsers(users);
             } catch (CustomException error){
@@ -631,16 +642,6 @@ public class ViewCMD {
     private void clearRoom(){
         if (users.size() > 0){
             try{
-                updateCoffees();
-                for (Room r: rooms) {
-                    r.setQuantity1(0);
-                    r.setQuantity2(0);
-                }
-                for (User u: users) {
-                    u.setPositionRoom(0);
-                    u.setPositionCoffee(0);
-                    u.setIdTemp(0);
-                }
                 users = UserController.userRaffle(users, rooms, coffees);
                 UserController.insertUsers(users);
             } catch (CustomException error){
@@ -658,16 +659,6 @@ public class ViewCMD {
     private void clearCoffee(){
         if (users.size() > 0){
             try{
-                updateRooms();
-                for (Room r: rooms) {
-                    r.setQuantity1(0);
-                    r.setQuantity2(0);
-                }
-                for (User u: users) {
-                    u.setPositionRoom(0);
-                    u.setPositionCoffee(0);
-                    u.setIdTemp(0);
-                }
                 users = UserController.userRaffle(users, rooms, coffees);
                 UserController.insertUsers(users);
             } catch (CustomException error){
