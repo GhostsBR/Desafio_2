@@ -98,7 +98,6 @@ public class UserController {
             if(room >= rooms.size()) {
                 room = 0;
             }
-
             try {
                 users.get(i).setRoom1User(rooms.get(room));
             } catch (CustomException error) {
