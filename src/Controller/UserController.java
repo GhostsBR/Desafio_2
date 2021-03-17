@@ -110,6 +110,7 @@ public class UserController {
             room++;
         }
 
+        Collections.shuffle(users);
         for(int i=0; i < users.size(); i++) {
             if(coffee >= coffees.size()) {
                 coffee = 0;
@@ -152,8 +153,8 @@ public class UserController {
             }
         }
 
+        Collections.shuffle(users);
         for(int i=0; i < users.size(); i++) {
-            coffee2 = (users.get(i).getPositionCoffee() + 1);
             if(coffee2 >= coffees.size()) {
                 coffee2 = 0;
             }
@@ -162,7 +163,7 @@ public class UserController {
             } catch (CustomException error) {
                 System.out.println("Erro ao definir o número de usuários no espaço 2: " + error.getMessage());
             }
-            //System.out.println("Nome: " + users.get(i).getNameUser() + "\t|\t Primeira Sala: " +users.get(i).getRoom1User().getIdRoom() + "\t|\t Primeiro Espaço: " +users.get(i).getCoffee1User().getIdCoffee() + "\t|\t Segunda Sala: " +users.get(i).getRoom2User().getIdRoom() + "\t|\t Segundo Espaço: " +users.get(i).getCoffee2User().getIdCoffee());
+            coffee2++;
         }
 
         for(int i=0; i < rooms.size(); i++) {
