@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável pela persisntência de dados da Classe Coffee.
+ * Classe responsável pela persisntência de dados da Classe Room.
  *
  * @author João
  * @author Thiago
  */
-public class CoffeeDAO {
+public class RoomDAO{
 
     /**
      * Objeto PreparedStatement usado no DAO.
@@ -26,29 +26,25 @@ public class CoffeeDAO {
     private PreparedStatement pstmt = null;
 
     /**
-     * Método para registrar no banco um novo Espaço de Café.
+     * Método para registrar no banco uma nova Sala.
      *
-     * Cadastra um novo espaço de café no banco utilizando um objeto Coffee.
+     * Cadastra uma nova sala no banco utilizando um objeto Room.
      *
      * @author João
      * @author Thiago
      *
-     * @param coffee Coffee
+     * @param room Room
      * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-    public void createCoffee(Coffee coffee) throws CustomException{
+    public void createRoom(Room room) throws CustomException{
         try {
-            int quantidadeEspacosSalvos = getCoffees().size();
-            if (quantidadeEspacosSalvos < 2){
-                String sql = "INSERT INTO coffees (name) VALUES (?)";
-                pstmt = ConnectionFactory.connect().prepareStatement(sql);
-                pstmt.setString(1,coffee.getNameCoffee());
-                pstmt.execute();
-            } else{
-                throw new CustomException("Erro: Limite de espaços de café cadastrados atingido!");
-            }
+            String sql = "INSERT INTO rooms (name, capacity) VALUES (?,?)";
+            pstmt = ConnectionFactory.connect().prepareStatement(sql);
+            pstmt.setString(1, room.getNameRoom());
+            pstmt.setInt(2,room.getCapacityRoom());
+            pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao inserir um novo Espaço de Café: " + error.getMessage());
+            throw new CustomException("Erro ao inserir uma nova Sala: " + error.getMessage());
         } finally{
             try{
                 if (pstmt != null){
@@ -60,9 +56,9 @@ public class CoffeeDAO {
     }
 
     /**
-     * Método para excluir um Espaço de café
+     * Método para excluir uma Sala
      *
-     * Exclui um Espaço de café do banco de dados usando o ID.
+     * Exclui uma Sala do banco de dados usando o ID.
      *
      * @author João
      * @author Thiago
@@ -70,14 +66,14 @@ public class CoffeeDAO {
      * @param id Integer
      * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-    public void deleteCoffee (int id) throws CustomException{
+    public void deleteRoom(int id) throws CustomException{
         try {
-            String sql = "DELETE FROM coffees WHERE id = ?";
+            String sql = "DELETE FROM rooms WHERE id = ?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setInt(1,id);
+            pstmt.setInt(1, id);
             pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao excluir um Espaço de Café: " + error.getMessage());
+            throw new CustomException("Erro ao excluir uma Sala: " + error.getMessage());
         } finally{
             try{
                 if (pstmt != null){
@@ -89,26 +85,26 @@ public class CoffeeDAO {
     }
 
     /**
-     * Método para alterar o Espaço de Café.
+     * Método para alterar a Sala.
      *
-     * Realiza alterações dos dados de Espaço de café no banco,
-     * utilizando um objeto Coffee.
+     * Realiza alterações dos dados da Sala no banco, utilizando um objeto Room.
      *
      * @author João
      * @author Thiago
      *
-     * @param coffee Coffee
+     * @param room Room
      * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-    public void updateCoffee (Coffee coffee) throws CustomException{
+    public void updateRoom(Room room) throws CustomException{
         try {
-            String sql = "UPDATE coffees SET name=? WHERE id = ?";
+            String sql = "UPDATE rooms SET name=?,capacity=? WHERE id=?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
-            pstmt.setString(1,coffee.getNameCoffee());
-            pstmt.setInt(2,coffee.getIdCoffee());
+            pstmt.setString(1,room.getNameRoom());
+            pstmt.setInt(2,room.getCapacityRoom());
+            pstmt.setInt(3,room.getIdRoom());
             pstmt.execute();
         }catch (Exception error){
-            throw new CustomException("Erro ao atualizar o Espaço de Café: " + error.getMessage());
+            throw new CustomException("Erro ao atualizar a Sala: " + error.getMessage());
         } finally{
             try{
                 if (pstmt != null){
@@ -120,33 +116,32 @@ public class CoffeeDAO {
     }
 
     /**
-     * Método para retornar todos os Espaços de Café.
+     * Método para retornar todas as Salas.
      *
-     * Realiza a busca e retorno de todos os Espaços de café salvos no banco.
+     * Realiza a busca e retorno de todas as Salas salvas no banco.
      *
-     * Obs: retorna uma lista vazia caso nenhum Espaço
-     * de Café seja encontrado no banco!
+     * Obs: retorna uma lista vazia caso nenhuma Sala seja encontrada no banco!
      *
      * @author João
      * @author Thiago
      *
-     * @return List<Coffee> Lista de Espaços de café
+     * @return List<Room> Lista de Salas
      * @throws CustomException se ocorrer erro de SQL ou no Statement
      */
-    public List<Coffee> getCoffees() throws CustomException{
-        List<Coffee> coffes = new ArrayList<Coffee>();
+    public List<Room> getRooms() throws CustomException{
+        List<Room> rooms = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM coffees";
+            String sql = "SELECT * FROM rooms";
             stmt = ConnectionFactory.connect().createStatement();
             rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                Coffee coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
-                coffes.add(coffee);
+            while (rs.next()){
+                Room room = new Room(rs.getInt("id"), rs.getString("name"), rs.getInt("capacity"));
+                rooms.add(room);
             }
-        } catch (Exception error) {
-            throw new CustomException("Erro ao selecionar o Espaço de Café: " + error.getMessage());
+        }catch (Exception error){
+            throw new CustomException("Erro ao selecionar as Salas: " + error.getMessage());
         } finally{
             try{
                 if (stmt != null){
@@ -158,38 +153,37 @@ public class CoffeeDAO {
             } catch (Exception error){}
             ConnectionFactory.closeConnectionDatabase();
         }
-        return coffes;
+        return rooms;
     }
 
     /**
-     * Método para retornar um Espaço de Café.
+     * Método para retornar uma Sala.
      *
-     * Realiza a busca e retorno de um Espaço de café salvo no banco através do id.
+     * Realiza a busca e retorno de uma Sala salva no banco através do id.
      *
-     * Obs: retorna um objeto vazio caso nenhum Espaço
-     * de Café seja encontrado no banco!
+     * Obs: retorna um objeto vazio caso nenhuma Sala seja encontrada no banco!
      *
      * @author João
      * @author Thiago
      *
      * @param id Integer
-     * @return Coffee
+     * @return Room
      * @throws CustomException se ocorrer erro de SQL ou no PreparedStatement
      */
-    public Coffee getCoffee(Integer id) throws CustomException{
-        Coffee coffee = new Coffee();
+    public Room getRoom(Integer id) throws CustomException{
+        Room room = new Room();
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM coffees WHERE id = ?";
+            String sql = "SELECT * FROM rooms WHERE id = ?";
             pstmt = ConnectionFactory.connect().prepareStatement(sql);
             pstmt.setInt(1,id);
             pstmt.execute();
             rs = pstmt.getResultSet();
             if(rs.next()){
-                coffee = new Coffee(rs.getInt("id"), rs.getString("name"));
+                room = new Room(rs.getInt("id"), rs.getString("name"), rs.getInt("capacity"));
             }
         } catch (Exception error) {
-            throw new CustomException("Erro ao buscar o Espaço de Café: " + error.getMessage());
+            throw new CustomException("Erro ao buscar a Sala: " + error.getMessage());
         } finally{
             try{
                 if (pstmt != null){
@@ -201,6 +195,6 @@ public class CoffeeDAO {
             } catch (Exception error){}
             ConnectionFactory.closeConnectionDatabase();
         }
-        return coffee;
+        return room;
     }
 }
